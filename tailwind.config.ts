@@ -87,6 +87,14 @@ export default {
           "0%": { transform: "translateY(10px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+        "swap-left": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(18px)" },
+        },
+        "swap-right": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(-18px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",

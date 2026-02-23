@@ -74,18 +74,14 @@ const Landing = () => {
 
       {/* Modal Verificando */}
       <Dialog open={step === "verifying"}>
-        <DialogContent className="bg-white border-gray-200 text-black sm:max-w-sm [&>button]:hidden">
-          <div className="flex flex-col items-center gap-4 py-6">
-            <div className="h-16 w-16 rounded-full border-4 border-gray-200 border-t-primary animate-spin" style={{ animationDuration: '1s' }} />
-            <h3 className="text-lg font-bold">Verificando sua conta...</h3>
-            <p className="text-sm text-gray-500 text-center">
-              Analisando @{username} no TikTok
-            </p>
-            <div className="flex flex-col gap-2 w-full text-sm">
-              <VerifyStep label="Verificando perfil" done />
-              <VerifyStep label="Analisando seguidores" done />
-              <VerifyStep label="Verificando elegibilidade" />
+        <DialogContent className="bg-white border-gray-200 text-black sm:max-w-xs [&>button]:hidden">
+          <div className="flex flex-col items-center gap-5 py-10">
+            <img src={tiktokLogo} alt="TikTok" className="h-6 mb-2" />
+            <div className="flex items-center gap-3">
+              <span className="inline-block h-3 w-3 rounded-full bg-secondary animate-[swap-left_1s_ease-in-out_infinite]" />
+              <span className="inline-block h-3 w-3 rounded-full bg-primary animate-[swap-right_1s_ease-in-out_infinite]" />
             </div>
+            <p className="text-sm text-gray-500">Verificando elegibilidade...</p>
           </div>
         </DialogContent>
       </Dialog>
