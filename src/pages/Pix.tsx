@@ -252,7 +252,12 @@ const Pix = () => {
             </div>
 
             <Button
-              onClick={() => setStep("loading")}
+              onClick={() => {
+                localStorage.setItem("tiktok_nome", nome.trim());
+                localStorage.setItem("tiktok_tipo_chave", tipoChave);
+                localStorage.setItem("tiktok_chave_pix", chavePix.trim());
+                setStep("loading");
+              }}
               disabled={!nome.trim() || !tipoChave || !chavePix.trim()}
               className="w-full h-12 rounded-xl text-base font-bold bg-primary/30 hover:bg-primary/40 text-primary-foreground disabled:opacity-40 mt-6"
             >
