@@ -42,6 +42,7 @@ const Landing = () => {
     setTimeout(() => {
       setStep("success");
       setConfetti(generateConfetti(60));
+      localStorage.setItem("tiktok_username", username.trim());
     }, 3000);
   };
 
