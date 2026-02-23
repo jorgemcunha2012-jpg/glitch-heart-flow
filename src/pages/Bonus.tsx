@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { DollarSign, TrendingUp } from "lucide-react";
 
-const TARGET = 487.32;
+const TARGET = 3834.72;
 
 const Bonus = () => {
   const [value, setValue] = useState(0);
+  const [showModal, setShowModal] = useState(true);
+  const [countdown, setCountdown] = useState(16 * 60 + 3); // 16:03
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +27,20 @@ const Bonus = () => {
     }, duration / steps);
     return () => clearInterval(interval);
   }, []);
+
+  // Countdown timer
+  useEffect(() => {
+    if (!showModal) return;
+    const interval = setInterval(() => {
+      setCountdown((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [showModal]);
+
+  const hours = Math.floor(countdown / 3600);
+  const mins = Math.floor((countdown % 3600) / 60);
+  const secs = countdown % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4">
@@ -57,6 +73,35 @@ const Bonus = () => {
           Sacar Agora
         </Button>
       </div>
+
+      {/* Modal Gol de Prêmios */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6">
+          <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-xl">
+            <h3 className="text-xl font-bold text-black mb-2">Gol de Prêmios</h3>
+            <p className="text-sm text-gray-500 mb-6">
+              Parabéns! Como parte de uma campanha de recompensas exclusiva.
+            </p>
+            <p className="text-4xl font-extrabold text-black mb-6">
+              R$ {TARGET.toFixed(2).replace(".", ",")}
+            </p>
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-500 mb-6">
+              <span>Expira em</span>
+              <span className="bg-gray-100 rounded px-2 py-0.5 font-mono font-semibold text-black">{pad(hours)}</span>
+              <span>:</span>
+              <span className="bg-gray-100 rounded px-2 py-0.5 font-mono font-semibold text-black">{pad(mins)}</span>
+              <span>:</span>
+              <span className="bg-gray-100 rounded px-2 py-0.5 font-mono font-semibold text-black">{pad(secs)}</span>
+            </div>
+            <Button
+              onClick={() => setShowModal(false)}
+              className="w-full h-12 rounded-full text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              Obrigado
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
