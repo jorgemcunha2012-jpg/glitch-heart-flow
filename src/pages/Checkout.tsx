@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, RefreshCw } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
@@ -25,9 +26,10 @@ const Checkout = () => {
   const secs = countdown % 60;
   const pad = (n: number) => String(n).padStart(2, "0");
 
+  const navigate = useNavigate();
+
   const handlePagar = () => {
-    // Here you could redirect to a real payment page
-    window.open("https://pay.exemplo.com", "_blank");
+    navigate("/pagamento");
   };
 
   return (
