@@ -1,67 +1,129 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Gift } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import tiktokLogo from "@/assets/tiktok-logo.png";
 
-const steps = [
-  "Analisando seguidores...",
-  "Verificando engajamento...",
-  "Calculando alcance...",
-  "Verificando monetização...",
-  "Finalizando análise...",
-];
+const bimonths = ["1/2", "3/4", "5/6", "7/8", "9/10", "11/12"];
 
 const Progresso = () => {
-  const [progress, setProgress] = useState(0);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [checkedCount, setCheckedCount] = useState(0);
+  const [calendarVisible, setCalendarVisible] = useState(false);
   const navigate = useNavigate();
+  const username = localStorage.getItem("tiktok_username") || "usuario";
+  const initial = username[0]?.toUpperCase() || "?";
 
   useEffect(() => {
+    // Show calendar after a brief delay
+    const calTimer = setTimeout(() => setCalendarVisible(true), 400);
+
+    // Animate checks one by one over 4 seconds (every ~667ms)
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
+      setCheckedCount((prev) => {
+        if (prev >= bimonths.length) {
           clearInterval(interval);
-          setTimeout(() => navigate("/bonus"), 800);
-          return 100;
+          return prev;
         }
         return prev + 1;
       });
-    }, 80);
-    return () => clearInterval(interval);
-  }, [navigate]);
+    }, 667);
 
-  useEffect(() => {
-    const stepIndex = Math.min(Math.floor(progress / 20), steps.length - 1);
-    setCurrentStep(stepIndex);
-  }, [progress]);
+    return () => {
+      clearTimeout(calTimer);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <h2 className="mb-2 text-center text-xl font-bold">Analisando sua conta</h2>
-        <p className="mb-8 text-center text-sm text-muted-foreground">
-          Aguarde enquanto processamos seus dados
+    <div className="flex min-h-screen flex-col items-center bg-gradient-to-b from-pink-50 to-white px-4 py-6">
+      {/* TikTok Logo */}
+      <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6" />
+
+      {/* User Card */}
+      <div className="w-full max-w-sm rounded-full bg-white shadow-sm border border-gray-100 flex items-center gap-3 px-4 py-3 mb-8">
+        <div className="h-10 w-10 rounded-full bg-orange-500 flex items-center justify-center shrink-0">
+          <span className="text-lg font-bold text-white">{initial}</span>
+        </div>
+        <span className="text-sm font-semibold text-black">@{username}</span>
+        <div className="ml-auto text-2xl">🌟</div>
+      </div>
+
+      {/* Content Card */}
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center">
+        {/* Title */}
+        <div className="text-left w-full mb-4">
+          <h1 className="text-xl font-bold text-black leading-tight">
+            Parabéns!
+            <br />
+            Você concluiu todas as
+            <br />
+            atividades do ano.
+            <br />
+            <span className="text-secondary">Veja seu progresso!</span>
+          </h1>
+          <p className="mt-3 text-xs text-gray-400 leading-relaxed">
+            Estamos carregando seu histórico mês a mês. Aguarde alguns segundos enquanto confirmamos todas as etapas.
+          </p>
+        </div>
+
+        {/* Calendar */}
+        <div
+          className={`my-6 text-7xl transition-all duration-700 ${
+            calendarVisible ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}
+        >
+          📅
+        </div>
+
+        {/* Bimonth progress grid */}
+        <div className="w-full flex flex-wrap items-center justify-center gap-x-2 gap-y-3 mb-4">
+          {bimonths.map((label, i) => {
+            const checked = i < checkedCount;
+            const isLast = i === bimonths.length - 1;
+            return (
+              <div key={label} className="flex items-center gap-2">
+                <div
+                  className={`flex items-center gap-1 transition-all duration-500 ${
+                    checked ? "opacity-100 scale-100" : "opacity-30 scale-90"
+                  }`}
+                >
+                  <CheckCircle2
+                    className={`h-5 w-5 shrink-0 transition-colors duration-300 ${
+                      checked ? "text-green-500" : "text-gray-300"
+                    }`}
+                  />
+                  <span className={`text-sm font-semibold ${checked ? "text-green-600" : "text-gray-400"}`}>
+                    {label}
+                  </span>
+                </div>
+                {!isLast && (i === 2 ? null : (
+                  <div className={`w-6 h-0.5 transition-colors duration-300 ${
+                    checked ? "bg-green-400" : "bg-gray-200"
+                  }`} />
+                ))}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Status text */}
+        <p
+          className={`text-xs text-green-500 font-medium mb-4 transition-opacity duration-500 ${
+            checkedCount >= bimonths.length ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          Seu progresso foi concluído com sucesso!
         </p>
 
-        <Progress value={progress} className="mb-4 h-3 bg-muted [&>div]:bg-primary" />
-        <p className="mb-8 text-center text-2xl font-extrabold text-primary">{progress}%</p>
-
-        <div className="flex flex-col gap-3">
-          {steps.map((step, i) => (
-            <div key={step} className="flex items-center gap-3 text-sm">
-              {i < currentStep ? (
-                <CheckCircle2 className="h-5 w-5 text-secondary shrink-0" />
-              ) : i === currentStep ? (
-                <Loader2 className="h-5 w-5 animate-spin text-primary shrink-0" />
-              ) : (
-                <div className="h-5 w-5 rounded-full border border-border shrink-0" />
-              )}
-              <span className={i <= currentStep ? "text-foreground" : "text-muted-foreground"}>
-                {step}
-              </span>
-            </div>
-          ))}
-        </div>
+        {/* CTA Button */}
+        <Button
+          onClick={() => navigate("/bonus")}
+          disabled={checkedCount < bimonths.length}
+          className="w-full h-12 rounded-full text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-40 gap-2"
+        >
+          <Gift className="h-5 w-5" />
+          Resgatar progresso
+        </Button>
       </div>
     </div>
   );
