@@ -1,13 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+
+// Confetti piece component
+const CONFETTI_COLORS = ["#EE1D52", "#69C9D0", "#FFD700", "#FF6B6B", "#4ECDC4", "#A78BFA", "#F97316"];
+
+interface ConfettiPiece {
+  id: number;
+  left: number;
+  delay: number;
+  duration: number;
+  color: string;
+  size: number;
+  rotation: number;
+  shape: "square" | "rect" | "circle";
+}
+
+const generateConfetti = (count: number): ConfettiPiece[] =>
+  Array.from({ length: count }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    delay: Math.random() * 2,
+    duration: 2 + Math.random() * 3,
+    color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+    size: 4 + Math.random() * 8,
+    rotation: Math.random() * 360,
+    shape: (["square", "rect", "circle"] as const)[Math.floor(Math.random() * 3)],
+  }));
 
 const Landing = () => {
   const [username, setUsername] = useState("");
   const [step, setStep] = useState<"idle" | "verifying" | "success">("idle");
+  const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
   const navigate = useNavigate();
 
   const handleVerify = () => {
@@ -15,8 +41,20 @@ const Landing = () => {
     setStep("verifying");
     setTimeout(() => {
       setStep("success");
+      setConfetti(generateConfetti(60));
     }, 3000);
   };
+
+  // Clear confetti after 5s
+  useEffect(() => {
+    if (step === "success" && confetti.length > 0) {
+      const timer = setTimeout(() => setConfetti([]), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, confetti.length]);
+
+  // Get initial letter for avatar
+  const initial = username.trim() ? username.trim()[0].toUpperCase() : "?";
 
   return (
     <div className="flex min-h-screen flex-col bg-white px-6 py-8">
@@ -72,7 +110,7 @@ const Landing = () => {
         </p>
       </div>
 
-      {/* Modal Verificando - fullscreen */}
+      {/* Fullscreen Verificando */}
       {step === "verifying" && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
           <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6" />
@@ -84,39 +122,72 @@ const Landing = () => {
         </div>
       )}
 
-      {/* Modal Sucesso */}
-      <Dialog open={step === "success"} onOpenChange={() => {}}>
-        <DialogContent className="bg-white border-gray-200 text-black sm:max-w-sm [&>button]:hidden">
-          <div className="flex flex-col items-center gap-4 py-6">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-secondary/20">
-              <CheckCircle2 className="h-12 w-12 text-secondary" />
+      {/* Fullscreen Sucesso */}
+      {step === "success" && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white overflow-hidden">
+          {/* Confetti layer */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            {confetti.map((piece) => (
+              <span
+                key={piece.id}
+                className="absolute animate-[confetti-fall_linear_forwards]"
+                style={{
+                  left: `${piece.left}%`,
+                  top: "-10px",
+                  width: piece.shape === "rect" ? piece.size * 0.5 : piece.size,
+                  height: piece.shape === "circle" ? piece.size : piece.size * (piece.shape === "rect" ? 1.5 : 1),
+                  backgroundColor: piece.color,
+                  borderRadius: piece.shape === "circle" ? "50%" : "1px",
+                  transform: `rotate(${piece.rotation}deg)`,
+                  animationDelay: `${piece.delay}s`,
+                  animationDuration: `${piece.duration}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Logo top */}
+          <img src={tiktokLogo} alt="TikTok" className="h-5 mb-10 opacity-40" />
+
+          {/* Avatar circle */}
+          <div className="relative mb-6">
+            {/* Outer ring - teal */}
+            <div className="h-36 w-36 rounded-full border-[3px] border-secondary/30 flex items-center justify-center">
+              {/* Pink ring */}
+              <div className="h-28 w-28 rounded-full border-[3px] border-primary/30 flex items-center justify-center">
+                {/* Gradient arc ring */}
+                <div className="h-24 w-24 rounded-full p-[3px] bg-gradient-to-br from-secondary via-gray-400 to-primary">
+                  {/* Orange avatar */}
+                  <div className="h-full w-full rounded-full bg-orange-500 flex items-center justify-center">
+                    <span className="text-3xl font-bold text-white">{initial}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-bold">Parabéns! 🎉</h3>
-            <p className="text-sm text-gray-500 text-center">
-              Sua conta <span className="font-semibold text-black">@{username}</span> foi verificada com sucesso e é elegível para monetização!
-            </p>
+            {/* Check badge */}
+            <div className="absolute bottom-1 right-4 h-8 w-8 rounded-full bg-secondary flex items-center justify-center border-2 border-white">
+              <CheckCircle2 className="h-5 w-5 text-white" />
+            </div>
+          </div>
+
+          {/* Text */}
+          <h3 className="text-xl font-bold text-black mb-1">Parabéns! 🎉</h3>
+          <p className="text-sm text-gray-500 mb-1">Conta verificada com sucesso</p>
+          <p className="text-sm font-semibold text-primary">@{username}</p>
+
+          {/* Continue button */}
+          <div className="mt-10 w-full max-w-xs px-4">
             <Button
               onClick={() => navigate("/progresso")}
-              className="w-full h-12 text-base font-bold bg-secondary hover:bg-secondary/90 text-secondary-foreground rounded-xl"
+              className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
             >
               Continuar
             </Button>
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
     </div>
   );
 };
-
-const VerifyStep = ({ label, done }: { label: string; done?: boolean }) => (
-  <div className="flex items-center gap-2">
-    {done ? (
-      <CheckCircle2 className="h-4 w-4 text-secondary" />
-    ) : (
-      <Loader2 className="h-4 w-4 animate-spin text-primary" />
-    )}
-    <span className={done ? "text-gray-400" : "text-black"}>{label}</span>
-  </div>
-);
 
 export default Landing;
