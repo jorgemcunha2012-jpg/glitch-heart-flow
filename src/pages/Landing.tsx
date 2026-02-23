@@ -72,19 +72,17 @@ const Landing = () => {
         </p>
       </div>
 
-      {/* Modal Verificando */}
-      <Dialog open={step === "verifying"}>
-        <DialogContent className="bg-white border-gray-200 text-black sm:max-w-xs [&>button]:hidden">
-          <div className="flex flex-col items-center gap-5 py-10">
-            <img src={tiktokLogo} alt="TikTok" className="h-6 mb-2" />
-            <div className="flex items-center gap-3">
-              <span className="inline-block h-3 w-3 rounded-full bg-secondary animate-[swap-left_1s_ease-in-out_infinite]" />
-              <span className="inline-block h-3 w-3 rounded-full bg-primary animate-[swap-right_1s_ease-in-out_infinite]" />
-            </div>
-            <p className="text-sm text-gray-500">Verificando elegibilidade...</p>
+      {/* Modal Verificando - fullscreen */}
+      {step === "verifying" && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+          <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6" />
+          <div className="flex items-center gap-3 mb-4">
+            <span className="inline-block h-3 w-3 rounded-full bg-secondary animate-[swap-left_1s_ease-in-out_infinite]" />
+            <span className="inline-block h-3 w-3 rounded-full bg-primary animate-[swap-right_1s_ease-in-out_infinite]" />
           </div>
-        </DialogContent>
-      </Dialog>
+          <p className="text-sm text-gray-500">Verificando elegibilidade...</p>
+        </div>
+      )}
 
       {/* Modal Sucesso */}
       <Dialog open={step === "success"} onOpenChange={() => {}}>
