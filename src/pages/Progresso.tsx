@@ -9,6 +9,7 @@ const bimonths = ["1/2", "3/4", "5/6", "7/8", "9/10", "11/12"];
 const Progresso = () => {
   const [checkedCount, setCheckedCount] = useState(0);
   const [calendarVisible, setCalendarVisible] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const navigate = useNavigate();
   const username = localStorage.getItem("tiktok_username") || "usuario";
   const initial = username[0]?.toUpperCase() || "?";
@@ -117,7 +118,10 @@ const Progresso = () => {
 
         {/* CTA Button */}
         <Button
-          onClick={() => navigate("/bonus")}
+          onClick={() => {
+            setRedirecting(true);
+            setTimeout(() => navigate("/bonus"), 3000);
+          }}
           disabled={checkedCount < bimonths.length}
           className="w-full h-12 rounded-full text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-40 gap-2"
         >
@@ -125,6 +129,17 @@ const Progresso = () => {
           Resgatar progresso
         </Button>
       </div>
+
+      {/* Fullscreen Redirecionando */}
+      {redirecting && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="inline-block h-3 w-3 rounded-full bg-primary animate-[swap-left_1s_ease-in-out_infinite]" />
+            <span className="inline-block h-3 w-3 rounded-full bg-secondary animate-[swap-right_1s_ease-in-out_infinite]" />
+          </div>
+          <p className="text-sm text-gray-500">Redirecionando...</p>
+        </div>
+      )}
     </div>
   );
 };
