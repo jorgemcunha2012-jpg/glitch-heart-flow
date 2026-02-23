@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Loader2, CheckCircle2, Music } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
+import tiktokLogo from "@/assets/tiktok-logo.png";
 
 const Landing = () => {
   const [username, setUsername] = useState("");
@@ -19,59 +19,66 @@ const Landing = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
+    <div className="flex min-h-screen flex-col bg-white px-6 py-8">
       {/* Logo */}
-      <div className="mb-8 flex items-center gap-3">
-        <div className="relative">
-          <Music className="h-10 w-10 text-primary" />
-          <Music className="absolute left-[2px] top-[2px] h-10 w-10 text-secondary opacity-60" />
-        </div>
-        <h1 className="text-3xl font-extrabold tracking-tight">
-          Tik<span className="text-primary">Tok</span> <span className="text-secondary">Money</span>
-        </h1>
+      <div className="mb-10">
+        <img src={tiktokLogo} alt="TikTok" className="h-8" />
       </div>
 
-      {/* Card */}
-      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8">
-        <h2 className="mb-2 text-center text-xl font-bold">
-          Verifique sua conta
-        </h2>
-        <p className="mb-6 text-center text-sm text-muted-foreground">
-          Insira seu @ do TikTok para verificar se você é elegível para monetização
-        </p>
+      {/* Heading */}
+      <h1 className="mb-3 text-2xl font-bold text-black">
+        <span className="text-primary">Verifique</span> sua conta do TikTok
+      </h1>
+      <p className="mb-10 text-sm text-gray-500">
+        Insira seu @ para verificar a elegibilidade e liberar o bônus da plataforma.
+      </p>
 
-        <div className="relative mb-4">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">@</span>
-          <Input
+      {/* Input */}
+      <div className="mb-2">
+        <label className="mb-2 block text-sm font-semibold text-black">
+          Nome de usuário
+        </label>
+        <div className="flex items-center border-b border-gray-300 pb-2">
+          <span className="mr-2 text-sm text-gray-400 font-medium">@</span>
+          <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="seu.usuario"
-            className="pl-8 h-12 bg-muted border-border text-foreground placeholder:text-muted-foreground"
+            placeholder="seu_usuario"
+            className="w-full bg-transparent text-sm text-black placeholder:text-gray-300 outline-none"
           />
         </div>
+      </div>
 
+      {/* Button */}
+      <div className="mt-8">
         <Button
           onClick={handleVerify}
           disabled={!username.trim()}
-          className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl"
+          className="w-full h-12 rounded-full text-base font-bold bg-primary/80 hover:bg-primary text-primary-foreground disabled:opacity-40"
         >
-          Verificar Conta
+          Verificar Elegibilidade
         </Button>
+      </div>
 
-        <p className="mt-4 text-center text-xs text-muted-foreground">
-          Mais de 50.000 contas já verificadas
+      {/* Footer */}
+      <div className="mt-8 flex flex-col items-center gap-3">
+        <div className="flex w-full items-center gap-3">
+          <div className="h-px flex-1 bg-gray-200" />
+          <span className="text-xs text-gray-400">TikTok One</span>
+          <div className="h-px flex-1 bg-gray-200" />
+        </div>
+        <p className="text-center text-xs text-gray-400 leading-relaxed">
+          Ao continuar, você concorda com os Termos de Serviço e confirma que leu a Política de Privacidade.
         </p>
       </div>
 
       {/* Modal Verificando */}
       <Dialog open={step === "verifying"}>
-        <DialogContent className="bg-card border-border text-foreground sm:max-w-sm [&>button]:hidden">
+        <DialogContent className="bg-white border-gray-200 text-black sm:max-w-sm [&>button]:hidden">
           <div className="flex flex-col items-center gap-4 py-6">
-            <div className="relative">
-              <div className="h-16 w-16 rounded-full border-4 border-muted border-t-primary animate-spin-slow" />
-            </div>
+            <div className="h-16 w-16 rounded-full border-4 border-gray-200 border-t-primary animate-spin" style={{ animationDuration: '1s' }} />
             <h3 className="text-lg font-bold">Verificando sua conta...</h3>
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-gray-500 text-center">
               Analisando @{username} no TikTok
             </p>
             <div className="flex flex-col gap-2 w-full text-sm">
@@ -85,14 +92,14 @@ const Landing = () => {
 
       {/* Modal Sucesso */}
       <Dialog open={step === "success"} onOpenChange={() => {}}>
-        <DialogContent className="bg-card border-border text-foreground sm:max-w-sm [&>button]:hidden">
+        <DialogContent className="bg-white border-gray-200 text-black sm:max-w-sm [&>button]:hidden">
           <div className="flex flex-col items-center gap-4 py-6">
             <div className="flex h-20 w-20 items-center justify-center rounded-full bg-secondary/20">
               <CheckCircle2 className="h-12 w-12 text-secondary" />
             </div>
             <h3 className="text-xl font-bold">Parabéns! 🎉</h3>
-            <p className="text-sm text-muted-foreground text-center">
-              Sua conta <span className="font-semibold text-foreground">@{username}</span> foi verificada com sucesso e é elegível para monetização!
+            <p className="text-sm text-gray-500 text-center">
+              Sua conta <span className="font-semibold text-black">@{username}</span> foi verificada com sucesso e é elegível para monetização!
             </p>
             <Button
               onClick={() => navigate("/progresso")}
@@ -114,7 +121,7 @@ const VerifyStep = ({ label, done }: { label: string; done?: boolean }) => (
     ) : (
       <Loader2 className="h-4 w-4 animate-spin text-primary" />
     )}
-    <span className={done ? "text-muted-foreground" : "text-foreground"}>{label}</span>
+    <span className={done ? "text-gray-400" : "text-black"}>{label}</span>
   </div>
 );
 
