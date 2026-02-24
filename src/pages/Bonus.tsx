@@ -246,7 +246,7 @@ const Bonus = () => {
           <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-                Vê anúncios direcionados diariamente para ganhares até<br />
+                Veja anúncios direcionados diariamente para ganhar até<br />
                 <span style={{ color: TT_RED }}>2.730 pontos</span>
               </p>
               <CompletedBtn />
@@ -348,7 +348,7 @@ const Bonus = () => {
             </div>
 
             <p style={{ fontSize: 12, color: "#999", lineHeight: 1.6, marginTop: 14 }}>
-              Obtém 21 pontos por escreveres uma consulta na barra de pesquisa, ou 0 ponto por tocares numa pesquisa sugerida, como em "Podes gostar".
+              Ganhe 21 pontos ao escrever uma consulta na barra de pesquisa, ou 0 pontos ao tocar em uma pesquisa sugerida, como em "Pode gostar".
             </p>
           </div>
 
