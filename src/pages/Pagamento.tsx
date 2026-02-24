@@ -241,7 +241,7 @@ const Pagamento = () => {
                 <p className="text-xs text-gray-400">Aprovação imediata.</p>
               </div>
             </div>
-            <CheckCircle2 className="h-6 w-6 text-secondary" />
+            
           </div>
         </div>
 
