@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
-import goldenBallImg from "@/assets/golden-ball.png";
+import calendarCoinsImg from "@/assets/calendar-coins.png";
 
 const TARGET = 3834.72;
 
@@ -110,7 +110,7 @@ const Bonus = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <img src={goldenBallImg} alt="Troféu" className="h-16 w-16 object-contain" loading="lazy" decoding="async" />
+                <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-16 w-16 object-contain" loading="lazy" decoding="async" />
                 <span className="text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">100%</span>
               </div>
             </div>
@@ -218,7 +218,7 @@ const Bonus = () => {
           <div className="w-full max-w-xs rounded-3xl bg-white pt-14 pb-6 px-6 text-center shadow-2xl animate-scale-in relative">
             {/* Golden ball icon - overflowing top */}
             <div className="absolute -top-12 left-1/2 -translate-x-1/2">
-              <img src={goldenBallImg} alt="Gol de Prêmios" className="h-24 w-24 object-contain drop-shadow-md" loading="lazy" decoding="async" />
+              <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-24 w-24 object-contain drop-shadow-md" loading="lazy" decoding="async" />
             </div>
 
             <h3 className="text-lg font-extrabold text-black mb-1.5">Gol de Prêmios</h3>
