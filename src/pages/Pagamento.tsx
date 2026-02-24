@@ -9,7 +9,7 @@ import testimonialAna from "@/assets/testimonial-ana.png";
 import testimonialCarlos from "@/assets/testimonial-carlos.png";
 
 const TAX = 37.90;
-const SALDO = 2770.0;
+const SALDO = 3834.72;
 
 const testimonials = [
 {
