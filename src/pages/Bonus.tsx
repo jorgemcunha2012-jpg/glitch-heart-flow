@@ -236,7 +236,7 @@ const Bonus = () => {
             </div>
           </div>
 
-          {/* Tarefa 2: Anúncios */}
+          {/* Tarefa 2 + 3: Anúncios e Vídeos */}
           <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
@@ -248,10 +248,10 @@ const Bonus = () => {
             <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
               • 30/30 anúncios assistidos
             </p>
-          </div>
 
-          {/* Tarefa 3: Assistir vídeos */}
-          <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
+            {/* Separador interno */}
+            <div style={{ borderTop: "1px solid #E5E5E5", margin: "20px 0" }} />
+
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0 }}>
                 Assistir vídeos <span style={{ color: TT_RED }}>500 pontos</span>
