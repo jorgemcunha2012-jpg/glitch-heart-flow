@@ -123,7 +123,7 @@ const Checkout = () => {
         {/* CTA */}
         <Button
           onClick={handlePagar}
-          className="w-full h-14 rounded-2xl text-base font-bold bg-green-500 hover:bg-green-600 text-white"
+          className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
         >
           Pagar taxa para Liberar Saque
         </Button>
