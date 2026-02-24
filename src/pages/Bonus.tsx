@@ -20,7 +20,7 @@ const CompletedBtn = () => (
   <button
     disabled
     style={{
-      background: "#F1F1F3",
+      background: "#E2E2E5",
       borderRadius: 99,
       width: 89,
       height: 35,
