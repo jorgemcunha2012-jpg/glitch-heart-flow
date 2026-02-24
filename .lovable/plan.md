@@ -1,52 +1,39 @@
 
 
-# Funil de Monetização TikTok
+## Plano: Buscar foto de perfil do TikTok via Unavatar.io
 
-Aplicação estilo funil com identidade visual inspirada no TikTok (preto #010101, branco #FFFFFF, vermelho/rosa #EE1D52, teal #69C9D0) usando Montserrat como fonte principal.
+### O que muda
 
----
+O serviço [unavatar.io](https://unavatar.io) oferece avatares de redes sociais gratuitamente, incluindo TikTok. Basta fazer uma requisicao para `https://unavatar.io/tiktok/{username}` e ele retorna a imagem diretamente. Nao precisa de API key nem do Firecrawl.
 
-## Página 1: Landing — Verificação de Conta (`/landing`)
+### Alteracoes
 
-- **Tela principal** com fundo escuro (#010101), logo estilizado e título em branco
-- Campo para o usuário inserir seu **@username do TikTok**
-- Botão "Verificar Conta" em destaque vermelho (#EE1D52)
-- Ao clicar, abre **Modal de Verificação**: animação de loading/spinner simulando análise da conta com texto "Verificando sua conta..."
-- Após alguns segundos, transição para **Modal de Parabéns**: ícone de sucesso em teal (#69C9D0), texto "Conta verificada com sucesso!" com confete/animação sutil
-- Botão "Continuar" no modal redireciona para `/progresso`
+**1. `supabase/functions/tiktok-avatar/index.ts`** -- Reescrever a edge function
+- Remover toda a logica do Firecrawl
+- Fazer um `fetch` para `https://unavatar.io/tiktok/{username}?json` que retorna um JSON com a URL do avatar
+- Se falhar, retornar `avatarUrl: null` como fallback
+- Manter os CORS headers existentes
 
-## Página 2: Progresso (`/progresso`)
+**2. `src/pages/Landing.tsx`** -- Reativar a busca de avatar
+- Restaurar o import do `supabase` client e o state `avatarUrl`
+- No `handleVerify`, chamar `supabase.functions.invoke('tiktok-avatar')` novamente
+- Salvar o avatar no `localStorage` para uso em outras paginas
+- Exibir a foto real no circulo de sucesso, com fallback para a inicial colorida
 
-- **Barra de progresso animada** que preenche gradualmente
-- Texto dinâmico mostrando etapas sendo "analisadas" (seguidores, engajamento, monetização)
-- Ao completar 100%, redireciona automaticamente para `/bonus`
+### Por que funciona
 
-## Página 3: Bônus (`/bonus`)
+- Unavatar.io e um servico open-source e gratuito (ate 50 req/s sem autenticacao)
+- Suporta TikTok nativamente -- nao depende de scraping
+- Nao precisa de API key nem do conector Firecrawl
+- A edge function serve como proxy, evitando problemas de CORS no navegador
 
-- Exibe um **valor em dinheiro disponível** para saque (ex: R$ 487,32)
-- Animação do valor "subindo" como um contador
-- Mensagem explicativa sobre o bônus de monetização
-- Botão "Sacar Agora" em vermelho que leva para `/pix`
+### Detalhes tecnicos
 
-## Página 4: PIX (`/pix`)
+A edge function fara:
+```text
+GET https://unavatar.io/tiktok/{username}?json
+-> { "url": "https://..." }
+```
 
-- **Seleção de método de saque**: PIX, conta bancária, etc.
-- Ao selecionar, exibe campos para inserir dados (chave PIX, banco, etc.)
-- Botão "Confirmar Saque" que leva para `/checkout`
-
-## Página 5: Checkout (`/checkout`)
-
-- Página de pagamento/oferta para desbloquear o saque
-- Card com valor da "taxa de liberação" ou produto
-- Design limpo com botão de ação principal em vermelho
-
----
-
-## Design & UX
-
-- Tema **100% dark** com fundo #010101
-- Tipografia **Montserrat** bold para títulos, regular para corpo
-- Transições suaves entre modais e páginas
-- Layout mobile-first, centralizado e minimalista
-- Acentos em vermelho (#EE1D52) para CTAs e teal (#69C9D0) para elementos de sucesso/destaque
+Se o servico retornar uma URL valida, ela sera enviada ao frontend. Caso contrario, o avatar com a inicial do usuario sera exibido.
 
