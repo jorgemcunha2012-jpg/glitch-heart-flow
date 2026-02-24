@@ -260,9 +260,6 @@ const Pagamento = () => {
           )}
         </Button>
 
-        <p className="text-xs text-gray-400 text-center leading-relaxed">
-          Ao finalizar o pagamento você concorda com nossos termos de uso e privacidade.
-        </p>
 
         {/* Testimonials */}
         <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4">
@@ -285,6 +282,10 @@ const Pagamento = () => {
             </div>
           ))}
         </div>
+
+        <p className="text-xs text-gray-400 text-center leading-relaxed pt-4 pb-2">
+          Ao finalizar o pagamento você concorda com nossos termos de uso e privacidade.
+        </p>
       </div>
     </div>
   );
