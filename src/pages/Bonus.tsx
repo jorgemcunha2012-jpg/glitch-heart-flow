@@ -100,7 +100,7 @@ const Bonus = () => {
           <div className="relative p-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs font-semibold text-primary mb-1">🎉 CAMPANHA CONCLUÍDA</p>
+                
                 <h2 className="text-lg font-bold text-black leading-tight">
                   Parabéns!
                   <br />
