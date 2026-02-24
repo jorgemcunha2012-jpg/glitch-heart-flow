@@ -173,7 +173,7 @@ const Bonus = () => {
           <img
             src={calendarCoinsImg}
             alt="Calendário com moedas"
-            style={{ width: 150, height: 150, objectFit: "contain", marginRight: -8, flexShrink: 0 }}
+            style={{ width: 120, height: 120, objectFit: "contain", marginRight: -8, flexShrink: 0 }}
             loading="lazy"
             decoding="async"
           />
