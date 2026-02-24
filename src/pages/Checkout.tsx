@@ -84,7 +84,7 @@ const Checkout = () => {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-500">Valor a receber</span>
-              <span className="text-sm font-bold text-black">R$ {TARGET.toFixed(2).replace(".", ",")}</span>
+              <span className="text-sm font-bold text-black">R$ {TARGET.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
             </div>
           </div>
           <div className="mt-4 rounded-xl border border-gray-200 py-3 text-center">
