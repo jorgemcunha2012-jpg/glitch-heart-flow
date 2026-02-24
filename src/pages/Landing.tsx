@@ -75,8 +75,16 @@ const Landing = () => {
     if (remaining > 0) await new Promise((r) => setTimeout(r, remaining));
 
     setStep("success");
-    setConfetti(generateConfetti(60));
+    setConfetti(generateConfetti(150));
   };
+
+  // Auto-navigate after 4s on success
+  useEffect(() => {
+    if (step === "success") {
+      const timer = setTimeout(() => navigate("/progresso"), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, navigate]);
 
   // Clear confetti after 5s
   useEffect(() => {
@@ -212,14 +220,10 @@ const Landing = () => {
           <p className="text-sm text-gray-500 mb-1">Conta verificada com sucesso</p>
           <p className="text-sm font-semibold text-primary">@{username}</p>
 
-          {/* Continue button */}
-          <div className="mt-10 w-full max-w-xs px-4">
-            <Button
-              onClick={() => navigate("/progresso")}
-              className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground rounded-full"
-            >
-              Continuar
-            </Button>
+          {/* Auto-redirect indicator */}
+          <div className="mt-10 flex items-center gap-3">
+            <span className="inline-block h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <p className="text-xs text-gray-400">Redirecionando...</p>
           </div>
         </div>
       )}
