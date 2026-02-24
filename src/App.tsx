@@ -11,6 +11,7 @@ import Checkout from "./pages/Checkout";
 import Pagamento from "./pages/Pagamento";
 import BackRedirect from "./pages/BackRedirect";
 import Upsell from "./pages/Upsell";
+import Upsell2 from "./pages/Upsell2";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/pagamento" element={<Pagamento />} />
           <Route path="/upsell" element={<Upsell />} />
+          <Route path="/up2" element={<Upsell2 />} />
           <Route path="/backredirect" element={<BackRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
