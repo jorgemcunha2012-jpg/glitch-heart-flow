@@ -160,13 +160,10 @@ const Bonus = () => {
           }}
         >
           <div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#000", margin: 0, lineHeight: 1.3 }}>
-              Parabéns!
-              <br />
-              Você concluiu
-              <br />
-              todas as tarefas
-            </h2>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#000", margin: 0 }}>Parabéns!</h2>
+            <p style={{ fontSize: 18, fontWeight: 700, color: "#000", margin: "4px 0 0", lineHeight: 1.3 }}>
+              Você concluiu todas as tarefas
+            </p>
             <p style={{ fontSize: 22, fontWeight: 700, color: TT_RED, margin: "6px 0 0" }}>
               R$ {formatBRL(TARGET)}
             </p>
@@ -255,7 +252,7 @@ const Bonus = () => {
           <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0 }}>
-                Assistir vídeos<span style={{ color: TT_RED }}>500 pontos</span>
+                Assistir vídeos <span style={{ color: TT_RED }}>500 pontos</span>
               </p>
               <CompletedBtn />
             </div>
@@ -291,7 +288,7 @@ const Bonus = () => {
           <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-                Resgate suas recompensas e ganhe<span style={{ color: TT_RED }}>640 pontos</span>
+                Resgate suas recompensas e ganhe <span style={{ color: TT_RED }}>640 pontos</span>
               </p>
               <CompletedBtn />
             </div>
@@ -304,7 +301,7 @@ const Bonus = () => {
           <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-                Faça 60 pesquisas diárias para ganhar até<span style={{ color: TT_RED }}>996 pontos</span>
+                Faça 60 pesquisas diárias para ganhar até <span style={{ color: TT_RED }}>996 pontos</span>
               </p>
               <CompletedBtn />
             </div>
