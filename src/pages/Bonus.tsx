@@ -91,9 +91,9 @@ const Bonus = () => {
         <div
           style={{
             background: "rgba(255,255,255,0.95)",
-            borderRadius: 10,
+            borderRadius: 8,
             boxShadow: "rgba(0,0,0,0.03) 0px 1px 18.4px 0px",
-            padding: "18px 20px",
+            padding: "14px 16px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -101,11 +101,11 @@ const Bonus = () => {
           }}
         >
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              <span style={{ fontSize: 13, fontWeight: 500, color: "#000" }}>Seu saldo</span>
-              <CoinImg size={18} />
+            <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+              <span style={{ fontSize: 10, fontWeight: 500, color: "#000" }}>Seu saldo</span>
+              <CoinImg size={14} />
             </div>
-            <p style={{ fontSize: 18, fontWeight: 700, color: "#000000", margin: "4px 0 0" }}>
+            <p style={{ fontSize: 14, fontWeight: 700, color: "#000000", margin: "3px 0 0" }}>
               R$ {formatBRL(value)}
             </p>
           </div>
@@ -117,9 +117,9 @@ const Bonus = () => {
                 color: "#fff",
                 border: "none",
                 borderRadius: 99,
-                width: 96,
-                height: 30,
-                fontSize: 13,
+                width: 77,
+                height: 24,
+                fontSize: 10,
                 fontWeight: 600,
                 cursor: "pointer",
                 position: "relative",
@@ -132,9 +132,9 @@ const Bonus = () => {
               alt="PIX"
               style={{
                 position: "absolute",
-                top: -8,
-                right: -6,
-                height: 14,
+                top: -7,
+                right: -5,
+                height: 11,
                 objectFit: "contain",
                 background: "#fff",
                 borderRadius: 3,
