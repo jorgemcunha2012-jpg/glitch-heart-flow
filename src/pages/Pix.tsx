@@ -9,8 +9,9 @@ import tiktokLogo from "@/assets/tiktok-logo.png";
 import roseImg from "@/assets/rose-3d.png";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 
-const TARGET = 3012.37;
-const POINTS = 28347200;
+import { TARGET_BALANCE, POINTS } from "@/lib/constants";
+
+const TARGET = TARGET_BALANCE;
 const FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif";
 
 const withdrawOptions = ["R$1,5", "R$5", "R$10"];
