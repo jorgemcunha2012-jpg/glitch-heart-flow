@@ -105,7 +105,7 @@ const Bonus = () => {
               <span style={{ fontSize: 13, fontWeight: 500, color: "#000" }}>Seu saldo</span>
               <CoinImg size={18} />
             </div>
-            <p style={{ fontSize: 22, fontWeight: 700, color: "#000000", margin: "4px 0 0" }}>
+            <p style={{ fontSize: 18, fontWeight: 700, color: "#000000", margin: "4px 0 0" }}>
               R$ {formatBRL(value)}
             </p>
           </div>
