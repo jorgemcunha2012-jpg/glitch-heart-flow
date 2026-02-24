@@ -6,6 +6,7 @@ import pixLogoIcon from "@/assets/pix-logo-icon.png";
 import pixLogoIcon2 from "@/assets/pix-logo-icon-2.png";
 import coinLargeImg from "@/assets/coin-large.png";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import roseImg from "@/assets/rose-3d.png";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 
 const TARGET = 2738.52;
@@ -389,7 +390,7 @@ const Pix = () => {
                 Use Moedas para enviar presentes virtuais para seus hosts de live Favoritos.
               </p>
             </div>
-            <span style={{ fontSize: 36 }}>🌹</span>
+            <img src={roseImg} alt="Rosa" style={{ width: 44, height: 44, objectFit: "contain" }} loading="lazy" decoding="async" />
           </div>
           <button
             disabled
