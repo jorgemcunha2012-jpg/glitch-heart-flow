@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { CreditCard, ChevronRight } from "lucide-react";
-import pixLogoIcon from "@/assets/pix-logo-icon.png";
-import coinLargeImg from "@/assets/coin-large.png";
-import pixLogoIcon2 from "@/assets/pix-logo-icon-2.png";
+import { ChevronRight, CreditCard } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import pixLogoIcon from "@/assets/pix-logo-icon.png";
+import pixLogoIcon2 from "@/assets/pix-logo-icon-2.png";
+import coinLargeImg from "@/assets/coin-large.png";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 
-const TARGET = 3834.72;
+const TARGET = 2738.52;
 const POINTS = 28347200;
+const FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif";
+
 const withdrawOptions = ["R$1,5", "R$5", "R$10"];
 
 type Step = "main" | "method" | "form" | "loading";
+
+const formatBRL = (v: number) =>
+  v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const Pix = () => {
   const [value, setValue] = useState(0);
@@ -55,16 +60,13 @@ const Pix = () => {
 
   const isChaveValid = (): boolean => {
     if (!chavePix.trim() || !tipoChave) return false;
-    if (tipoChave === "cpf") {
-      return chavePix.replace(/\D/g, "").length === 11;
-    } else if (tipoChave === "email") {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(chavePix.trim());
-    } else if (tipoChave === "telefone") {
+    if (tipoChave === "cpf") return chavePix.replace(/\D/g, "").length === 11;
+    if (tipoChave === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(chavePix.trim());
+    if (tipoChave === "telefone") {
       const digits = chavePix.replace(/\D/g, "");
       return digits.length >= 10 && digits.length <= 11;
-    } else if (tipoChave === "aleatoria") {
-      return /^[a-f0-9-]{32,36}$/i.test(chavePix.trim());
     }
+    if (tipoChave === "aleatoria") return /^[a-f0-9-]{32,36}$/i.test(chavePix.trim());
     return true;
   };
 
@@ -102,6 +104,7 @@ const Pix = () => {
 
   // Animate saldo
   useEffect(() => {
+    trackTikTokEvent({ event: "ViewContent", properties: { page: "pix", content_type: "withdraw" } });
     const duration = 2000;
     const steps = 60;
     const increment = TARGET / steps;
@@ -164,188 +167,431 @@ const Pix = () => {
   const secs = countdown % 60;
   const pad = (n: number) => String(n).padStart(2, "0");
 
-  const fullAmount = `R$ ${TARGET.toFixed(2).replace(".", ",")}`;
+  const fullAmount = `R$ ${formatBRL(TARGET)}`;
   const isFullSelected = selectedAmount === fullAmount;
 
-  // Fullscreen loading
+  // ─── Tela 3: Loading ───
   if (step === "loading") {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white px-6">
-        <img src={tiktokLogo} alt="TikTok" className="h-7 mb-16" loading="lazy" decoding="async" />
-        <div className="w-full max-w-xs flex flex-col items-center gap-6">
-          <div className="space-y-3 w-full">
-            {loadingMessages.map((msg, i) => (
-              <div
-                key={msg}
-                className={`flex items-center gap-3 transition-all duration-500 ${
-                  i <= loadingStep ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                }`}
-              >
-                {i < loadingStep ? (
-                  <span className="text-green-500 text-sm">✓</span>
-                ) : i === loadingStep ? (
-                  <span className="h-4 w-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-                ) : (
-                  <span className="h-4 w-4" />
-                )}
-                <span className={`text-sm ${i <= loadingStep ? (i < loadingStep ? "text-gray-400" : "text-black font-medium") : "text-gray-300"}`}>
-                  {msg}
-                </span>
-              </div>
-            ))}
+      <div
+        style={{
+          fontFamily: FONT,
+          position: "fixed",
+          inset: 0,
+          zIndex: 50,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#FFFFFF",
+          padding: "0 24px",
+        }}
+      >
+        <img src={tiktokLogo} alt="TikTok" style={{ height: 28, marginBottom: 64 }} loading="lazy" decoding="async" />
+        <div style={{ width: "100%", maxWidth: 280, display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
+          <p style={{ fontSize: 17.6, fontWeight: 500, color: "#333333", textAlign: "center" }}>
+            {loadingMessages[loadingStep] || loadingMessages[3]}
+          </p>
+          <div style={{ width: "100%", height: 5, borderRadius: 3, background: "#F5F5F5", overflow: "hidden" }}>
+            <div
+              style={{
+                width: `${Math.min(loadingProgress, 100)}%`,
+                height: "100%",
+                borderRadius: 3,
+                background: "#FE2C55",
+                transition: "width 0.1s linear",
+              }}
+            />
           </div>
-          <Progress value={loadingProgress} className="h-1.5 bg-gray-200 [&>div]:bg-primary" />
         </div>
       </div>
     );
   }
 
+  // ─── Tela 2: Resgatar Recompensas ───
   return (
-    <div className="flex min-h-screen flex-col bg-white">
-      {/* Timer bar */}
-      <div className="bg-black py-2 text-center">
-        <p className="text-xs font-semibold text-white tracking-wide">
-          SEU SALDO EXPIRA EM 00 - {pad(mins)} - {pad(secs)}
+    <div
+      style={{
+        fontFamily: FONT,
+        background: "#F5F5F5",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Banner de expiração */}
+      <div style={{ background: "#000", padding: "10px 0", textAlign: "center" }}>
+        <p style={{ fontSize: 12, fontWeight: 600, color: "#fff", letterSpacing: "0.05em", margin: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+          SEU SALDO EXPIRA EM
+          {["00", pad(mins), pad(secs)].map((v, i) => (
+            <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+              {i > 0 && <span style={{ color: "#fff" }}>-</span>}
+              <span
+                style={{
+                  background: "#E6E6E6",
+                  color: "#000",
+                  fontWeight: 700,
+                  fontSize: 10,
+                  padding: "2px 6px",
+                  borderRadius: 3,
+                }}
+              >
+                {v}
+              </span>
+            </span>
+          ))}
         </p>
       </div>
 
-      {/* Title */}
-      <h1 className="text-xl font-bold text-black text-center py-5">Resgatar recompensas</h1>
+      {/* Título */}
+      <h1 style={{ fontSize: 16, fontWeight: 600, color: "#000", textAlign: "center", padding: "20px 0", margin: 0 }}>
+        Resgatar recompensas
+      </h1>
 
-      <div className="px-4 space-y-5">
-        {/* Saldo Card */}
-        <div className="rounded-2xl bg-black p-5">
-          <p className="text-sm text-gray-400 mb-1">Seu saldo</p>
-          <div className="flex items-center justify-between">
+      <div style={{ padding: "0 12px 110px", maxWidth: 449, margin: "0 auto", width: "100%" }}>
+        {/* Card Preto de Saldo */}
+        <div
+          style={{
+            background: "#000000",
+            borderRadius: 10,
+            padding: 20,
+            marginBottom: 10,
+          }}
+        >
+          <p style={{ fontSize: 14, fontWeight: 500, color: "#444", margin: "0 0 4px" }}>Seu saldo</p>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
-              <p className="text-3xl font-extrabold text-white">
-                R$ {value.toFixed(2).replace(".", ",")}
+              <p style={{ fontSize: 22, fontWeight: 700, color: "#fff", margin: 0 }}>
+                R$ {formatBRL(value)}
               </p>
-              <p className="text-xs text-gray-500 mt-1">= {POINTS.toLocaleString("pt-BR")} pontos</p>
+              <p style={{ fontSize: 12, fontWeight: 400, color: "rgba(255,255,255,0.5)", margin: "4px 0 0" }}>
+                = {POINTS.toLocaleString("pt-BR")} pontos
+              </p>
             </div>
-            <img src={coinLargeImg} alt="P" className="h-16 w-16 object-contain" loading="lazy" decoding="async" />
+            <img src={coinLargeImg} alt="P" style={{ width: 56, height: 56, objectFit: "contain" }} loading="lazy" decoding="async" />
           </div>
         </div>
 
-        {/* Separador + Última recompensa */}
-        <div style={{ borderTop: "1.5px solid #E0E0E0", margin: "0 4px" }} />
-        <div className="rounded-xl bg-gray-100 px-4 py-2.5">
-          <p className="text-xs text-gray-500 font-medium">Última recompensa: R$ 646,43</p>
+        {/* Card Preto Última Recompensa */}
+        <div
+          style={{
+            background: "#000000",
+            borderRadius: 10,
+            padding: "10px 20px",
+            marginBottom: 16,
+          }}
+        >
+          <p style={{ fontSize: 13, fontWeight: 500, color: "#fff", margin: 0 }}>
+            Última recompensa: R$ 646,43
+          </p>
         </div>
 
-        {/* Sacar dinheiro */}
-        <div className="rounded-2xl border border-gray-200 p-5">
-          <h2 className="text-base font-bold text-black mb-2">Sacar dinheiro</h2>
-          <div className="flex items-center gap-1.5 mb-4">
-            <CreditCard className="h-4 w-4 text-gray-400" />
-            <span className="text-xs text-gray-400">Transferencia via /</span>
-            <img src={pixLogoIcon} alt="Pix" className="h-4 w-4" loading="lazy" decoding="async" />
-            <span className="text-xs font-bold text-teal-500 uppercase">pix</span>
+        {/* Card Branco - Sacar dinheiro */}
+        <div
+          style={{
+            background: "rgba(255,255,255,0.95)",
+            borderRadius: 8,
+            padding: 20,
+            marginBottom: 16,
+          }}
+        >
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#020817", margin: "0 0 8px" }}>Sacar dinheiro</h2>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
+            <CreditCard size={16} color="#666" />
+            <span style={{ fontSize: 12, color: "#666" }}>Transferência via</span>
+            <img src={pixLogoIcon} alt="Pix" style={{ height: 16, width: 16 }} loading="lazy" decoding="async" />
+            <span style={{ fontSize: 12, fontWeight: 700, color: "#00B2A9", textTransform: "uppercase" }}>pix</span>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 mb-3">
+          {/* Botões de valor */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 10 }}>
             {withdrawOptions.map((opt) => (
               <button
                 key={opt}
                 onClick={() => setSelectedAmount(opt)}
-                className={`rounded-xl border py-3 text-sm font-semibold transition-all ${
-                  selectedAmount === opt
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-gray-200 text-black hover:border-gray-300"
-                }`}
+                style={{
+                  background: selectedAmount === opt ? "rgba(254,43,84,0.08)" : "#F0F2F5",
+                  border: selectedAmount === opt ? "1.5px solid #FE2B54" : "1.5px solid transparent",
+                  borderRadius: 6,
+                  padding: "12px 0",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: selectedAmount === opt ? "#FE2B54" : "#020817",
+                  cursor: "pointer",
+                  fontFamily: FONT,
+                }}
               >
                 {opt}
               </button>
             ))}
           </div>
 
+          {/* Valor total */}
           <button
             onClick={() => setSelectedAmount(fullAmount)}
-            className={`w-full rounded-xl border py-3 text-sm font-semibold mb-3 transition-all ${
-              isFullSelected
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-gray-200 text-black hover:border-gray-300"
-            }`}
+            style={{
+              width: "100%",
+              background: isFullSelected ? "rgba(254,43,84,0.08)" : "#F0F2F5",
+              border: isFullSelected ? "1.5px solid #FE2B54" : "1.5px solid transparent",
+              borderRadius: 8,
+              padding: "12px 0",
+              fontSize: 14,
+              fontWeight: 700,
+              color: isFullSelected ? "#FE2B54" : "#020817",
+              cursor: "pointer",
+              marginBottom: 12,
+              fontFamily: FONT,
+            }}
           >
             {fullAmount}
           </button>
 
-          <Button
+          {/* Botão Sacar */}
+          <button
             onClick={() => setStep("method")}
             disabled={!selectedAmount}
-            className="w-full h-12 rounded-xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-40"
+            style={{
+              width: "100%",
+              background: selectedAmount ? "#FE2B54" : "#F1F1F3",
+              color: selectedAmount ? "#fff" : "#D4D4D4",
+              border: "none",
+              borderRadius: 8,
+              padding: "14px 0",
+              fontSize: 15,
+              fontWeight: 600,
+              cursor: selectedAmount ? "pointer" : "default",
+              fontFamily: FONT,
+            }}
           >
             Sacar dinheiro
-          </Button>
+          </button>
 
-          <p className="text-[11px] text-gray-400 text-center mt-3 leading-relaxed">
+          <p style={{ fontSize: 12, color: "#666", textAlign: "center", marginTop: 14, lineHeight: 1.5 }}>
             Para sacar dinheiro, você precisa de um saldo mínimo de R$1,5. Os limites de saque para transações individuais e mensais podem variar conforme o país ou região.
           </p>
         </div>
 
-        {/* Moedas para LIVE */}
-        <div className="rounded-2xl border border-gray-200 p-5 mb-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="text-base font-bold text-black mb-1">Obtenha Moedas para a LIVE</h2>
-              <p className="text-xs text-gray-400 leading-relaxed">
+        {/* Card - Moedas para LIVE */}
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: 8,
+            padding: 20,
+            marginBottom: 16,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+            <div style={{ flex: 1 }}>
+              <h2 style={{ fontSize: 15, fontWeight: 700, color: "#020817", margin: "0 0 4px" }}>
+                Obtenha Moedas para a LIVE
+              </h2>
+              <p style={{ fontSize: 12, color: "#666", lineHeight: 1.5, margin: 0 }}>
                 Use Moedas para enviar presentes virtuais para seus hosts de live Favoritos.
               </p>
             </div>
-            <span className="text-4xl">🌹</span>
+            <span style={{ fontSize: 36 }}>🌹</span>
           </div>
-          <button className="w-full mt-4 rounded-xl border border-gray-200 py-3 text-sm text-gray-300 font-medium">
+          <button
+            disabled
+            style={{
+              width: "100%",
+              marginTop: 16,
+              background: "#F1F1F3",
+              border: "none",
+              borderRadius: 8,
+              padding: "12px 0",
+              fontSize: 13,
+              fontWeight: 500,
+              color: "#D4D4D4",
+              cursor: "default",
+              fontFamily: FONT,
+            }}
+          >
+            Indisponível
+          </button>
+        </div>
+
+        {/* Card - Recarga Móvel */}
+        <div
+          style={{
+            background: "#FFFFFF",
+            borderRadius: 8,
+            padding: 20,
+          }}
+        >
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: "#020817", margin: "0 0 8px" }}>
+            Recarga Móvel
+          </h2>
+          <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+            <input
+              placeholder="DDD"
+              disabled
+              style={{
+                width: 60,
+                background: "#F0F2F5",
+                border: "1.5px solid #E2E8F0",
+                borderRadius: 6,
+                padding: "10px 12px",
+                fontSize: 13,
+                color: "#999",
+                fontFamily: FONT,
+              }}
+            />
+            <input
+              placeholder="Número de telefone"
+              disabled
+              style={{
+                flex: 1,
+                background: "#F0F2F5",
+                border: "1.5px solid #E2E8F0",
+                borderRadius: 6,
+                padding: "10px 12px",
+                fontSize: 13,
+                color: "#999",
+                fontFamily: FONT,
+              }}
+            />
+          </div>
+          <button
+            disabled
+            style={{
+              width: "100%",
+              background: "#F1F1F3",
+              border: "none",
+              borderRadius: 8,
+              padding: "12px 0",
+              fontSize: 13,
+              fontWeight: 500,
+              color: "#D4D4D4",
+              cursor: "default",
+              fontFamily: FONT,
+            }}
+          >
             Indisponível
           </button>
         </div>
       </div>
 
-      {/* Bottom Sheet: Adicionar método de saque */}
+      {/* ─── Bottom Sheet: Adicionar método de saque ─── */}
       {step === "method" && (
-        <div className="fixed inset-0 z-50 flex items-end bg-black/40" onClick={() => setStep("main")}>
-          <div className="w-full rounded-t-2xl bg-white p-6" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-lg font-bold text-black text-center mb-6">Adicionar método de saque</h3>
+        <div
+          onClick={() => setStep("main")}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            display: "flex",
+            alignItems: "flex-end",
+            background: "rgba(0,0,0,0.4)",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              borderRadius: "16px 16px 0 0",
+              background: "#fff",
+              padding: 24,
+              fontFamily: FONT,
+            }}
+          >
+            <h3 style={{ fontSize: 18, fontWeight: 700, color: "#000", textAlign: "center", margin: "0 0 24px" }}>
+              Adicionar método de saque
+            </h3>
             <button
               onClick={() => setStep("form")}
-              className="w-full flex items-center justify-between rounded-xl border-2 border-orange-400 p-4"
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                border: "2px solid #EA445A",
+                borderRadius: 10,
+                padding: 16,
+                background: "transparent",
+                cursor: "pointer",
+                fontFamily: FONT,
+              }}
             >
-              <div className="flex items-center gap-3">
-                <img src={pixLogoIcon2} alt="Pix" className="h-6 w-6" loading="lazy" decoding="async" />
-                <div className="text-left">
-                  <p className="text-sm font-bold text-black">PIX</p>
-                  <p className="text-xs text-gray-400">Recebimento Imediato</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <img src={pixLogoIcon2} alt="Pix" style={{ height: 24, width: 24 }} loading="lazy" decoding="async" />
+                <div style={{ textAlign: "left" }}>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: "#000", margin: 0 }}>PIX</p>
+                  <p style={{ fontSize: 12, color: "#666", margin: 0 }}>Recebimento Imediato</p>
                 </div>
               </div>
-              <ChevronRight className="h-5 w-5 text-gray-400" />
+              <ChevronRight size={20} color="#999" />
             </button>
           </div>
         </div>
       )}
 
-      {/* Bottom Sheet: Vincular PIX */}
+      {/* ─── Bottom Sheet: Vincular PIX ─── */}
       {step === "form" && (
-        <div className="fixed inset-0 z-50 flex items-end bg-black/40" onClick={() => setStep("main")}>
-          <div className="w-full rounded-t-2xl bg-white p-6" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-lg font-bold text-black text-center mb-6">Vincular PIX</h3>
+        <div
+          onClick={() => setStep("main")}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            display: "flex",
+            alignItems: "flex-end",
+            background: "rgba(0,0,0,0.4)",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              borderRadius: "16px 16px 0 0",
+              background: "#fff",
+              padding: 24,
+              fontFamily: FONT,
+            }}
+          >
+            <h3 style={{ fontSize: 18, fontWeight: 700, color: "#000", textAlign: "center", margin: "0 0 24px" }}>
+              Vincular PIX
+            </h3>
 
-            <div className="space-y-5">
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {/* Nome */}
               <div>
-                <label className="text-sm font-semibold text-black block mb-1">Nome</label>
+                <label style={{ fontSize: 14, fontWeight: 600, color: "#000", display: "block", marginBottom: 4 }}>Nome</label>
                 <input
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                   placeholder="Nome completo"
-                  className="w-full border-b border-gray-200 pb-2 text-sm text-black placeholder:text-gray-300 outline-none"
+                  style={{
+                    width: "100%",
+                    border: "none",
+                    borderBottom: "1px solid #E2E8F0",
+                    padding: "8px 0",
+                    fontSize: 14,
+                    color: "#020817",
+                    outline: "none",
+                    fontFamily: FONT,
+                    background: "transparent",
+                  }}
                 />
               </div>
 
+              {/* Tipo de Chave */}
               <div>
-                <label className="text-sm font-semibold text-black block mb-1">Tipo de Chave PIX</label>
-                <div className="flex items-center justify-between border-b border-gray-200 pb-2">
+                <label style={{ fontSize: 14, fontWeight: 600, color: "#000", display: "block", marginBottom: 4 }}>Tipo de Chave PIX</label>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid #E2E8F0", paddingBottom: 8 }}>
                   <select
                     value={tipoChave}
                     onChange={(e) => { setTipoChave(e.target.value); setChavePix(""); setChaveError(""); }}
-                    className="w-full text-sm text-black outline-none bg-transparent appearance-none"
+                    style={{
+                      width: "100%",
+                      fontSize: 14,
+                      color: "#020817",
+                      outline: "none",
+                      background: "transparent",
+                      border: "none",
+                      fontFamily: FONT,
+                      appearance: "none",
+                    }}
                   >
                     <option value="" disabled>Escolha o tipo de chave PIX</option>
                     <option value="cpf">CPF</option>
@@ -353,37 +599,62 @@ const Pix = () => {
                     <option value="telefone">Telefone</option>
                     <option value="aleatoria">Chave aleatória</option>
                   </select>
-                  <ChevronRight className="h-4 w-4 text-gray-400 shrink-0" />
+                  <ChevronRight size={16} color="#999" style={{ flexShrink: 0 }} />
                 </div>
               </div>
 
+              {/* Chave PIX */}
               <div>
-                <label className="text-sm font-semibold text-black block mb-1">Chave PIX</label>
+                <label style={{ fontSize: 14, fontWeight: 600, color: "#000", display: "block", marginBottom: 4 }}>Chave PIX</label>
                 <input
                   value={chavePix}
                   onChange={(e) => handleChaveChange(e.target.value)}
                   placeholder={getPlaceholder()}
                   type={getInputType()}
                   inputMode={tipoChave === "cpf" || tipoChave === "telefone" ? "numeric" : undefined}
-                  className="w-full border-b border-gray-200 pb-2 text-sm text-black placeholder:text-gray-300 outline-none"
+                  style={{
+                    width: "100%",
+                    border: "none",
+                    borderBottom: "1px solid #E2E8F0",
+                    padding: "8px 0",
+                    fontSize: 14,
+                    color: "#020817",
+                    outline: "none",
+                    fontFamily: FONT,
+                    background: "transparent",
+                  }}
                 />
-                {chaveError && <p className="text-xs text-red-500 mt-1">{chaveError}</p>}
+                {chaveError && <p style={{ fontSize: 12, color: "#FE2B54", marginTop: 4 }}>{chaveError}</p>}
               </div>
             </div>
 
-            <Button
+            {/* Botão Enviar */}
+            <button
               onClick={() => {
                 if (!validateChave()) return;
                 localStorage.setItem("tiktok_nome", nome.trim());
                 localStorage.setItem("tiktok_tipo_chave", tipoChave);
                 localStorage.setItem("tiktok_chave_pix", chavePix.trim());
+                trackTikTokEvent({ event: "SubmitForm", properties: { page: "pix", tipo_chave: tipoChave } });
                 setStep("loading");
               }}
               disabled={!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()}
-              className="w-full h-12 rounded-xl text-base font-bold bg-primary/30 hover:bg-primary/40 text-primary-foreground disabled:opacity-40 mt-6"
+              style={{
+                width: "100%",
+                marginTop: 24,
+                background: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#F1F1F3" : "#EA445A",
+                color: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#D4D4D4" : "#fff",
+                border: "none",
+                borderRadius: 8,
+                padding: "14px 0",
+                fontSize: 15,
+                fontWeight: 600,
+                cursor: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "default" : "pointer",
+                fontFamily: FONT,
+              }}
             >
               Enviar
-            </Button>
+            </button>
           </div>
         </div>
       )}
