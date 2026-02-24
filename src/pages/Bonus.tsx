@@ -242,31 +242,54 @@ const Bonus = () => {
 
       {/* Modal Gol de Prêmios */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-6">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl animate-scale-in">
-            <img src={tiktokLogo} alt="TikTok" className="h-5 mx-auto mb-4 opacity-60" />
-            <img src={trophyImg} alt="Troféu" className="h-20 w-20 object-contain mx-auto mb-3" />
-            <h3 className="text-xl font-bold text-black mb-1">Gol de Prêmios</h3>
-            <p className="text-sm text-gray-400 mb-5">
-              Campanha de recompensas exclusiva concluída!
-            </p>
-            <p className="text-4xl font-extrabold text-black mb-5 tracking-tight">
-              R$ {TARGET.toFixed(2).replace(".", ",")}
-            </p>
-            <div className="flex items-center justify-center gap-1.5 text-sm text-gray-500 mb-6">
-              <span className="text-xs">Expira em</span>
-              <span className="bg-gray-100 rounded-lg px-2.5 py-1 font-mono font-bold text-black text-sm">{pad(hours)}</span>
-              <span className="font-bold">:</span>
-              <span className="bg-gray-100 rounded-lg px-2.5 py-1 font-mono font-bold text-black text-sm">{pad(mins)}</span>
-              <span className="font-bold">:</span>
-              <span className="bg-gray-100 rounded-lg px-2.5 py-1 font-mono font-bold text-black text-sm">{pad(secs)}</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md px-6">
+          <div className="w-full max-w-sm rounded-3xl bg-white p-7 text-center shadow-2xl animate-scale-in relative overflow-hidden">
+            {/* Decorative gradient strip at top */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-secondary to-primary" />
+
+            {/* Subtle background glow */}
+            <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-60 h-60 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+
+            <div className="relative">
+              <img src={tiktokLogo} alt="TikTok" className="h-4 mx-auto mb-5 opacity-50" />
+
+              {/* Trophy with glow ring */}
+              <div className="relative mx-auto w-24 h-24 mb-4">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 animate-pulse" />
+                <img src={trophyImg} alt="Troféu" className="relative h-24 w-24 object-contain mx-auto drop-shadow-lg" />
+              </div>
+
+              <h3 className="text-xl font-extrabold text-gradient-tiktok mb-1">Gol de Prêmios</h3>
+              <p className="text-xs text-muted-foreground mb-5">
+                Campanha de recompensas exclusiva concluída!
+              </p>
+
+              {/* Value with accent border */}
+              <div className="inline-block rounded-2xl border-2 border-primary/15 bg-primary/5 px-6 py-3 mb-5">
+                <p className="text-3xl font-extrabold text-foreground tracking-tight">
+                  R$ {TARGET.toFixed(2).replace(".", ",")}
+                </p>
+              </div>
+
+              {/* Timer */}
+              <div className="flex items-center justify-center gap-1.5 mb-6">
+                <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Expira em</span>
+                <div className="flex items-center gap-1">
+                  <span className="bg-foreground/5 rounded-lg px-2.5 py-1.5 font-mono font-bold text-foreground text-sm min-w-[34px]">{pad(hours)}</span>
+                  <span className="font-bold text-primary text-xs">:</span>
+                  <span className="bg-foreground/5 rounded-lg px-2.5 py-1.5 font-mono font-bold text-foreground text-sm min-w-[34px]">{pad(mins)}</span>
+                  <span className="font-bold text-primary text-xs">:</span>
+                  <span className="bg-foreground/5 rounded-lg px-2.5 py-1.5 font-mono font-bold text-foreground text-sm min-w-[34px]">{pad(secs)}</span>
+                </div>
+              </div>
+
+              <Button
+                onClick={() => setShowModal(false)}
+                className="w-full h-12 rounded-full text-base font-bold bg-gradient-to-r from-primary to-primary/85 hover:from-primary/90 hover:to-primary/75 text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-200"
+              >
+                Continuar
+              </Button>
             </div>
-            <Button
-              onClick={() => setShowModal(false)}
-              className="w-full h-12 rounded-full text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
-            >
-              Continuar
-            </Button>
           </div>
         </div>
       )}
