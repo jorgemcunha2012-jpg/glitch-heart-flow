@@ -6,8 +6,9 @@ import calendarCoinsImg from "@/assets/calendar-coins.png";
 import pixLogoFull from "@/assets/pix-badge.png";
 import coinIcon from "@/assets/coin-p-icon.png";
 import goldenBallImg from "@/assets/golden-ball.png";
+import { TARGET_BALANCE } from "@/lib/constants";
 
-const TARGET = 3012.37;
+const TARGET = TARGET_BALANCE;
 const TT_RED = "#FE2B54";
 const FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif";
 
