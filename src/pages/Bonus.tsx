@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
-import tiktokLogo from "@/assets/tiktok-logo.png";
+import { Check, Coins } from "lucide-react";
 import calendarCoinsImg from "@/assets/calendar-coins.png";
+import pixLogo from "@/assets/pix-logo-icon.png";
 
 const TARGET = 3834.72;
+
+const checkInValues = [50, 100, 150, 200, 250, 300];
 
 const Bonus = () => {
   const [value, setValue] = useState(0);
   const [showModal, setShowModal] = useState(true);
   const [countdown, setCountdown] = useState(16 * 60 + 3);
   const navigate = useNavigate();
-  const username = localStorage.getItem("tiktok_username") || "usuario";
-  const avatarUrl = localStorage.getItem("tiktok_avatar") || null;
-  const initial = username[0]?.toUpperCase() || "?";
 
   useEffect(() => {
     const duration = 2000;
@@ -46,46 +45,31 @@ const Bonus = () => {
   const secs = countdown % 60;
   const pad = (n: number) => String(n).padStart(2, "0");
 
-  const checkDays = ["Dia 01", "Dia 02", "Dia 03", "Dia 04", "Dia 05", "Dia 06"];
-  const videoPoints = [
-    { label: "50 pts", value: 50 },
-    { label: "100 pts", value: 100 },
-    { label: "150 pts", value: 150 },
-    { label: "225 pts", value: 225 },
-  ];
-
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-pink-50 to-white">
+    <div className="flex min-h-screen flex-col bg-white">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4">
-        <img src={tiktokLogo} alt="TikTok" className="h-5" loading="lazy" decoding="async" />
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center overflow-hidden">
-            {avatarUrl ? (
-              <img src={avatarUrl} alt={username} className="h-full w-full object-cover" loading="lazy" decoding="async" />
-            ) : (
-              <span className="text-xs font-bold text-white">{initial}</span>
-            )}
-          </div>
-        </div>
+      <div className="flex items-center justify-center px-5 py-4 border-b border-gray-100">
+        <h1 className="text-lg font-bold text-black">TikTok Bônus</h1>
       </div>
 
-      <div className="flex-1 px-4 pb-6 space-y-4">
+      <div className="flex-1 px-4 pb-6 space-y-4 pt-4">
         {/* Saldo Card */}
-        <div className="rounded-2xl bg-white p-5 shadow-[0_2px_16px_-2px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '0ms' }}>
-          <p className="text-xs text-gray-400 mb-1">Seu saldo disponível</p>
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-3xl font-extrabold text-black tracking-tight">
-                R$ {value.toFixed(2).replace(".", ",")}
-              </p>
-              <p className="text-[10px] text-green-500 font-semibold mt-0.5">
-                ✓ Todas as tarefas concluídas
-              </p>
-            </div>
+        <div className="rounded-2xl bg-white p-5 shadow-[0_2px_16px_-2px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in">
+          <div className="flex items-center gap-1.5 mb-1">
+            <Coins className="h-4 w-4 text-yellow-500" />
+            <p className="text-xs text-gray-400">Seu saldo</p>
+          </div>
+          <p className="text-3xl font-extrabold text-black tracking-tight">
+            R$ {value.toFixed(2).replace(".", ",")}
+          </p>
+          <p className="text-[10px] text-green-500 font-semibold mt-0.5 mb-4">
+            ✓ Todas as tarefas concluídas
+          </p>
+          <div className="flex flex-col items-center gap-2">
+            <img src={pixLogo} alt="PIX" className="h-6 object-contain" loading="lazy" decoding="async" />
             <Button
               onClick={() => navigate("/pix")}
-              className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-6 h-10 text-sm shadow-md shadow-primary/20"
+              className="w-full rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-11 text-sm shadow-md shadow-primary/20"
             >
               Sacar
             </Button>
@@ -93,10 +77,10 @@ const Bonus = () => {
         </div>
 
         {/* Parabéns Banner */}
-        <div className="rounded-2xl overflow-hidden relative shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] animate-fade-in" style={{ animationDelay: '80ms' }}>
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-pink-50 to-secondary/10" />
+        <div className="rounded-2xl overflow-hidden relative shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] animate-fade-in" style={{ animationDelay: '80ms' }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-white to-pink-50" />
           <div className="relative p-5">
-            <div className="flex items-start justify-between">
+            <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-bold text-black leading-tight">
                   Parabéns!
@@ -109,105 +93,52 @@ const Bonus = () => {
                   R$ {TARGET.toFixed(2).replace(".", ",")}
                 </p>
               </div>
-              <div className="flex flex-col items-center gap-1">
-                <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-20 w-20 object-contain" loading="lazy" decoding="async" />
-                <span className="text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">100%</span>
-              </div>
+              <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-28 w-28 object-contain" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
 
-        {/* Check-in Task */}
-        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '160ms' }}>
-          <div className="flex items-center justify-between mb-3">
+        {/* Check-in Section */}
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in" style={{ animationDelay: '160ms' }}>
+          {/* Dashed separator */}
+          <div className="border-t border-dashed border-gray-200 mb-4" />
+
+          <div className="flex items-start justify-between mb-2">
             <div>
-              <p className="text-sm font-semibold text-black">Check-in diário</p>
-              <p className="text-xs text-primary font-bold">8.414 pontos</p>
+              <p className="text-sm font-semibold text-black">
+                Entre por 14 dias para ganhar{" "}
+                <span className="text-red-500 font-bold">8.414 pontos</span>
+              </p>
             </div>
-            <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
+            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500">
+              Concluído
+            </button>
           </div>
-          <p className="text-[11px] text-gray-400 mb-3">12 de nov — 25 de nov</p>
-          <div className="flex items-center justify-between gap-1">
-            {checkDays.map((day) => (
-              <div key={day} className="flex flex-col items-center gap-1">
-                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center border border-primary/10">
-                  <CheckCircle2 className="h-4 w-4 text-primary" />
-                </div>
-                <span className="text-[9px] text-gray-400 font-medium">{day}</span>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Anúncios Task */}
-        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '240ms' }}>
+          <div className="flex items-center gap-1.5 mb-3">
+            <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
+            <p className="text-[11px] text-gray-400">12 de nov - 25 de nov</p>
+          </div>
+
+          {/* Message box */}
+          <div className="bg-gray-50 rounded-lg p-3 mb-4">
+            <p className="text-[11px] text-gray-500">Você concluiu todos os dias de check-in.</p>
+          </div>
+
+          {/* Check-in circles */}
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-semibold text-black">Anúncios assistidos</p>
-              <p className="text-xs text-primary font-bold">2.730 pontos</p>
-            </div>
-            <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
-          </div>
-          <div className="mt-3 flex items-center gap-2">
-            <div className="flex-1 h-1.5 rounded-full bg-gray-100 overflow-hidden">
-              <div className="h-full w-full bg-gradient-to-r from-primary to-secondary rounded-full" />
-            </div>
-            <span className="text-[10px] text-gray-400 font-semibold">30/30</span>
-          </div>
-        </div>
-
-        {/* Assistir vídeos Task */}
-        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '320ms' }}>
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <p className="text-sm font-semibold text-black">Assistir vídeos</p>
-              <p className="text-xs text-primary font-bold">500 pontos</p>
-            </div>
-            <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
-          </div>
-          <div className="flex items-center justify-between">
-            {videoPoints.map((vp, i) => (
+            {checkInValues.map((pts, i) => (
               <div key={i} className="flex flex-col items-center gap-1">
-                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-sm shadow-primary/20">
-                  <span className="text-[10px] font-bold text-white">{vp.value}</span>
+                <div className="relative h-11 w-11 rounded-full border-2 border-pink-200 bg-pink-50 flex items-center justify-center">
+                  <Coins className="h-5 w-5 text-yellow-500" />
+                  {/* Pink checkmark */}
+                  <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-pink-400 flex items-center justify-center">
+                    <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                  </div>
                 </div>
-                <span className="text-[9px] text-gray-400 font-medium">{vp.label}</span>
+                <span className="text-[10px] text-gray-500 font-medium">{pts}</span>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Resgatar recompensas */}
-        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '400ms' }}>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-semibold text-black">Recompensas resgatadas</p>
-              <p className="text-xs text-primary font-bold">640 pontos</p>
-            </div>
-            <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
-          </div>
-          <div className="mt-3 flex items-center gap-2">
-            <div className="flex-1 h-1.5 rounded-full bg-gray-100 overflow-hidden">
-              <div className="h-full w-full bg-gradient-to-r from-secondary to-secondary/60 rounded-full" />
-            </div>
-            <span className="text-[10px] text-gray-400 font-semibold">8/8</span>
-          </div>
-        </div>
-
-        {/* Pesquisas diárias */}
-        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '480ms' }}>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-semibold text-black">Pesquisas diárias</p>
-              <p className="text-xs text-primary font-bold">996 pontos</p>
-            </div>
-            <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
-          </div>
-          <div className="mt-3 flex items-center gap-2">
-            <div className="flex-1 h-1.5 rounded-full bg-gray-100 overflow-hidden">
-              <div className="h-full w-full bg-gradient-to-r from-primary to-primary/60 rounded-full" />
-            </div>
-            <span className="text-[10px] text-gray-400 font-semibold">60/60</span>
           </div>
         </div>
       </div>
@@ -216,7 +147,6 @@ const Bonus = () => {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-6">
           <div className="w-full max-w-xs rounded-3xl bg-white pt-14 pb-6 px-6 text-center shadow-2xl animate-scale-in relative">
-            {/* Golden ball icon - overflowing top */}
             <div className="absolute -top-12 left-1/2 -translate-x-1/2">
               <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-24 w-24 object-contain drop-shadow-md" loading="lazy" decoding="async" />
             </div>
@@ -232,7 +162,6 @@ const Bonus = () => {
               R$ {TARGET.toFixed(2).replace(".", ",")}
             </p>
 
-            {/* Timer */}
             <div className="flex items-center justify-center gap-1 text-sm text-gray-400 mb-6">
               <span className="text-xs">Expira em</span>
               <span className="font-mono font-bold text-black">{pad(hours)}</span>
