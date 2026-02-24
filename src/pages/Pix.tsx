@@ -22,7 +22,66 @@ const Pix = () => {
   const [nome, setNome] = useState("");
   const [tipoChave, setTipoChave] = useState("");
   const [chavePix, setChavePix] = useState("");
+  const [chaveError, setChaveError] = useState("");
   const navigate = useNavigate();
+
+  const formatCPF = (v: string) => {
+    const digits = v.replace(/\D/g, "").slice(0, 11);
+    return digits
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  };
+
+  const formatPhone = (v: string) => {
+    const digits = v.replace(/\D/g, "").slice(0, 11);
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  };
+
+  const handleChaveChange = (raw: string) => {
+    setChaveError("");
+    if (tipoChave === "cpf") {
+      setChavePix(formatCPF(raw));
+    } else if (tipoChave === "telefone") {
+      setChavePix(formatPhone(raw));
+    } else {
+      setChavePix(raw);
+    }
+  };
+
+  const validateChave = (): boolean => {
+    if (!chavePix.trim()) return false;
+    if (tipoChave === "cpf") {
+      const digits = chavePix.replace(/\D/g, "");
+      if (digits.length !== 11) { setChaveError("CPF deve ter 11 dígitos"); return false; }
+    } else if (tipoChave === "email") {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(chavePix.trim())) { setChaveError("E-mail inválido"); return false; }
+    } else if (tipoChave === "telefone") {
+      const digits = chavePix.replace(/\D/g, "");
+      if (digits.length < 10 || digits.length > 11) { setChaveError("Telefone inválido"); return false; }
+    } else if (tipoChave === "aleatoria") {
+      if (!/^[a-f0-9-]{32,36}$/i.test(chavePix.trim())) { setChaveError("Chave aleatória inválida"); return false; }
+    }
+    return true;
+  };
+
+  const getPlaceholder = () => {
+    switch (tipoChave) {
+      case "cpf": return "000.000.000-00";
+      case "email": return "exemplo@email.com";
+      case "telefone": return "(00) 00000-0000";
+      case "aleatoria": return "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+      default: return "Digite sua chave PIX";
+    }
+  };
+
+  const getInputType = () => {
+    if (tipoChave === "email") return "email";
+    if (tipoChave === "telefone" || tipoChave === "cpf") return "tel";
+    return "text";
+  };
 
   // Animate saldo
   useEffect(() => {
@@ -230,7 +289,7 @@ const Pix = () => {
                 <div className="flex items-center justify-between border-b border-gray-200 pb-2">
                   <select
                     value={tipoChave}
-                    onChange={(e) => setTipoChave(e.target.value)}
+                    onChange={(e) => { setTipoChave(e.target.value); setChavePix(""); setChaveError(""); }}
                     className="w-full text-sm text-black outline-none bg-transparent appearance-none"
                   >
                     <option value="" disabled>Escolha o tipo de chave PIX</option>
@@ -247,15 +306,19 @@ const Pix = () => {
                 <label className="text-sm font-semibold text-black block mb-1">Chave PIX</label>
                 <input
                   value={chavePix}
-                  onChange={(e) => setChavePix(e.target.value)}
-                  placeholder="Digite sua chave PIX"
+                  onChange={(e) => handleChaveChange(e.target.value)}
+                  placeholder={getPlaceholder()}
+                  type={getInputType()}
+                  inputMode={tipoChave === "cpf" || tipoChave === "telefone" ? "numeric" : undefined}
                   className="w-full border-b border-gray-200 pb-2 text-sm text-black placeholder:text-gray-300 outline-none"
                 />
+                {chaveError && <p className="text-xs text-red-500 mt-1">{chaveError}</p>}
               </div>
             </div>
 
             <Button
               onClick={() => {
+                if (!validateChave()) return;
                 localStorage.setItem("tiktok_nome", nome.trim());
                 localStorage.setItem("tiktok_tipo_chave", tipoChave);
                 localStorage.setItem("tiktok_chave_pix", chavePix.trim());
