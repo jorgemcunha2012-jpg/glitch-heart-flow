@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Coins, TrendingUp, Eye, Search, Gift, Star } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import goldenBallImg from "@/assets/golden-ball.png";
 
@@ -72,17 +72,15 @@ const Bonus = () => {
 
       <div className="flex-1 px-4 pb-6 space-y-4">
         {/* Saldo Card */}
-        <div className="rounded-2xl bg-white p-5 shadow-sm border border-gray-100">
-          <p className="text-xs text-gray-400 mb-1 flex items-center gap-1">
-            <Coins className="h-3.5 w-3.5" /> Seu saldo disponível
-          </p>
+        <div className="rounded-2xl bg-white p-5 shadow-[0_2px_16px_-2px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '0ms' }}>
+          <p className="text-xs text-gray-400 mb-1">Seu saldo disponível</p>
           <div className="flex items-end justify-between">
             <div>
               <p className="text-3xl font-extrabold text-black tracking-tight">
                 R$ {value.toFixed(2).replace(".", ",")}
               </p>
-              <p className="text-[10px] text-green-500 font-semibold mt-0.5 flex items-center gap-0.5">
-                <TrendingUp className="h-3 w-3" /> Todas as tarefas concluídas
+              <p className="text-[10px] text-green-500 font-semibold mt-0.5">
+                ✓ Todas as tarefas concluídas
               </p>
             </div>
             <Button
@@ -95,12 +93,11 @@ const Bonus = () => {
         </div>
 
         {/* Parabéns Banner */}
-        <div className="rounded-2xl overflow-hidden relative">
+        <div className="rounded-2xl overflow-hidden relative shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] animate-fade-in" style={{ animationDelay: '80ms' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-pink-50 to-secondary/10" />
           <div className="relative p-5">
             <div className="flex items-start justify-between">
               <div>
-                
                 <h2 className="text-lg font-bold text-black leading-tight">
                   Parabéns!
                   <br />
@@ -121,16 +118,11 @@ const Bonus = () => {
         </div>
 
         {/* Check-in Task */}
-        <div className="rounded-2xl bg-white p-5 shadow-sm border border-gray-100">
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '160ms' }}>
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Star className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-black">Check-in diário</p>
-                <p className="text-xs text-primary font-bold">8.414 pontos</p>
-              </div>
+            <div>
+              <p className="text-sm font-semibold text-black">Check-in diário</p>
+              <p className="text-xs text-primary font-bold">8.414 pontos</p>
             </div>
             <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
           </div>
@@ -148,16 +140,11 @@ const Bonus = () => {
         </div>
 
         {/* Anúncios Task */}
-        <div className="rounded-2xl bg-white p-5 shadow-sm border border-gray-100">
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '240ms' }}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-xl bg-secondary/10 flex items-center justify-center">
-                <Eye className="h-4 w-4 text-secondary" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-black">Anúncios assistidos</p>
-                <p className="text-xs text-primary font-bold">2.730 pontos</p>
-              </div>
+            <div>
+              <p className="text-sm font-semibold text-black">Anúncios assistidos</p>
+              <p className="text-xs text-primary font-bold">2.730 pontos</p>
             </div>
             <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
           </div>
@@ -170,16 +157,11 @@ const Bonus = () => {
         </div>
 
         {/* Assistir vídeos Task */}
-        <div className="rounded-2xl bg-white p-5 shadow-sm border border-gray-100">
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '320ms' }}>
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center">
-                <TrendingUp className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-black">Assistir vídeos</p>
-                <p className="text-xs text-primary font-bold">500 pontos</p>
-              </div>
+            <div>
+              <p className="text-sm font-semibold text-black">Assistir vídeos</p>
+              <p className="text-xs text-primary font-bold">500 pontos</p>
             </div>
             <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
           </div>
@@ -187,7 +169,7 @@ const Bonus = () => {
             {videoPoints.map((vp, i) => (
               <div key={i} className="flex flex-col items-center gap-1">
                 <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-sm shadow-primary/20">
-                  <Coins className="h-4 w-4 text-white" />
+                  <span className="text-[10px] font-bold text-white">{vp.value}</span>
                 </div>
                 <span className="text-[9px] text-gray-400 font-medium">{vp.label}</span>
               </div>
@@ -196,16 +178,11 @@ const Bonus = () => {
         </div>
 
         {/* Resgatar recompensas */}
-        <div className="rounded-2xl bg-white p-5 shadow-sm border border-gray-100">
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '400ms' }}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-xl bg-secondary/10 flex items-center justify-center">
-                <Gift className="h-4 w-4 text-secondary" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-black">Recompensas resgatadas</p>
-                <p className="text-xs text-primary font-bold">640 pontos</p>
-              </div>
+            <div>
+              <p className="text-sm font-semibold text-black">Recompensas resgatadas</p>
+              <p className="text-xs text-primary font-bold">640 pontos</p>
             </div>
             <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
           </div>
@@ -218,16 +195,11 @@ const Bonus = () => {
         </div>
 
         {/* Pesquisas diárias */}
-        <div className="rounded-2xl bg-white p-5 shadow-sm border border-gray-100">
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-100 animate-fade-in" style={{ animationDelay: '480ms' }}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Search className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-black">Pesquisas diárias</p>
-                <p className="text-xs text-primary font-bold">996 pontos</p>
-              </div>
+            <div>
+              <p className="text-sm font-semibold text-black">Pesquisas diárias</p>
+              <p className="text-xs text-primary font-bold">996 pontos</p>
             </div>
             <span className="rounded-full bg-green-50 border border-green-200 px-2.5 py-0.5 text-[10px] font-semibold text-green-600">✓ Concluído</span>
           </div>
