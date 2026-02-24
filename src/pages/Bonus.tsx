@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import calendarCoinsImg from "@/assets/calendar-coins.png";
 import pixLogoFull from "@/assets/pix-logo-full.png";
@@ -8,13 +7,37 @@ import coinIcon from "@/assets/coin-icon.png";
 import goldenBallImg from "@/assets/golden-ball.png";
 
 const TARGET = 3200.00;
-const TT_RED = "#FE2C55";
-const TT_BLACK = "#161823";
+const TT_RED = "#FE2B54";
+const FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif";
 
 const checkInValues = [50, 100, 150, 200, 250, 300];
 
 const CoinImg = ({ size = 32 }: { size?: number }) => (
   <img src={coinIcon} alt="moeda" style={{ width: size, height: size }} className="object-contain" />
+);
+
+const CompletedBtn = () => (
+  <button
+    disabled
+    style={{
+      background: "#F1F1F3",
+      borderRadius: 99,
+      width: 89,
+      height: 35,
+      fontSize: 12,
+      fontWeight: 500,
+      color: "rgb(212,212,212)",
+      border: "none",
+      cursor: "default",
+      flexShrink: 0,
+    }}
+  >
+    Concluído
+  </button>
+);
+
+const Divider = () => (
+  <div style={{ height: 1, background: "#E2E8F0", margin: "12px 0" }} />
 );
 
 const Bonus = () => {
@@ -57,263 +80,355 @@ const Bonus = () => {
     v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <div className="flex min-h-screen flex-col bg-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-      {/* Header */}
-      <div className="flex items-center justify-center px-5 py-3.5">
-        <h1 className="text-[17px] font-bold tracking-tight" style={{ color: TT_BLACK }}>TikTok Bônus</h1>
-      </div>
+    <div style={{ background: "#F5F5F5", minHeight: "100vh", fontFamily: FONT }}>
+      <div style={{ maxWidth: 450, margin: "0 auto", padding: "0 12px 110px" }}>
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "14px 0" }}>
+          <h1 style={{ fontSize: 16, fontWeight: 600, color: "#000000", margin: 0 }}>TikTok Bônus</h1>
+        </div>
 
-      <div className="flex-1 px-4 pb-8 pt-2">
-        {/* Saldo Card */}
-        <div className="rounded-2xl bg-[#f5f5f5] p-5 mb-4 animate-fade-in">
-          <div className="flex items-center gap-1.5 mb-0.5">
-            <span className="text-[15px] font-medium" style={{ color: '#545454' }}>Seu saldo</span>
-            <CoinImg size={20} />
-          </div>
-          <div className="flex items-end justify-between mt-1">
-            <p className="text-[32px] font-extrabold leading-none tracking-tight" style={{ color: TT_BLACK }}>
+        {/* Card Saldo */}
+        <div
+          style={{
+            background: "rgba(255,255,255,0.95)",
+            borderRadius: 8,
+            boxShadow: "rgba(0,0,0,0.03) 0px 1px 18.4px 0px",
+            height: 90,
+            padding: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontSize: 14, fontWeight: 500, color: "#000" }}>Seu saldo</span>
+              <CoinImg size={18} />
+            </div>
+            <p style={{ fontSize: 22, fontWeight: 700, color: "#000000", margin: "4px 0 0" }}>
               R$ {formatBRL(value)}
             </p>
-            <div className="flex flex-col items-center gap-1.5">
-              <img src={pixLogoFull} alt="PIX" className="h-[22px] object-contain" loading="lazy" decoding="async" />
-              <Button
-                onClick={() => navigate("/pix")}
-                className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-7 h-[38px] text-[14px]"
-              >
-                Sacar
-              </Button>
-            </div>
+          </div>
+          <div style={{ position: "relative" }}>
+            <button
+              onClick={() => navigate("/pix")}
+              style={{
+                background: TT_RED,
+                color: "#fff",
+                border: "none",
+                borderRadius: 99,
+                width: 81,
+                height: 27,
+                fontSize: 14,
+                fontWeight: 500,
+                cursor: "pointer",
+              }}
+            >
+              Sacar
+            </button>
+            <img
+              src={pixLogoFull}
+              alt="PIX"
+              style={{
+                position: "absolute",
+                top: -10,
+                right: -10,
+                height: 16,
+                objectFit: "contain",
+              }}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </div>
 
-        {/* Parabéns Banner */}
-        <div className="rounded-2xl overflow-hidden relative mb-4 animate-fade-in" style={{ animationDelay: '80ms' }}>
-          <div className="absolute inset-0 bg-gradient-to-br from-[#fff0f3] via-white to-[#fff5f7]" />
-          <div className="relative px-5 py-6">
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <h2 className="text-[22px] font-extrabold leading-[1.2]" style={{ color: TT_BLACK }}>
-                  Parabéns!
-                  <br />
-                  Você concluiu
-                  <br />
-                  todas as tarefas
-                </h2>
-                <p className="text-[22px] font-extrabold text-primary mt-1.5">
-                  R$ {formatBRL(TARGET)}
-                </p>
-              </div>
-              <img
-                src={calendarCoinsImg}
-                alt="Calendário com moedas"
-                className="w-[130px] h-[130px] object-contain -mr-2"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* ─── Check-in Section ─── */}
-        <div className="px-1 animate-fade-in" style={{ animationDelay: '160ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
-
-          <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
-              Entre por 14 dias para ganhar
-              <br />
-              <span style={{ color: TT_RED }}>8.414 pontos</span>
+        {/* Bloco Parabéns */}
+        <div
+          style={{
+            background: "#FFFFFF",
+            padding: 20,
+            borderRadius: 12,
+            margin: "20px 0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#000", margin: 0 }}>Parabéns!</h2>
+            <p style={{ fontSize: 18, fontWeight: 700, color: "#000", margin: "4px 0 0" }}>
+              Você concluiu todas as tarefas
             </p>
-            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
-              Concluído
-            </span>
+            <p style={{ fontSize: 22, fontWeight: 700, color: TT_RED, margin: "6px 0 0" }}>
+              R$ {formatBRL(TARGET)}
+            </p>
           </div>
+          <img
+            src={calendarCoinsImg}
+            alt="Calendário com moedas"
+            style={{ width: 110, height: 110, objectFit: "contain" }}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
 
-          <div className="flex items-center gap-1.5 mb-3">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
-            <p className="text-[12px]" style={{ color: TT_RED }}>12 de nov - 25 de nov</p>
+        {/* ─── Tarefa 1: Check-in ─── */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+              Entre por 14 dias para ganhar{" "}
+              <span style={{ color: TT_RED, fontWeight: 500 }}>8.414 pontos</span>
+            </p>
+            <CompletedBtn />
           </div>
+          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+            • 12 de nov - 25 de nov
+          </p>
+          <p style={{ fontSize: 11, fontWeight: 500, color: "rgb(132,132,134)", margin: "10px 0 0" }}>
+            Você concluiu todos os dias de check-in.
+          </p>
 
-          <div className="border-l-[2px] border-[#e8e8e8] pl-3 mb-5">
-            <p className="text-[13px] text-[#999] italic">Você concluiu todos os dias de check-in.</p>
-          </div>
-
-          <div className="flex items-start justify-between px-1 mb-6">
+          {/* Day Tracker */}
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16 }}>
             {checkInValues.map((pts, i) => (
-              <div key={i} className="flex flex-col items-center" style={{ gap: '4px' }}>
-                <div className="relative">
+              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <div style={{ position: "relative", width: 45, height: 45 }}>
                   <div
-                    className="rounded-full flex items-center justify-center"
-                    style={{ width: 48, height: 48, border: '2px solid #fcc', backgroundColor: '#fff5f7' }}
+                    style={{
+                      width: 45,
+                      height: 45,
+                      borderRadius: 8.82,
+                      background: "#F8F9FB",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    <CoinImg size={26} />
+                    <CoinImg size={24} />
                   </div>
                   <div
-                    className="absolute flex items-center justify-center bg-white rounded-full"
-                    style={{ top: -3, right: -3, width: 20, height: 20 }}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 8.82,
+                      background: "rgba(255,240,243,0.9)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    <Check style={{ color: TT_RED }} size={14} strokeWidth={3} />
+                    <Check style={{ color: TT_RED }} size={18} strokeWidth={2.5} />
                   </div>
                 </div>
-                <span className="text-[11px] font-semibold text-[#c49a20]">{pts}</span>
-                <span className="text-[10px] text-[#aaa]">Dia {String(i + 1).padStart(2, '0')}</span>
+                <span style={{ fontSize: 10, color: "#888" }}>Dia {String(i + 1).padStart(2, "0")}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* ─── Anúncios ─── */}
-        <div className="px-1 animate-fade-in" style={{ animationDelay: '240ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
-          <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
-              Vê anúncios direcionados diariamente
-              <br />
-              para ganhares até<span style={{ color: TT_RED }}> 2.730 pontos</span>
+        {/* ─── Tarefa 2: Anúncios ─── */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+              Vê anúncios direcionados diariamente para ganhares até{" "}
+              <span style={{ color: TT_RED }}>2.730 pontos</span>
             </p>
-            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
-              Concluído
-            </span>
+            <CompletedBtn />
           </div>
-          <div className="flex items-center gap-1.5 mb-6">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
-            <p className="text-[12px]" style={{ color: TT_RED }}>30/30 anúncios assistidos</p>
-          </div>
+          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+            • 30/30 anúncios assistidos
+          </p>
         </div>
 
-        {/* ─── Assistir vídeos ─── */}
-        <div className="px-1 animate-fade-in" style={{ animationDelay: '320ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
-          <div className="flex items-start justify-between mb-3">
-            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
-              Assistir vídeos<span style={{ color: TT_RED }}> 500 pontos</span>
+        {/* ─── Tarefa 3: Assistir vídeos ─── */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0 }}>
+              Assistir vídeos <span style={{ color: TT_RED }}>500 pontos</span>
             </p>
-            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
-              Concluído
-            </span>
+            <CompletedBtn />
           </div>
-          <div className="inline-block rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-semibold mb-5" style={{ color: TT_BLACK }}>
+          <div
+            style={{
+              display: "inline-block",
+              background: "#F1F1F1",
+              borderRadius: 6,
+              padding: "4px 12px",
+              fontSize: 12,
+              color: "#000",
+              marginTop: 12,
+            }}
+          >
             Assista por 10 min
           </div>
-          <div className="relative mb-6">
-            <div className="absolute top-[18px] left-[10%] right-[10%] h-[2px] bg-[#e0e0e0]" />
-            <div className="flex items-center justify-between relative">
-              {["50 pontos", "100 pontos", "150 pontos", "225 pontos"].map((label, i) => (
-                <div key={i} className="flex flex-col items-center gap-1.5 z-10">
-                  <CoinImg size={36} />
-                  <span className="text-[11px] text-[#888] font-medium">{label}</span>
-                </div>
-              ))}
-            </div>
+
+          {/* Progress bar */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "0 10px", marginTop: 16, height: 44 }}>
+            {["50 pontos", "100", "150", "225 pontos"].map((label, i) => (
+              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                <CoinImg size={28} />
+                <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* ─── Recompensas ─── */}
-        <div className="px-1 animate-fade-in" style={{ animationDelay: '400ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
-          <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
-              Resgate suas recompensas e ganhe<span style={{ color: TT_RED }}>640 pontos</span>
+        {/* ─── Tarefa 4: Recompensas ─── */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+              Resgate suas recompensas e ganhe{" "}
+              <span style={{ color: TT_RED }}>640 pontos</span>
             </p>
-            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
-              Concluído
-            </span>
+            <CompletedBtn />
           </div>
-          <div className="flex items-center gap-1.5 mb-6">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
-            <p className="text-[12px]" style={{ color: TT_RED }}>8/8 resgatados</p>
-          </div>
+          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+            • 8/8 resgatados
+          </p>
         </div>
 
-        {/* ─── Pesquisas diárias ─── */}
-        <div className="px-1 animate-fade-in" style={{ animationDelay: '480ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
-          <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
-              Faça 60 pesquisas diárias para ganhar
-              <br />
-              até<span style={{ color: TT_RED }}> 996 pontos</span>
+        {/* ─── Tarefa 5: Pesquisas ─── */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+              Faça 60 pesquisas diárias para ganhar até{" "}
+              <span style={{ color: TT_RED }}>996 pontos</span>
             </p>
-            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
-              Concluído
-            </span>
+            <CompletedBtn />
           </div>
-          <div className="flex items-center gap-1.5 mb-2">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
-            <p className="text-[12px]" style={{ color: TT_RED }}>60 pesquisas feitas hoje</p>
-          </div>
-          <div className="inline-block rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-semibold mb-5" style={{ color: TT_BLACK }}>
+          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+            • 60 pesquisas feitas hoje
+          </p>
+
+          {/* Pill */}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#F1F1F1",
+              borderRadius: 99,
+              height: 19,
+              padding: "0 12px",
+              fontSize: 11,
+              fontWeight: 500,
+              color: "#888",
+              marginTop: 10,
+            }}
+          >
             Até 756 pontos
           </div>
-          <div className="relative mb-3">
-            <div className="absolute top-[18px] left-[20%] right-[20%] h-[2px] bg-[#ddd]" />
-            <div className="flex items-center justify-around relative">
-              {["36 pesquisas", "60 pesquisas"].map((label, i) => (
-                <div key={i} className="flex flex-col items-center gap-1.5 z-10">
-                  <CoinImg size={36} />
-                  <span className="text-[11px] text-[#888] font-medium">{label}</span>
-                </div>
-              ))}
-            </div>
+
+          {/* Progress */}
+          <div style={{ display: "flex", justifyContent: "space-around", marginTop: 16 }}>
+            {["16 pesquisas", "36 pesquisas", "60 pesquisas"].map((label, i) => (
+              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                <CoinImg size={28} />
+                <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
+              </div>
+            ))}
           </div>
-          <div className="bg-[#f7f7f7] rounded-xl p-4 mt-2 mb-6">
-            <p className="text-[12px] text-[#999] leading-relaxed">
-              Obtém 21 pontos por escreveres uma consulta na barra de pesquisa, ou 0 ponto por tocares numa pesquisa sugerida, como em "Podes gostar".
-            </p>
-          </div>
+
+          <p style={{ fontSize: 12, color: "#999", lineHeight: 1.6, marginTop: 14, background: "#F8F9FB", borderRadius: 8, padding: 12 }}>
+            Obtém 21 pontos por escreveres uma consulta na barra de pesquisa, ou 0 ponto por tocares numa pesquisa sugerida, como em "Podes gostar".
+          </p>
         </div>
 
-        {/* ─── Convide amigos ─── */}
-        <div className="px-1 animate-fade-in" style={{ animationDelay: '560ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
-          <div className="flex items-start justify-between mb-6">
-            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
+        {/* ─── Tarefa 6: Convite ─── */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
               Convide 1 amigo para se inscrever e ganhar{" "}
               <span style={{ color: TT_RED }}>100.000 pontos - 200.000 pontos</span>
             </p>
-            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
-              Concluído
-            </span>
+            <CompletedBtn />
           </div>
         </div>
       </div>
 
-      {/* Modal Gol de Prêmios */}
+      {/* ─── Modal Gol de Prêmios ─── */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6">
-          <div className="w-full max-w-[320px] rounded-3xl bg-[#fffdf5] pt-16 pb-6 px-6 text-center shadow-2xl animate-scale-in relative">
-            <div className="absolute -top-14 left-1/2 -translate-x-1/2">
-              <img src={goldenBallImg} alt="Bola dourada" className="h-[100px] w-[100px] object-contain drop-shadow-lg" loading="lazy" decoding="async" />
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 1000,
+            background: "rgba(0,0,0,0.45)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              background: "#FFFFFF",
+              borderRadius: 16,
+              padding: 20,
+              width: 320,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              position: "relative",
+              paddingTop: 70,
+            }}
+          >
+            <div style={{ position: "absolute", top: -50, left: "50%", transform: "translateX(-50%)" }}>
+              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 130, height: 130, objectFit: "contain" }} loading="lazy" decoding="async" />
             </div>
 
-            <h3 className="text-[20px] font-extrabold mb-2" style={{ color: TT_BLACK }}>Gol de Prêmios</h3>
-            <p className="text-[13px] text-[#666] mb-5 leading-relaxed">
+            <h3 style={{ fontSize: 20, fontWeight: 700, color: "#000", margin: "0 0 8px" }}>Gol de Prêmios</h3>
+            <p style={{ fontSize: 14, fontWeight: 500, color: "rgb(64,63,58)", margin: "0 0 16px", lineHeight: 1.5 }}>
               Parabéns! Como parte de uma campanha de recompensas exclusiva.
             </p>
 
-            <p className="text-[36px] font-extrabold tracking-tight mb-5" style={{ color: TT_BLACK }}>
+            <p style={{ fontSize: 36, fontWeight: 700, color: "#000", margin: "0 0 16px" }}>
               R$ {formatBRL(TARGET)}
             </p>
 
-            <div className="flex items-center justify-center gap-2 mb-5">
-              <span className="text-[13px] text-[#999]">Expira em</span>
-              <div className="flex items-center gap-1">
-                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-[#e0e0e0] bg-white text-[14px] font-bold" style={{ color: TT_BLACK }}>{pad(hours)}</span>
-                <span className="text-[14px] font-bold" style={{ color: TT_BLACK }}>:</span>
-                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-[#e0e0e0] bg-white text-[14px] font-bold" style={{ color: TT_BLACK }}>{pad(mins)}</span>
-                <span className="text-[14px] font-bold" style={{ color: TT_BLACK }}>:</span>
-                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-[#e0e0e0] bg-white text-[14px] font-bold" style={{ color: TT_BLACK }}>{pad(secs)}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20 }}>
+              <span style={{ fontSize: 10, fontWeight: 500, color: "rgb(64,63,58)" }}>Expira em</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
+                {[pad(hours), pad(mins), pad(secs)].map((digit, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: 20,
+                        height: 23,
+                        background: "#F1F1F3",
+                        borderRadius: 2,
+                        fontSize: 10,
+                        fontWeight: 600,
+                        color: "#020817",
+                      }}
+                    >
+                      {digit}
+                    </span>
+                    {i < 2 && <span style={{ fontSize: 10, fontWeight: 600, color: "#020817" }}>:</span>}
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="border-t border-dashed border-[#ddd] mb-5" />
-
-            <Button
+            <button
               onClick={() => setShowModal(false)}
-              className="w-full h-[50px] rounded-full text-[16px] font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
+              style={{
+                width: 270,
+                height: 53,
+                background: TT_RED,
+                color: "#fff",
+                border: "none",
+                borderRadius: 99,
+                fontSize: 16,
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
             >
               Obrigado
-            </Button>
+            </button>
           </div>
         </div>
       )}
