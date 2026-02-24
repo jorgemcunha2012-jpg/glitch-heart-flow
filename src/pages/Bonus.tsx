@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { useNavigate } from "react-router-dom";
 import { Check } from "lucide-react";
 import calendarCoinsImg from "@/assets/calendar-coins.png";
@@ -45,6 +46,10 @@ const Bonus = () => {
   const [showModal, setShowModal] = useState(true);
   const [countdown, setCountdown] = useState(16 * 60 + 3);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    trackTikTokEvent({ event: "ViewContent", properties: { page: "bonus", content_type: "rewards" } });
+  }, []);
 
   useEffect(() => {
     const duration = 2000;

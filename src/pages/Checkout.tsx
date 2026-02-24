@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, RefreshCw } from "lucide-react";
+import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import bacenLogo from "@/assets/bacen-logo.png";
 import govbrLogo from "@/assets/govbr-logo.png";
@@ -17,6 +18,10 @@ const Checkout = () => {
   const today = new Date().toLocaleDateString("pt-BR");
 
   const [countdown, setCountdown] = useState(15 * 60);
+
+  useEffect(() => {
+    trackTikTokEvent({ event: "InitiateCheckout", properties: { value: TARGET, currency: "BRL" } });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
