@@ -100,38 +100,28 @@ const Bonus = () => {
 
         {/* Check-in Section */}
         <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in" style={{ animationDelay: '160ms' }}>
-          {/* Dashed separator */}
           <div className="border-t border-dashed border-gray-200 mb-4" />
-
           <div className="flex items-start justify-between mb-2">
-            <div>
-              <p className="text-sm font-semibold text-black">
-                Entre por 14 dias para ganhar{" "}
-                <span className="text-red-500 font-bold">8.414 pontos</span>
-              </p>
-            </div>
-            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500">
+            <p className="text-sm font-semibold text-black">
+              Entre por 14 dias para ganhar{" "}
+              <span className="text-red-500 font-bold">8.414 pontos</span>
+            </p>
+            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500 shrink-0 ml-2">
               Concluído
             </button>
           </div>
-
           <div className="flex items-center gap-1.5 mb-3">
             <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
             <p className="text-[11px] text-gray-400">12 de nov - 25 de nov</p>
           </div>
-
-          {/* Message box */}
           <div className="bg-gray-50 rounded-lg p-3 mb-4">
             <p className="text-[11px] text-gray-500">Você concluiu todos os dias de check-in.</p>
           </div>
-
-          {/* Check-in circles */}
           <div className="flex items-center justify-between">
             {checkInValues.map((pts, i) => (
               <div key={i} className="flex flex-col items-center gap-1">
                 <div className="relative h-11 w-11 rounded-full border-2 border-pink-200 bg-pink-50 flex items-center justify-center">
                   <Coins className="h-5 w-5 text-yellow-500" />
-                  {/* Pink checkmark */}
                   <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-pink-400 flex items-center justify-center">
                     <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
                   </div>
@@ -139,6 +129,135 @@ const Bonus = () => {
                 <span className="text-[10px] text-gray-500 font-medium">{pts}</span>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Anúncios */}
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in" style={{ animationDelay: '240ms' }}>
+          <div className="border-t border-dashed border-gray-200 mb-4" />
+          <div className="flex items-start justify-between mb-2">
+            <p className="text-sm font-semibold text-black">
+              Vê anúncios direcionados diariamente para ganhares até
+              <span className="text-red-500 font-bold">2.730 pontos</span>
+            </p>
+            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500 shrink-0 ml-2">
+              Concluído
+            </button>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
+            <p className="text-[11px] text-red-400">30/30 anúncios assistidos</p>
+          </div>
+        </div>
+
+        {/* Assistir vídeos */}
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in" style={{ animationDelay: '320ms' }}>
+          <div className="border-t border-dashed border-gray-200 mb-4" />
+          <div className="flex items-start justify-between mb-2">
+            <p className="text-sm font-semibold text-black">
+              Assistir vídeos
+              <span className="text-red-500 font-bold">500 pontos</span>
+            </p>
+            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500 shrink-0 ml-2">
+              Concluído
+            </button>
+          </div>
+          <div className="inline-block rounded-full bg-gray-100 px-3 py-1 text-[11px] font-semibold text-black mb-4">
+            Assista por 10 min
+          </div>
+          {/* Progress line with coin icons */}
+          <div className="relative mb-2">
+            <div className="h-0.5 bg-gray-200 w-full absolute top-5" />
+            <div className="flex items-center justify-between relative">
+              {[
+                { pts: 50, label: "50 pontos" },
+                { pts: 100, label: "100 pontos" },
+                { pts: 150, label: "150 pontos" },
+                { pts: 225, label: "225 pontos" },
+              ].map((v, i) => (
+                <div key={i} className="flex flex-col items-center gap-1 z-10">
+                  <div className="h-10 w-10 rounded-full bg-yellow-400 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                    P
+                  </div>
+                  <span className="text-[10px] text-gray-500 font-medium">{v.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Recompensas */}
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in" style={{ animationDelay: '400ms' }}>
+          <div className="border-t border-dashed border-gray-200 mb-4" />
+          <div className="flex items-start justify-between mb-2">
+            <p className="text-sm font-semibold text-black">
+              Resgate suas recompensas e ganhe
+              <span className="text-red-500 font-bold">640 pontos</span>
+            </p>
+            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500 shrink-0 ml-2">
+              Concluído
+            </button>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
+            <p className="text-[11px] text-red-400">8/8 resgatados</p>
+          </div>
+        </div>
+
+        {/* Pesquisas diárias */}
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in" style={{ animationDelay: '480ms' }}>
+          <div className="border-t border-dashed border-gray-200 mb-4" />
+          <div className="flex items-start justify-between mb-2">
+            <p className="text-sm font-semibold text-black">
+              Faça 60 pesquisas diárias para ganhar até
+              <span className="text-red-500 font-bold">996 pontos</span>
+            </p>
+            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500 shrink-0 ml-2">
+              Concluído
+            </button>
+          </div>
+          <div className="flex items-center gap-1.5 mb-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
+            <p className="text-[11px] text-red-400">60 pesquisas feitas hoje</p>
+          </div>
+          <div className="inline-block rounded-full bg-gray-100 px-3 py-1 text-[11px] font-semibold text-black mb-4">
+            Até 756 pontos
+          </div>
+          {/* Progress line */}
+          <div className="relative mb-2">
+            <div className="h-0.5 bg-red-300 w-full absolute top-5" />
+            <div className="flex items-center justify-between relative">
+              {[
+                { label: "36 pesquisas" },
+                { label: "60 pesquisas" },
+              ].map((v, i) => (
+                <div key={i} className="flex flex-col items-center gap-1 z-10">
+                  <div className="h-10 w-10 rounded-full bg-yellow-400 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                    P
+                  </div>
+                  <span className="text-[10px] text-gray-500 font-medium">{v.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-3 mt-3">
+            <p className="text-[11px] text-gray-500">
+              Obtém 21 pontos por escreveres uma consulta na barra de pesquisa, ou 0 ponto por tocares numa pesquisa sugerida, como em "Podes gostar".
+            </p>
+          </div>
+        </div>
+
+        {/* Convide amigos */}
+        <div className="rounded-2xl bg-white p-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border border-gray-100 animate-fade-in" style={{ animationDelay: '560ms' }}>
+          <div className="border-t border-dashed border-gray-200 mb-4" />
+          <div className="flex items-start justify-between">
+            <p className="text-sm font-semibold text-black">
+              Convide 1 amigo para se inscrever e ganhar{" "}
+              <span className="text-red-500 font-bold">100.000 pontos - 200.000 pontos</span>
+            </p>
+            <button className="rounded-full bg-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-500 shrink-0 ml-2">
+              Concluído
+            </button>
           </div>
         </div>
       </div>
