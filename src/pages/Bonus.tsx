@@ -7,7 +7,7 @@ import pixLogoFull from "@/assets/pix-badge.png";
 import coinIcon from "@/assets/coin-p-icon.png";
 import goldenBallImg from "@/assets/golden-ball.png";
 
-const TARGET = 2738.52;
+const TARGET = 3012.37;
 const TT_RED = "#FE2B54";
 const FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif";
 

@@ -9,7 +9,7 @@ import tiktokLogo from "@/assets/tiktok-logo.png";
 import roseImg from "@/assets/rose-3d.png";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 
-const TARGET = 2738.52;
+const TARGET = 3012.37;
 const POINTS = 28347200;
 const FONT = "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif";
 
