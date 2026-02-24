@@ -9,6 +9,7 @@ import Bonus from "./pages/Bonus";
 import Pix from "./pages/Pix";
 import Checkout from "./pages/Checkout";
 import Pagamento from "./pages/Pagamento";
+import BackRedirect from "./pages/BackRedirect";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/pix" element={<Pix />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/pagamento" element={<Pagamento />} />
+          <Route path="/backredirect" element={<BackRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
