@@ -20,20 +20,17 @@ const BackRedirect = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-black overflow-hidden relative">
-      {/* Ambient glow effects */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/15 rounded-full blur-[100px] pointer-events-none" />
+    <div className="flex min-h-screen flex-col bg-white overflow-hidden relative">
 
       <div className="px-5 py-8 space-y-6 max-w-md mx-auto w-full relative z-10">
         {/* TikTok logo */}
         <div className="flex justify-center animate-fade-in">
-          <img src={tiktokLogo} alt="TikTok" className="h-9 brightness-0 invert" />
+          <img src={tiktokLogo} alt="TikTok" className="h-9" />
         </div>
 
         {/* Headline */}
         <div className="text-center space-y-3 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <h1 className="text-[26px] font-extrabold text-white leading-tight tracking-tight">
+          <h1 className="text-[26px] font-extrabold text-black leading-tight tracking-tight">
             ESPERE! Não Vá<br />Embora Ainda…
           </h1>
           <p className="text-[15px] font-semibold text-secondary leading-snug">
@@ -42,20 +39,17 @@ const BackRedirect = () => {
               1000
             </span>{" "}
             pessoas selecionadas{" "}
-            <span className="font-extrabold text-white">para um desconto EXCLUSIVO!</span>
+            <span className="font-extrabold text-black">para um desconto EXCLUSIVO!</span>
           </p>
         </div>
 
         {/* Price card */}
-        <div
-          className="rounded-3xl p-[1px] bg-gradient-to-br from-secondary via-secondary/40 to-primary/40 animate-fade-in"
-          style={{ animationDelay: "0.2s" }}
-        >
-          <div className="rounded-3xl bg-black/90 backdrop-blur-sm p-6 text-center space-y-2">
-            <p className="text-sm text-muted-foreground line-through">
+        <div className="rounded-3xl border-2 border-secondary/30 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="rounded-3xl bg-gradient-to-b from-secondary/5 to-secondary/10 p-6 text-center space-y-2">
+            <p className="text-sm text-gray-400 line-through">
               De R$ {PRECO_ORIGINAL.toFixed(2).replace(".", ",")}
             </p>
-            <p className="text-xl font-extrabold text-white leading-tight">
+            <p className="text-xl font-extrabold text-black leading-tight">
               Agora por<br />
               <span className="text-secondary">APENAS</span>
             </p>
@@ -75,25 +69,24 @@ const BackRedirect = () => {
 
         {/* Info cards */}
         <div className="space-y-3 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <div className="rounded-2xl border border-border bg-card p-4 flex items-start gap-3">
+          <div className="rounded-2xl border border-gray-200 bg-white p-4 flex items-start gap-3">
             <div className="h-9 w-9 rounded-xl bg-secondary/10 flex items-center justify-center shrink-0">
               <Shield className="h-4 w-4 text-secondary" />
             </div>
             <div>
-              <p className="text-sm font-bold text-white">Sua Segurança Garantida</p>
-              <p className="text-xs text-muted-foreground leading-relaxed mt-1">
-                A Taxa Anti-Fraude é essencial para verificar sua identidade e proteger sua conta. Um pequeno valor para sua tranquilidade.
+              <p className="text-sm font-bold text-black">Sua Segurança Garantida</p>
+              <p className="text-xs text-gray-500 leading-relaxed mt-1">
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border bg-card p-4 flex items-start gap-3">
+          <div className="rounded-2xl border border-gray-200 bg-white p-4 flex items-start gap-3">
             <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
               <Sparkles className="h-4 w-4 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-bold text-white">Oferta Por Tempo Limitado</p>
-              <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+              <p className="text-sm font-bold text-black">Oferta Por Tempo Limitado</p>
+              <p className="text-xs text-gray-500 leading-relaxed mt-1">
                 Os cupons com este super desconto são limitados. Garanta o seu antes que esta oportunidade exclusiva termine!
               </p>
             </div>
@@ -112,10 +105,10 @@ const BackRedirect = () => {
 
         {/* Footer text */}
         <div className="text-center space-y-1 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-          <p className="text-sm font-bold text-white">
+          <p className="text-sm font-bold text-black">
             Milhares já aproveitaram este benefício hoje!
           </p>
-          <p className="text-xs text-muted-foreground italic">
+          <p className="text-xs text-gray-400 italic">
             Não deixe essa chance escapar e finalize sua experiência com economia.
           </p>
         </div>
