@@ -9,7 +9,7 @@ import govbrLogo from "@/assets/govbr-logo.png";
 import receitaLogo from "@/assets/receita-federal-logo.png";
 
 const TARGET = 3834.72;
-const TAX = 37.90;
+const TAX = 32.71;
 
 const Checkout = () => {
   const nome = localStorage.getItem("tiktok_nome") || "—";
