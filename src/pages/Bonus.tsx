@@ -7,7 +7,7 @@ import pixLogoFull from "@/assets/pix-logo-full.png";
 import coinIcon from "@/assets/coin-icon.png";
 import goldenBallImg from "@/assets/golden-ball.png";
 
-const TARGET = 3834.72;
+const TARGET = 3200.00;
 const TT_RED = "#FE2C55";
 const TT_BLACK = "#161823";
 
