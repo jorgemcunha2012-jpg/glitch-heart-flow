@@ -150,7 +150,7 @@ const Bonus = () => {
         <div
           style={{
             background: "#FFFFFF",
-            padding: 20,
+            padding: "24px 24px",
             borderRadius: 12,
             margin: "20px 0",
             display: "flex",
@@ -158,19 +158,22 @@ const Bonus = () => {
             justifyContent: "space-between",
           }}
         >
-          <div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#000", margin: 0 }}>Parabéns!</h2>
-            <p style={{ fontSize: 18, fontWeight: 700, color: "#000", margin: "4px 0 0", lineHeight: 1.3 }}>
-              Você concluiu todas as tarefas
-            </p>
-            <p style={{ fontSize: 22, fontWeight: 700, color: TT_RED, margin: "6px 0 0" }}>
+          <div style={{ flex: 1 }}>
+            <h2 style={{ fontSize: 26, fontWeight: 800, color: "#000", margin: 0, lineHeight: 1.25 }}>
+              Parabéns!
+              <br />
+              Você concluiu
+              <br />
+              todas as tarefas
+            </h2>
+            <p style={{ fontSize: 24, fontWeight: 700, color: TT_RED, margin: "8px 0 0" }}>
               R$ {formatBRL(TARGET)}
             </p>
           </div>
           <img
             src={calendarCoinsImg}
             alt="Calendário com moedas"
-            style={{ width: 130, height: 130, objectFit: "contain", marginRight: -10 }}
+            style={{ width: 150, height: 150, objectFit: "contain", marginRight: -8, flexShrink: 0 }}
             loading="lazy"
             decoding="async"
           />
