@@ -372,20 +372,21 @@ const Bonus = () => {
         >
           <div
             style={{
-              background: "#FFFFFF",
+              background: "linear-gradient(180deg, #fffdf5 0%, #FFFFFF 40%)",
               borderRadius: 16,
-              padding: 20,
-              width: 320,
+              padding: "20px 24px 24px",
+              width: "calc(100% - 48px)",
+              maxWidth: 380,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
               position: "relative",
-              paddingTop: 70,
+              paddingTop: 60,
             }}
           >
-            <div style={{ position: "absolute", top: -50, left: "50%", transform: "translateX(-50%)" }}>
-              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 130, height: 130, objectFit: "contain" }} loading="lazy" decoding="async" />
+            <div style={{ position: "absolute", top: -55, left: "50%", transform: "translateX(-50%)" }}>
+              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 120, height: 120, objectFit: "contain" }} loading="lazy" decoding="async" />
             </div>
 
             <h3 style={{ fontSize: 20, fontWeight: 700, color: "#000", margin: "0 0 8px" }}>Gol de Prêmios</h3>
