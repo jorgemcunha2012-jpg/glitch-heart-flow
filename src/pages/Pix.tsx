@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CreditCard, ChevronRight } from "lucide-react";
 import pixLogoIcon from "@/assets/pix-logo-icon.png";
+import coinLargeImg from "@/assets/coin-large.png";
 import pixLogoIcon2 from "@/assets/pix-logo-icon-2.png";
 import { Progress } from "@/components/ui/progress";
 import tiktokLogo from "@/assets/tiktok-logo.png";
@@ -220,15 +221,16 @@ const Pix = () => {
               <p className="text-3xl font-extrabold text-white">
                 R$ {value.toFixed(2).replace(".", ",")}
               </p>
-              <p className="text-xs text-gray-500 mt-1">= {POINTS.toLocaleString("pt-BR")} pontos (s)</p>
+              <p className="text-xs text-gray-500 mt-1">= {POINTS.toLocaleString("pt-BR")} pontos</p>
             </div>
-            <div className="h-14 w-14 rounded-full bg-yellow-500 flex items-center justify-center">
-              <span className="text-2xl font-bold text-white">P</span>
-            </div>
+            <img src={coinLargeImg} alt="P" className="h-16 w-16 object-contain" loading="lazy" decoding="async" />
           </div>
-          <div className="mt-3 bg-gray-800 rounded-lg px-3 py-2">
-            <p className="text-xs text-gray-400">Última recompensa: R$ 646,43</p>
-          </div>
+        </div>
+
+        {/* Separador + Última recompensa */}
+        <div style={{ borderTop: "1.5px solid #E0E0E0", margin: "0 4px" }} />
+        <div className="rounded-xl bg-gray-100 px-4 py-2.5">
+          <p className="text-xs text-gray-500 font-medium">Última recompensa: R$ 646,43</p>
         </div>
 
         {/* Sacar dinheiro */}
