@@ -386,7 +386,7 @@ const Bonus = () => {
             }}
           >
             <div style={{ position: "absolute", top: -37, left: "50%", transform: "translateX(-50%)" }}>
-              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 82, height: 82, objectFit: "contain" }} loading="lazy" decoding="async" />
+              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 102, height: 102, objectFit: "contain" }} loading="lazy" decoding="async" />
             </div>
 
             <h3 style={{ fontSize: 14, fontWeight: 700, color: "#000", margin: "0 0 5px" }}>Gol de Prêmios</h3>
