@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, Star, User } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokRound from "@/assets/tiktok-round.png";
+import pixLogo3 from "@/assets/pix-logo-icon-3.png";
 
 const TAX = 37.90;
 const SALDO = 2770.0;
@@ -109,7 +110,7 @@ const Pagamento = () => {
           <h3 className="text-xl font-bold text-black mb-4">Escolha um método de pagamento...</h3>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-secondary text-xl">💠</span>
+              <img src={pixLogo3} alt="Pix" className="h-6 w-6" />
               <div>
                 <p className="text-sm font-bold text-black">Pagamento via Pix</p>
                 <p className="text-xs text-gray-400">Aprovação imediata.</p>
