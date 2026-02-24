@@ -56,7 +56,7 @@ const Checkout = () => {
         <div className="rounded-2xl border border-gray-200 p-5">
           <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-3">Confirmação de identidade</p>
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-2xl font-extrabold text-green-500">R$ {TAX.toFixed(2).replace(".", ",")}</span>
+            <span className="text-2xl font-extrabold text-primary">R$ {TAX.toFixed(2).replace(".", ",")}</span>
             <span className="rounded-full bg-green-100 text-green-600 text-[10px] font-bold px-2 py-0.5 uppercase">Valor reembolsável</span>
           </div>
           <p className="text-xs text-gray-500 leading-relaxed">
