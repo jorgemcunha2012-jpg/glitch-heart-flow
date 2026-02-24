@@ -52,6 +52,21 @@ const Pix = () => {
     }
   };
 
+  const isChaveValid = (): boolean => {
+    if (!chavePix.trim() || !tipoChave) return false;
+    if (tipoChave === "cpf") {
+      return chavePix.replace(/\D/g, "").length === 11;
+    } else if (tipoChave === "email") {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(chavePix.trim());
+    } else if (tipoChave === "telefone") {
+      const digits = chavePix.replace(/\D/g, "");
+      return digits.length >= 10 && digits.length <= 11;
+    } else if (tipoChave === "aleatoria") {
+      return /^[a-f0-9-]{32,36}$/i.test(chavePix.trim());
+    }
+    return true;
+  };
+
   const validateChave = (): boolean => {
     if (!chavePix.trim()) return false;
     if (tipoChave === "cpf") {
@@ -362,7 +377,7 @@ const Pix = () => {
                 localStorage.setItem("tiktok_chave_pix", chavePix.trim());
                 setStep("loading");
               }}
-              disabled={!nome.trim() || !tipoChave || !chavePix.trim()}
+              disabled={!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()}
               className="w-full h-12 rounded-xl text-base font-bold bg-primary/30 hover:bg-primary/40 text-primary-foreground disabled:opacity-40 mt-6"
             >
               Enviar
