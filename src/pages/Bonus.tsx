@@ -103,7 +103,7 @@ const Bonus = () => {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ fontSize: 12, fontWeight: 500, color: "#000" }}>Seu saldo</span>
-              <CoinImg size={16} />
+              <CoinImg size={11} />
             </div>
             <p style={{ fontSize: 18, fontWeight: 700, color: "#000000", margin: "3px 0 0" }}>
               R$ {formatBRL(value)}
@@ -214,7 +214,7 @@ const Bonus = () => {
                         justifyContent: "center",
                       }}
                     >
-                      <CoinImg size={24} />
+                      <CoinImg size={17} />
                     </div>
                     <div
                       style={{
@@ -278,7 +278,7 @@ const Bonus = () => {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
                 {["50 pontos", "100 pontos", "150 pontos", "225 pontos"].map((label, i) => (
                   <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                    <CoinImg size={28} />
+                    <CoinImg size={20} />
                     <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
                   </div>
                 ))}
@@ -334,7 +334,7 @@ const Bonus = () => {
               <div style={{ display: "flex", justifyContent: "space-around", position: "relative" }}>
                 {["16 pesquisas", "36 pesquisas", "60 pesquisas"].map((label, i) => (
                   <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                    <CoinImg size={28} />
+                    <CoinImg size={20} />
                     <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
                   </div>
                 ))}
