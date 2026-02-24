@@ -170,7 +170,7 @@ const Pix = () => {
   if (step === "loading") {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white px-6">
-        <img src={tiktokLogo} alt="TikTok" className="h-7 mb-16" />
+        <img src={tiktokLogo} alt="TikTok" className="h-7 mb-16" loading="lazy" decoding="async" />
         <div className="w-full max-w-xs flex flex-col items-center gap-6">
           <div className="space-y-3 w-full">
             {loadingMessages.map((msg, i) => (
@@ -237,7 +237,7 @@ const Pix = () => {
           <div className="flex items-center gap-1.5 mb-4">
             <CreditCard className="h-4 w-4 text-gray-400" />
             <span className="text-xs text-gray-400">Transferencia via /</span>
-            <img src={pixLogoIcon} alt="Pix" className="h-4 w-4" />
+            <img src={pixLogoIcon} alt="Pix" className="h-4 w-4" loading="lazy" decoding="async" />
             <span className="text-xs font-bold text-teal-500">pix</span>
           </div>
 
@@ -308,7 +308,7 @@ const Pix = () => {
               className="w-full flex items-center justify-between rounded-xl border-2 border-orange-400 p-4"
             >
               <div className="flex items-center gap-3">
-                <img src={pixLogoIcon2} alt="Pix" className="h-6 w-6" />
+                <img src={pixLogoIcon2} alt="Pix" className="h-6 w-6" loading="lazy" decoding="async" />
                 <div className="text-left">
                   <p className="text-sm font-bold text-black">PIX</p>
                   <p className="text-xs text-gray-400">Recebimento Imediato</p>

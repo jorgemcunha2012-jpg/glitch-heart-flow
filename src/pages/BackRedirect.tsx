@@ -25,7 +25,7 @@ const BackRedirect = () => {
       <div className="px-5 py-8 space-y-6 max-w-md mx-auto w-full relative z-10">
         {/* TikTok logo */}
         <div className="flex justify-center animate-fade-in">
-          <img src={tiktokLogo} alt="TikTok" className="h-9" />
+          <img src={tiktokLogo} alt="TikTok" className="h-9" loading="lazy" decoding="async" />
         </div>
 
         {/* Headline */}
