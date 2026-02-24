@@ -61,9 +61,9 @@ const Pagamento = () => {
         {/* Product card */}
         <div className="rounded-2xl bg-white border border-gray-200 p-5">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-14 w-14 rounded-2xl bg-black flex items-center justify-center shrink-0">
-              <span className="text-2xl">♪</span>
-            </div>
+            
+
+
             <div>
               <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
               <p className="text-xs text-gray-400">Tiktok ltda</p>
