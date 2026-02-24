@@ -4,18 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import calendarCoinsImg from "@/assets/calendar-coins.png";
 import pixLogoFull from "@/assets/pix-logo-full.png";
-
+import coinIcon from "@/assets/coin-icon.png";
 const TARGET = 3834.72;
 
 const checkInValues = [50, 100, 150, 200, 250, 300];
 
-const CoinIcon = ({ size = 32 }: { size?: number }) => (
-  <div
-    className="rounded-full bg-gradient-to-b from-yellow-300 to-yellow-500 flex items-center justify-center shadow-sm"
-    style={{ width: size, height: size, border: '2px solid #d4a017' }}
-  >
-    <span className="text-white font-extrabold" style={{ fontSize: size * 0.4 }}>P</span>
-  </div>
+const CoinImg = ({ size = 32 }: { size?: number }) => (
+  <img src={coinIcon} alt="moeda" style={{ width: size, height: size }} className="object-contain" />
 );
 
 const Bonus = () => {
@@ -69,7 +64,7 @@ const Bonus = () => {
         <div className="rounded-2xl bg-[#f5f5f5] p-5 mb-4 animate-fade-in">
           <div className="flex items-center gap-1.5 mb-0.5">
             <span className="text-[15px] text-gray-600 font-medium">Seu saldo</span>
-            <CoinIcon size={20} />
+            <CoinImg size={20} />
           </div>
           <div className="flex items-end justify-between mt-1">
             <p className="text-[32px] font-extrabold text-black leading-none tracking-tight">
@@ -147,7 +142,7 @@ const Bonus = () => {
                     className="rounded-full bg-pink-50 flex items-center justify-center"
                     style={{ width: 48, height: 48, border: '2px solid #f5c2d0' }}
                   >
-                    <CoinIcon size={26} />
+                    <CoinImg size={26} />
                   </div>
                   <div
                     className="absolute flex items-center justify-center bg-white rounded-full"
@@ -203,7 +198,7 @@ const Bonus = () => {
             <div className="flex items-center justify-between relative">
               {["50 pontos", "100 pontos", "150 pontos", "225 pontos"].map((label, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5 z-10">
-                  <CoinIcon size={36} />
+                  <CoinImg size={36} />
                   <span className="text-[11px] text-[#888] font-medium">{label}</span>
                 </div>
               ))}
@@ -255,7 +250,7 @@ const Bonus = () => {
             <div className="flex items-center justify-around relative">
               {["36 pesquisas", "60 pesquisas"].map((label, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5 z-10">
-                  <CoinIcon size={36} />
+                  <CoinImg size={36} />
                   <span className="text-[11px] text-[#888] font-medium">{label}</span>
                 </div>
               ))}
