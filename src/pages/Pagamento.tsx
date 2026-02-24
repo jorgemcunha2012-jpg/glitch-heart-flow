@@ -4,7 +4,7 @@ import { CheckCircle2, Star, User } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokRound from "@/assets/tiktok-round.png";
 
-const TAX = 21.07;
+const TAX = 37.90;
 const SALDO = 2770.0;
 
 const testimonials = [
