@@ -249,25 +249,25 @@ const Bonus = () => {
               <img src={goldenBallImg} alt="Gol de Prêmios" className="h-24 w-24 object-contain drop-shadow-md" />
             </div>
 
-            <h3 className="text-lg font-extrabold text-foreground mb-1.5">Gol de Prêmios</h3>
-            <p className="text-xs text-muted-foreground mb-5 leading-relaxed">
+            <h3 className="text-lg font-extrabold text-black mb-1.5">Gol de Prêmios</h3>
+            <p className="text-xs text-gray-500 mb-5 leading-relaxed">
               Parabéns! Como parte de uma
               <br />
               campanha de recompensas exclusiva.
             </p>
 
-            <p className="text-3xl font-extrabold text-foreground tracking-tight mb-5">
+            <p className="text-3xl font-extrabold text-black tracking-tight mb-5">
               R$ {TARGET.toFixed(2).replace(".", ",")}
             </p>
 
             {/* Timer */}
-            <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mb-6">
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-400 mb-6">
               <span className="text-xs">Expira em</span>
-              <span className="font-mono font-bold text-foreground">{pad(hours)}</span>
+              <span className="font-mono font-bold text-black">{pad(hours)}</span>
               <span className="font-bold">:</span>
-              <span className="font-mono font-bold text-foreground">{pad(mins)}</span>
+              <span className="font-mono font-bold text-black">{pad(mins)}</span>
               <span className="font-bold">:</span>
-              <span className="font-mono font-bold text-foreground">{pad(secs)}</span>
+              <span className="font-mono font-bold text-black">{pad(secs)}</span>
             </div>
 
             <Button
