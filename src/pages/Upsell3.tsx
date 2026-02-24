@@ -35,10 +35,10 @@ const Upsell3 = () => {
     navigate("/pagamento");
   };
 
-  const fadeUp = (delay: number) => ({
+  const fadeUp = (delay: number): React.CSSProperties => ({
     opacity: visible ? 1 : 0,
-    transform: visible ? "translateY(0)" : "translateY(18px)",
-    transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
+    transform: visible ? "translateY(0)" : "translateY(20px)",
+    transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
   });
 
   return (
@@ -61,7 +61,7 @@ const Upsell3 = () => {
         display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
         boxShadow: `0 2px 12px rgba(254,43,84,0.2)`,
       }}>
-        <Zap size={14} />
+        <Zap size={14} style={{ animation: "zapFlash 2s ease-in-out infinite" }} />
         RECEBA SALDO + TAXAS DE VOLTA
       </div>
 
@@ -77,12 +77,12 @@ const Upsell3 = () => {
         }}>
           <div style={{
             ...fadeUp(0.1),
-            width: 56, height: 56,
-            background: GREEN,
+            width: 56, height: 56, background: GREEN,
             borderRadius: "50%",
             display: "flex", alignItems: "center", justifyContent: "center",
             margin: "0 auto 16px",
             boxShadow: `0 4px 20px rgba(16,185,129,0.3), 0 0 0 6px rgba(16,185,129,0.08)`,
+            animation: "softPulse 2.5s ease-in-out infinite",
           }}>
             <Coins size={24} color="#fff" />
           </div>
@@ -107,7 +107,6 @@ const Upsell3 = () => {
           marginTop: 12,
           boxShadow: "0 2px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
         }}>
-          {/* Badge */}
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 6,
             background: RED, color: "#fff",
@@ -122,13 +121,12 @@ const Upsell3 = () => {
           {/* Highlight Box */}
           <div style={{
             background: "#FFF0F3", borderRadius: 12, padding: "16px 14px",
-            margin: "0 0 16px",
-            border: `1px solid rgba(254,43,84,0.1)`,
+            margin: "0 0 16px", border: `1px solid rgba(254,43,84,0.1)`,
             textAlign: "center",
             boxShadow: "inset 0 1px 0 rgba(255,255,255,0.6)",
           }}>
             <p style={{ fontSize: 13, fontWeight: 600, color: "#000", marginBottom: 4 }}>Você vai receber:</p>
-            <p style={{ fontSize: 24, fontWeight: 800, color: RED, margin: "4px 0" }}>
+            <p style={{ fontSize: 24, fontWeight: 800, color: RED, margin: "4px 0", animation: "countPulse 3s ease-in-out infinite" }}>
               R$ {CASHBACK.toFixed(2).replace(".", ",")}
             </p>
             <p style={{ fontSize: 11, color: "#848286" }}>Pagando apenas 9% das taxas</p>
@@ -136,6 +134,7 @@ const Upsell3 = () => {
 
           {/* 9% pill */}
           <div style={{
+            ...fadeUp(0.3),
             display: "flex", alignItems: "center", gap: 8,
             background: "#F8F9FB", padding: "10px 14px", borderRadius: 10,
             marginBottom: 16,
@@ -155,6 +154,7 @@ const Upsell3 = () => {
 
           {/* Fee Section */}
           <div style={{
+            ...fadeUp(0.35),
             background: "#F8F9FB", borderRadius: 12, padding: "14px",
             marginBottom: 16, textAlign: "center",
             boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 3px rgba(0,0,0,0.03)",
@@ -174,14 +174,14 @@ const Upsell3 = () => {
             style={{
               width: "100%", border: 0, borderRadius: 99,
               padding: "17px 16px", fontSize: 15, fontWeight: 700,
-              cursor: "pointer", color: "#fff",
-              background: GREEN,
+              cursor: "pointer", color: "#fff", background: GREEN,
               display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
               boxShadow: `0 6px 24px rgba(16,185,129,0.3), 0 2px 6px rgba(16,185,129,0.15), inset 0 1px 0 rgba(255,255,255,0.15)`,
               fontFamily: FONT, letterSpacing: "0.2px",
               transition: "transform 0.15s ease",
+              animation: "ctaGlowGreen 2s ease-in-out infinite",
             }}
-            onMouseDown={e => (e.currentTarget.style.transform = "scale(0.98)")}
+            onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
             onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
             onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
           >
@@ -192,10 +192,9 @@ const Upsell3 = () => {
 
         {/* Timer + Security */}
         <div style={{
-          ...fadeUp(0.3),
+          ...fadeUp(0.4),
           background: "#fff", borderRadius: 12, padding: "14px 16px",
-          marginTop: 12,
-          boxShadow: "0 1px 12px rgba(0,0,0,0.04)",
+          marginTop: 12, boxShadow: "0 1px 12px rgba(0,0,0,0.04)",
           display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 500, color: "#848286" }}>
@@ -211,11 +210,29 @@ const Upsell3 = () => {
           </div>
         </div>
 
-        {/* Footer */}
-        <p style={{ ...fadeUp(0.35), textAlign: "center", fontSize: 11, color: "#aaa", marginTop: 14, lineHeight: 1.5, padding: "0 8px" }}>
+        <p style={{ ...fadeUp(0.45), textAlign: "center", fontSize: 11, color: "#aaa", marginTop: 14, lineHeight: 1.5, padding: "0 8px" }}>
           Última oportunidade de receber o valor completo com todas as taxas de volta.
         </p>
       </div>
+
+      <style>{`
+        @keyframes softPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.06); }
+        }
+        @keyframes zapFlash {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.6; transform: scale(1.15); }
+        }
+        @keyframes countPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.03); }
+        }
+        @keyframes ctaGlowGreen {
+          0%, 100% { box-shadow: 0 6px 24px rgba(16,185,129,0.3), 0 2px 6px rgba(16,185,129,0.15), inset 0 1px 0 rgba(255,255,255,0.15); }
+          50% { box-shadow: 0 8px 32px rgba(16,185,129,0.4), 0 4px 12px rgba(16,185,129,0.2), inset 0 1px 0 rgba(255,255,255,0.15); }
+        }
+      `}</style>
     </div>
   );
 };
