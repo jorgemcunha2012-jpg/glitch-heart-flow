@@ -34,8 +34,6 @@ const testimonials = [
 const Pagamento = () => {
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [telefone, setTelefone] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixData, setPixData] = useState<{
     qr_code: string;
@@ -58,8 +56,8 @@ const Pagamento = () => {
           customer: {
             name: nomeCompleto.trim(),
             email: email.trim(),
-            document: cpf.replace(/\D/g, ""),
-            phone: telefone.replace(/\D/g, ""),
+            document: "00000000000",
+            phone: "00000000000",
           },
         },
       });
@@ -95,11 +93,7 @@ const Pagamento = () => {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const isFormValid =
-    email.trim() &&
-    nomeCompleto.trim() &&
-    cpf.replace(/\D/g, "").length >= 11 &&
-    telefone.replace(/\D/g, "").length >= 10;
+  const isFormValid = email.trim() && nomeCompleto.trim();
 
   // Show QR code screen after payment generated
   if (pixData) {
@@ -221,28 +215,6 @@ const Pagamento = () => {
                 value={nomeCompleto}
                 onChange={(e) => setNomeCompleto(e.target.value)}
                 placeholder="Nome e sobrenome"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-semibold text-black block mb-2">CPF</label>
-              <input
-                type="text"
-                value={cpf}
-                onChange={(e) => setCpf(e.target.value)}
-                placeholder="Apenas números"
-                maxLength={14}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-semibold text-black block mb-2">Telefone</label>
-              <input
-                type="tel"
-                value={telefone}
-                onChange={(e) => setTelefone(e.target.value)}
-                placeholder="DDD + número"
-                maxLength={15}
                 className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
               />
             </div>
