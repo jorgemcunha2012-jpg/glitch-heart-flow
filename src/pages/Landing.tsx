@@ -50,6 +50,7 @@ const Landing = () => {
   const handleVerify = async () => {
     if (!username.trim()) return;
     setStep("verifying");
+    const verifyStart = Date.now();
 
     const cleanUsername = username.trim().replace(/^@/, '');
     localStorage.setItem("tiktok_username", cleanUsername);
@@ -67,6 +68,11 @@ const Landing = () => {
     } catch (err) {
       console.log('Avatar fetch failed, using fallback', err);
     }
+
+    // Ensure at least 3 seconds on the loading screen
+    const elapsed = Date.now() - verifyStart;
+    const remaining = Math.max(0, 3000 - elapsed);
+    if (remaining > 0) await new Promise((r) => setTimeout(r, remaining));
 
     setStep("success");
     setConfetti(generateConfetti(60));
@@ -140,12 +146,12 @@ const Landing = () => {
       {/* Fullscreen Verificando */}
       {step === "verifying" && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
-          <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6" />
-          <div className="flex items-center gap-3 mb-4">
+          <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6 animate-fade-in" />
+          <div className="flex items-center gap-3 mb-4 animate-fade-in" style={{ animationDelay: "0.6s", animationFillMode: "both" }}>
             <span className="inline-block h-3 w-3 rounded-full bg-secondary animate-[swap-left_1s_ease-in-out_infinite]" />
             <span className="inline-block h-3 w-3 rounded-full bg-primary animate-[swap-right_1s_ease-in-out_infinite]" />
           </div>
-          <p className="text-sm text-gray-500">Verificando elegibilidade...</p>
+          <p className="text-sm text-gray-500 animate-fade-in" style={{ animationDelay: "0.6s", animationFillMode: "both" }}>Verificando elegibilidade...</p>
         </div>
       )}
 
