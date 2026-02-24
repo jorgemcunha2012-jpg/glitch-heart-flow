@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import { supabase } from "@/integrations/supabase/client";
 
 // Confetti piece component
 const CONFETTI_COLORS = ["#EE1D52", "#69C9D0", "#FFD700", "#FF6B6B", "#4ECDC4", "#A78BFA", "#F97316"];
@@ -34,16 +35,31 @@ const Landing = () => {
   const [username, setUsername] = useState("");
   const [step, setStep] = useState<"idle" | "verifying" | "success">("idle");
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     if (!username.trim()) return;
     setStep("verifying");
-    setTimeout(() => {
-      setStep("success");
-      setConfetti(generateConfetti(60));
-      localStorage.setItem("tiktok_username", username.trim());
-    }, 3000);
+    
+    // Fetch avatar in parallel with the delay
+    const cleanUsername = username.trim().replace(/^@/, '');
+    
+    try {
+      const { data } = await supabase.functions.invoke('tiktok-avatar', {
+        body: { username: cleanUsername },
+      });
+      if (data?.success && data?.avatarUrl) {
+        setAvatarUrl(data.avatarUrl);
+        localStorage.setItem("tiktok_avatar", data.avatarUrl);
+      }
+    } catch (err) {
+      console.log('Avatar fetch failed, using fallback', err);
+    }
+
+    setStep("success");
+    setConfetti(generateConfetti(60));
+    localStorage.setItem("tiktok_username", cleanUsername);
   };
 
   // Clear confetti after 5s
@@ -158,9 +174,13 @@ const Landing = () => {
               <div className="h-28 w-28 rounded-full border-[3px] border-primary/30 flex items-center justify-center">
                 {/* Gradient arc ring */}
                 <div className="h-24 w-24 rounded-full p-[3px] bg-gradient-to-br from-secondary via-gray-400 to-primary">
-                  {/* Orange avatar */}
-                  <div className="h-full w-full rounded-full bg-orange-500 flex items-center justify-center">
-                    <span className="text-3xl font-bold text-white">{initial}</span>
+                  {/* Avatar - real photo or fallback */}
+                  <div className="h-full w-full rounded-full bg-orange-500 flex items-center justify-center overflow-hidden">
+                    {avatarUrl ? (
+                      <img src={avatarUrl} alt={username} className="h-full w-full object-cover" />
+                    ) : (
+                      <span className="text-3xl font-bold text-white">{initial}</span>
+                    )}
                   </div>
                 </div>
               </div>
