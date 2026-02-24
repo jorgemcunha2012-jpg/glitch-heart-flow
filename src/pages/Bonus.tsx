@@ -373,33 +373,33 @@ const Bonus = () => {
           <div
             style={{
               background: "linear-gradient(180deg, #fffdf5 0%, #FFFFFF 40%)",
-              borderRadius: 16,
-              padding: "20px 24px 24px",
-              width: "calc(100% - 48px)",
-              maxWidth: 380,
+              borderRadius: 13,
+              padding: "16px 19px 19px",
+              width: "calc(100% - 80px)",
+              maxWidth: 304,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
               position: "relative",
-              paddingTop: 60,
+              paddingTop: 48,
             }}
           >
-            <div style={{ position: "absolute", top: -55, left: "50%", transform: "translateX(-50%)" }}>
-              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 120, height: 120, objectFit: "contain" }} loading="lazy" decoding="async" />
+            <div style={{ position: "absolute", top: -44, left: "50%", transform: "translateX(-50%)" }}>
+              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 96, height: 96, objectFit: "contain" }} loading="lazy" decoding="async" />
             </div>
 
-            <h3 style={{ fontSize: 20, fontWeight: 700, color: "#000", margin: "0 0 8px" }}>Gol de Prêmios</h3>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "rgb(64,63,58)", margin: "0 0 16px", lineHeight: 1.5 }}>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: "#000", margin: "0 0 6px" }}>Gol de Prêmios</h3>
+            <p style={{ fontSize: 11, fontWeight: 500, color: "rgb(64,63,58)", margin: "0 0 13px", lineHeight: 1.5 }}>
               Parabéns! Como parte de uma campanha de recompensas exclusiva.
             </p>
 
-            <p style={{ fontSize: 36, fontWeight: 700, color: "#000", margin: "0 0 16px" }}>
+            <p style={{ fontSize: 29, fontWeight: 700, color: "#000", margin: "0 0 13px" }}>
               R$ {formatBRL(TARGET)}
             </p>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20 }}>
-              <span style={{ fontSize: 10, fontWeight: 500, color: "rgb(64,63,58)" }}>Expira em</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 16 }}>
+              <span style={{ fontSize: 8, fontWeight: 500, color: "rgb(64,63,58)" }}>Expira em</span>
               <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
                 {[pad(hours), pad(mins), pad(secs)].map((digit, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -408,18 +408,18 @@ const Bonus = () => {
                         display: "inline-flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        width: 20,
-                        height: 23,
+                        width: 16,
+                        height: 18,
                         background: "#F1F1F3",
                         borderRadius: 2,
-                        fontSize: 10,
+                        fontSize: 8,
                         fontWeight: 600,
                         color: "#020817",
                       }}
                     >
                       {digit}
                     </span>
-                    {i < 2 && <span style={{ fontSize: 10, fontWeight: 600, color: "#020817" }}>:</span>}
+                    {i < 2 && <span style={{ fontSize: 8, fontWeight: 600, color: "#020817" }}>:</span>}
                   </div>
                 ))}
               </div>
@@ -428,13 +428,13 @@ const Bonus = () => {
             <button
               onClick={() => setShowModal(false)}
               style={{
-                width: 270,
-                height: 53,
+                width: 216,
+                height: 42,
                 background: TT_RED,
                 color: "#fff",
                 border: "none",
                 borderRadius: 99,
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: 600,
                 cursor: "pointer",
               }}
