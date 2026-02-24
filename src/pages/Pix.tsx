@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CreditCard, ChevronRight } from "lucide-react";
 import pixLogoIcon from "@/assets/pix-logo-icon.png";
+import pixLogoIcon2 from "@/assets/pix-logo-icon-2.png";
 import { Progress } from "@/components/ui/progress";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 
@@ -195,7 +196,7 @@ const Pix = () => {
               className="w-full flex items-center justify-between rounded-xl border-2 border-orange-400 p-4"
             >
               <div className="flex items-center gap-3">
-                <span className="text-teal-500 text-lg">💠</span>
+                <img src={pixLogoIcon2} alt="Pix" className="h-6 w-6" />
                 <div className="text-left">
                   <p className="text-sm font-bold text-black">PIX</p>
                   <p className="text-xs text-gray-400">Recebimento Imediato</p>
