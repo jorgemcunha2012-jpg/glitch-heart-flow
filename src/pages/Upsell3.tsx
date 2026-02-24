@@ -337,13 +337,6 @@ const Upsell3 = () => {
             boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 3px rgba(0,0,0,0.02)",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{
-                display: "inline-flex", alignItems: "center", justifyContent: "center",
-                background: `linear-gradient(135deg, ${RED}, #E91E4D)`,
-                color: "#fff", width: 26, height: 26, borderRadius: "50%",
-                fontSize: 9, fontWeight: 800,
-                boxShadow: `0 2px 6px rgba(254,43,84,0.2)`,
-              }}>9%</span>
               <span style={{ fontSize: 12, color: "#666" }}>Taxa única de liberação</span>
             </div>
             <span style={{ fontSize: 15, fontWeight: 800, color: "#000" }}>
