@@ -35,17 +35,27 @@ serve(async (req) => {
       });
     }
 
-    const payload = {
-      pixel_code: PIXEL_ID,
+    const eventData: Record<string, unknown> = {
       event: event,
       event_id: event_id || crypto.randomUUID(),
-      timestamp: new Date().toISOString(),
-      context: {
-        user_agent: req.headers.get('user-agent') || '',
+      event_time: Math.floor(Date.now() / 1000),
+      user: {
         ip: req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || '',
+        user_agent: req.headers.get('user-agent') || '',
       },
-      properties: properties || {},
     };
+
+    if (properties) {
+      eventData.properties = properties;
+    }
+
+    const payload = {
+      event_source: "web",
+      event_source_id: PIXEL_ID,
+      data: [eventData],
+    };
+
+    console.log("Sending TikTok event:", JSON.stringify(payload));
 
     const response = await fetch(TIKTOK_EVENTS_URL, {
       method: 'POST',
@@ -53,19 +63,12 @@ serve(async (req) => {
         'Content-Type': 'application/json',
         'Access-Token': ACCESS_TOKEN,
       },
-      body: JSON.stringify({
-        pixel_code: PIXEL_ID,
-        event: event,
-        event_id: payload.event_id,
-        timestamp: payload.timestamp,
-        context: payload.context,
-        properties: payload.properties,
-      }),
+      body: JSON.stringify(payload),
     });
 
     const data = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || data.code !== 0) {
       console.error(`TikTok Events API error [${response.status}]:`, data);
       throw new Error(`TikTok API error [${response.status}]: ${JSON.stringify(data)}`);
     }
