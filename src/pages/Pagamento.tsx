@@ -49,9 +49,9 @@ const Pagamento = () => {
         </div>
 
         {/* Info banner */}
-        <div className="rounded-xl bg-black px-4 py-2.5 flex items-center justify-center gap-2">
-          <p className="text-xs font-medium text-white">Confirmação instantânea •</p>
-          <p className="text-xs font-medium text-white">PIX cai em até 2 minutos</p>
+        <div className="rounded-xl bg-black px-4 py-3 text-center space-y-0.5">
+          <p className="text-xs font-semibold text-white">Confirmação instantânea</p>
+          <p className="text-[11px] text-gray-400">PIX cai em até 2 minutos</p>
         </div>
 
         {/* Product card */}
