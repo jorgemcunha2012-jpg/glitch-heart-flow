@@ -58,11 +58,11 @@ const Bonus = () => {
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-pink-50 to-white">
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4">
-        <img src={tiktokLogo} alt="TikTok" className="h-5" />
+        <img src={tiktokLogo} alt="TikTok" className="h-5" loading="lazy" decoding="async" />
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center overflow-hidden">
             {avatarUrl ? (
-              <img src={avatarUrl} alt={username} className="h-full w-full object-cover" />
+              <img src={avatarUrl} alt={username} className="h-full w-full object-cover" loading="lazy" decoding="async" />
             ) : (
               <span className="text-xs font-bold text-white">{initial}</span>
             )}
@@ -110,7 +110,7 @@ const Bonus = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <img src={goldenBallImg} alt="Troféu" className="h-16 w-16 object-contain" />
+                <img src={goldenBallImg} alt="Troféu" className="h-16 w-16 object-contain" loading="lazy" decoding="async" />
                 <span className="text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">100%</span>
               </div>
             </div>
@@ -218,7 +218,7 @@ const Bonus = () => {
           <div className="w-full max-w-xs rounded-3xl bg-white pt-14 pb-6 px-6 text-center shadow-2xl animate-scale-in relative">
             {/* Golden ball icon - overflowing top */}
             <div className="absolute -top-12 left-1/2 -translate-x-1/2">
-              <img src={goldenBallImg} alt="Gol de Prêmios" className="h-24 w-24 object-contain drop-shadow-md" />
+              <img src={goldenBallImg} alt="Gol de Prêmios" className="h-24 w-24 object-contain drop-shadow-md" loading="lazy" decoding="async" />
             </div>
 
             <h3 className="text-lg font-extrabold text-black mb-1.5">Gol de Prêmios</h3>

@@ -46,13 +46,13 @@ const Progresso = () => {
   return (
     <div className="flex min-h-screen flex-col items-center bg-gradient-to-b from-pink-50 to-white px-4 py-6">
       {/* TikTok Logo */}
-      <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6" />
+      <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6" loading="lazy" decoding="async" />
 
       {/* User Card */}
       <div className="w-full max-w-sm rounded-full bg-white shadow-sm border border-gray-100 flex items-center gap-3 px-4 py-3 mb-8">
         <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center shrink-0 overflow-hidden">
           {avatarUrl ? (
-            <img src={avatarUrl} alt={username} className="h-full w-full object-cover" />
+            <img src={avatarUrl} alt={username} className="h-full w-full object-cover" loading="lazy" decoding="async" />
           ) : (
             <span className="text-lg font-bold text-white">{initial}</span>
           )}
@@ -91,6 +91,8 @@ const Progresso = () => {
             src={calendarImg}
             alt="Calendário"
             className="h-28 w-28 object-contain drop-shadow-lg"
+            loading="lazy"
+            decoding="async"
           />
         </div>
 

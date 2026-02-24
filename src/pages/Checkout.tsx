@@ -39,7 +39,7 @@ const Checkout = () => {
     <div className="flex min-h-screen flex-col bg-white">
       {/* Logo */}
       <div className="flex justify-center py-6">
-        <img src={tiktokLogo} alt="TikTok" className="h-8" />
+        <img src={tiktokLogo} alt="TikTok" className="h-8" loading="lazy" decoding="async" />
       </div>
 
       <div className="px-4 space-y-4 pb-10">
@@ -137,13 +137,13 @@ const Checkout = () => {
         {/* Trust badges */}
         <div className="flex items-center justify-center gap-8 py-4">
           <div className="flex flex-col items-center">
-            <img src={bacenLogo} alt="BACEN" className="h-10 w-10 object-contain" />
+            <img src={bacenLogo} alt="BACEN" className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
           </div>
           <div className="flex flex-col items-center">
-            <img src={govbrLogo} alt="gov.br" className="h-8 object-contain" />
+            <img src={govbrLogo} alt="gov.br" className="h-8 object-contain" loading="lazy" decoding="async" />
           </div>
           <div className="flex flex-col items-center">
-            <img src={receitaLogo} alt="Receita Federal" className="h-10 w-10 object-contain" />
+            <img src={receitaLogo} alt="Receita Federal" className="h-10 w-10 object-contain" loading="lazy" decoding="async" />
           </div>
         </div>
 
