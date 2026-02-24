@@ -101,7 +101,7 @@ const Landing = () => {
     <div className="flex min-h-screen flex-col bg-white px-6 py-8">
       {/* Logo */}
       <div className="mb-10">
-        <img src={tiktokLogo} alt="TikTok" className="h-8" loading="lazy" decoding="async" />
+        <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
       </div>
 
       {/* Heading */}
@@ -154,7 +154,7 @@ const Landing = () => {
       {/* Fullscreen Verificando */}
       {step === "verifying" && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
-          <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6 animate-fade-in" loading="lazy" decoding="async" />
+          <img src={tiktokLogo} alt="TikTok" className="h-6 mb-6 animate-fade-in" loading="eager" decoding="async" />
           <div className="flex items-center gap-3 mb-4 animate-fade-in" style={{ animationDelay: "0.6s", animationFillMode: "both" }}>
             <span className="inline-block h-3 w-3 rounded-full bg-secondary animate-[swap-left_1s_ease-in-out_infinite]" />
             <span className="inline-block h-3 w-3 rounded-full bg-primary animate-[swap-right_1s_ease-in-out_infinite]" />
@@ -188,7 +188,7 @@ const Landing = () => {
           </div>
 
           {/* Logo top */}
-          <img src={tiktokLogo} alt="TikTok" className="h-5 mb-10 opacity-40" loading="lazy" decoding="async" />
+          <img src={tiktokLogo} alt="TikTok" className="h-5 mb-10 opacity-40" loading="eager" decoding="async" />
 
           {/* Avatar circle */}
           <div className="relative mb-6">
@@ -201,7 +201,7 @@ const Landing = () => {
                   {/* Avatar - real photo or fallback */}
                   <div className="h-full w-full rounded-full bg-orange-500 flex items-center justify-center overflow-hidden">
                     {avatarUrl ? (
-                      <img src={avatarUrl} alt={username} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                      <img src={avatarUrl} alt={username} className="h-full w-full object-cover" loading="eager" decoding="async" />
                     ) : (
                       <span className="text-3xl font-bold text-white">{initial}</span>
                     )}

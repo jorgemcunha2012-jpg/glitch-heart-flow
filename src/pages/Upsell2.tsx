@@ -64,7 +64,7 @@ const Upsell2 = () => {
     <div style={{ fontFamily: FONT, background: "#fff", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {/* Header */}
       <div style={{ width: "100%", background: "#fff", padding: "16px 0", borderBottom: "1px solid #f0f0f0", display: "flex", justifyContent: "center", position: "sticky", top: 0, zIndex: 100 }}>
-        <img src={tiktokLogo} alt="TikTok" style={{ height: 24 }} loading="lazy" decoding="async" />
+        <img src={tiktokLogo} alt="TikTok" style={{ height: 24 }} loading="eager" decoding="async" />
       </div>
 
       <div style={{ maxWidth: 375, margin: "0 auto", width: "100%", flex: 1 }}>

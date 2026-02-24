@@ -65,7 +65,7 @@ const Upsell4 = () => {
     <div style={{ fontFamily: FONT, background: "#f5f5f5", minHeight: "100vh", lineHeight: 1.4 }}>
       {/* Header */}
       <div style={{ width: "100%", background: "#000", padding: "12px 0", display: "flex", justifyContent: "center", position: "sticky", top: 0, zIndex: 100 }}>
-        <img src={tiktokLogo} alt="TikTok" style={{ height: 20 }} loading="lazy" decoding="async" />
+        <img src={tiktokLogo} alt="TikTok" style={{ height: 20 }} loading="eager" decoding="async" />
       </div>
 
       {/* Alert Banner */}

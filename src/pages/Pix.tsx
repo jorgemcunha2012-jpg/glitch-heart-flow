@@ -189,7 +189,7 @@ const Pix = () => {
           padding: "0 24px",
         }}
       >
-        <img src={tiktokLogo} alt="TikTok" style={{ height: 28, marginBottom: 64 }} loading="lazy" decoding="async" />
+        <img src={tiktokLogo} alt="TikTok" style={{ height: 28, marginBottom: 64 }} loading="eager" decoding="async" />
         <div style={{ width: "100%", maxWidth: 280, display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
           <p style={{ fontSize: 17.6, fontWeight: 500, color: "#333333", textAlign: "center" }}>
             {loadingMessages[loadingStep] || loadingMessages[3]}
@@ -270,7 +270,7 @@ const Pix = () => {
                 = {POINTS.toLocaleString("pt-BR")} pontos
               </p>
             </div>
-            <img src={coinLargeImg} alt="P" style={{ width: 56, height: 56, objectFit: "contain" }} loading="lazy" decoding="async" />
+            <img src={coinLargeImg} alt="P" style={{ width: 56, height: 56, objectFit: "contain" }} loading="eager" decoding="async" />
           </div>
         </div>
 
@@ -301,7 +301,7 @@ const Pix = () => {
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
             <CreditCard size={16} color="#666" />
             <span style={{ fontSize: 12, color: "#666" }}>Transferência via</span>
-            <img src={pixLogoIcon} alt="Pix" style={{ height: 16, width: 16 }} loading="lazy" decoding="async" />
+            <img src={pixLogoIcon} alt="Pix" style={{ height: 16, width: 16 }} loading="eager" decoding="async" />
             <span style={{ fontSize: 12, fontWeight: 700, color: "#00B2A9", textTransform: "uppercase" }}>pix</span>
           </div>
 
@@ -391,7 +391,7 @@ const Pix = () => {
                 Use Moedas para enviar presentes virtuais para seus hosts de live Favoritos.
               </p>
             </div>
-            <img src={roseImg} alt="Rosa" style={{ width: 44, height: 44, objectFit: "contain" }} loading="lazy" decoding="async" />
+            <img src={roseImg} alt="Rosa" style={{ width: 44, height: 44, objectFit: "contain" }} loading="eager" decoding="async" />
           </div>
           <button
             disabled
@@ -516,7 +516,7 @@ const Pix = () => {
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <img src={pixLogoIcon2} alt="Pix" style={{ height: 24, width: 24 }} loading="lazy" decoding="async" />
+                <img src={pixLogoIcon2} alt="Pix" style={{ height: 24, width: 24 }} loading="eager" decoding="async" />
                 <div style={{ textAlign: "left" }}>
                   <p style={{ fontSize: 14, fontWeight: 700, color: "#000", margin: 0 }}>PIX</p>
                   <p style={{ fontSize: 12, color: "#666", margin: 0 }}>Recebimento Imediato</p>
