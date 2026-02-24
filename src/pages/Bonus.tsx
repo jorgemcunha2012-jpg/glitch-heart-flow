@@ -160,10 +160,13 @@ const Bonus = () => {
           }}
         >
           <div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#000", margin: 0 }}>Parabéns!</h2>
-            <p style={{ fontSize: 18, fontWeight: 700, color: "#000", margin: "4px 0 0" }}>
-              Você concluiu todas as tarefas
-            </p>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#000", margin: 0, lineHeight: 1.3 }}>
+              Parabéns!
+              <br />
+              Você concluiu
+              <br />
+              todas as tarefas
+            </h2>
             <p style={{ fontSize: 22, fontWeight: 700, color: TT_RED, margin: "6px 0 0" }}>
               R$ {formatBRL(TARGET)}
             </p>
@@ -171,188 +174,188 @@ const Bonus = () => {
           <img
             src={calendarCoinsImg}
             alt="Calendário com moedas"
-            style={{ width: 110, height: 110, objectFit: "contain" }}
+            style={{ width: 130, height: 130, objectFit: "contain", marginRight: -10 }}
             loading="lazy"
             decoding="async"
           />
         </div>
 
-        {/* ─── Tarefa 1: Check-in ─── */}
-        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-              Entre por 14 dias para ganhar{" "}
-              <span style={{ color: TT_RED, fontWeight: 500 }}>8.414 pontos</span>
-            </p>
-            <CompletedBtn />
-          </div>
-          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
-            • 12 de nov - 25 de nov
-          </p>
-          <p style={{ fontSize: 11, fontWeight: 500, color: "rgb(132,132,134)", margin: "10px 0 0" }}>
-            Você concluiu todos os dias de check-in.
-          </p>
+        {/* ─── Tarefas (sem cards, separadores tracejados) ─── */}
+        <div style={{ padding: "0 4px" }}>
 
-          {/* Day Tracker */}
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16 }}>
-            {checkInValues.map((pts, i) => (
-              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                <div style={{ position: "relative", width: 45, height: 45 }}>
-                  <div
-                    style={{
-                      width: 45,
-                      height: 45,
-                      borderRadius: 8.82,
-                      background: "#F8F9FB",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <CoinImg size={24} />
+          {/* Tarefa 1: Check-in */}
+          <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+                Entre por 14 dias para ganhar{" "}
+                <span style={{ color: TT_RED }}>8.414 pontos</span>
+              </p>
+              <CompletedBtn />
+            </div>
+            <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+              • 12 de nov - 25 de nov
+            </p>
+            <p style={{ fontSize: 11, fontWeight: 500, color: "rgb(132,132,134)", margin: "10px 0 0" }}>
+              Você concluiu todos os dias de check-in.
+            </p>
+
+            {/* Day Tracker */}
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 16, marginBottom: 20 }}>
+              {checkInValues.map((pts, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                  <div style={{ position: "relative", width: 45, height: 45 }}>
+                    <div
+                      style={{
+                        width: 45,
+                        height: 45,
+                        borderRadius: 8.82,
+                        background: "#F8F9FB",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <CoinImg size={24} />
+                    </div>
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: 8.82,
+                        background: "rgba(255,240,243,0.9)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Check style={{ color: TT_RED }} size={18} strokeWidth={2.5} />
+                    </div>
                   </div>
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      borderRadius: 8.82,
-                      background: "rgba(255,240,243,0.9)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Check style={{ color: TT_RED }} size={18} strokeWidth={2.5} />
-                  </div>
+                  <span style={{ fontSize: 10, color: "#888" }}>Dia {String(i + 1).padStart(2, "0")}</span>
                 </div>
-                <span style={{ fontSize: 10, color: "#888" }}>Dia {String(i + 1).padStart(2, "0")}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Tarefa 2: Anúncios */}
+          <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+                Vê anúncios direcionados diariamente para ganhares até{" "}
+                <span style={{ color: TT_RED }}>2.730 pontos</span>
+              </p>
+              <CompletedBtn />
+            </div>
+            <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+              • 30/30 anúncios assistidos
+            </p>
+          </div>
+
+          {/* Tarefa 3: Assistir vídeos */}
+          <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0 }}>
+                Assistir vídeos<span style={{ color: TT_RED }}>500 pontos</span>
+              </p>
+              <CompletedBtn />
+            </div>
+            <div
+              style={{
+                display: "inline-block",
+                background: "#F1F1F1",
+                borderRadius: 6,
+                padding: "4px 12px",
+                fontSize: 12,
+                color: "#000",
+                marginTop: 12,
+              }}
+            >
+              Assista por 10 min
+            </div>
+
+            {/* Progress bar */}
+            <div style={{ position: "relative", marginTop: 16, height: 50 }}>
+              <div style={{ position: "absolute", top: 14, left: "8%", right: "8%", height: 2, background: "#e0e0e0" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
+                {["50 pontos", "100 pontos", "150 pontos", "225 pontos"].map((label, i) => (
+                  <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                    <CoinImg size={28} />
+                    <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ─── Tarefa 2: Anúncios ─── */}
-        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-              Vê anúncios direcionados diariamente para ganhares até{" "}
-              <span style={{ color: TT_RED }}>2.730 pontos</span>
-            </p>
-            <CompletedBtn />
-          </div>
-          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
-            • 30/30 anúncios assistidos
-          </p>
-        </div>
-
-        {/* ─── Tarefa 3: Assistir vídeos ─── */}
-        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0 }}>
-              Assistir vídeos <span style={{ color: TT_RED }}>500 pontos</span>
-            </p>
-            <CompletedBtn />
-          </div>
-          <div
-            style={{
-              display: "inline-block",
-              background: "#F1F1F1",
-              borderRadius: 6,
-              padding: "4px 12px",
-              fontSize: 12,
-              color: "#000",
-              marginTop: 12,
-            }}
-          >
-            Assista por 10 min
-          </div>
-
-          {/* Progress bar */}
-          <div style={{ position: "relative", marginTop: 16, height: 44, padding: "0 10px" }}>
-            <div style={{ position: "absolute", top: 14, left: "10%", right: "10%", height: 2, background: "#e0e0e0" }} />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
-              {["50 pontos", "100", "150", "225 pontos"].map((label, i) => (
-                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                  <CoinImg size={28} />
-                  <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ─── Tarefa 4: Recompensas ─── */}
-        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-              Resgate suas recompensas e ganhe{" "}
-              <span style={{ color: TT_RED }}>640 pontos</span>
-            </p>
-            <CompletedBtn />
-          </div>
-          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
-            • 8/8 resgatados
-          </p>
-        </div>
-
-        {/* ─── Tarefa 5: Pesquisas ─── */}
-        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-              Faça 60 pesquisas diárias para ganhar até{" "}
-              <span style={{ color: TT_RED }}>996 pontos</span>
-            </p>
-            <CompletedBtn />
-          </div>
-          <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
-            • 60 pesquisas feitas hoje
-          </p>
-
-          {/* Pill */}
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "#F1F1F1",
-              borderRadius: 99,
-              height: 19,
-              padding: "0 12px",
-              fontSize: 11,
-              fontWeight: 500,
-              color: "#888",
-              marginTop: 10,
-            }}
-          >
-            Até 756 pontos
-          </div>
-
-          {/* Progress */}
-          <div style={{ position: "relative", marginTop: 16 }}>
-            <div style={{ position: "absolute", top: 14, left: "15%", right: "15%", height: 2, background: "#e0e0e0" }} />
-            <div style={{ display: "flex", justifyContent: "space-around", position: "relative" }}>
-              {["16 pesquisas", "36 pesquisas", "60 pesquisas"].map((label, i) => (
-                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                  <CoinImg size={28} />
-                  <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
-                </div>
-              ))}
             </div>
           </div>
 
-          <p style={{ fontSize: 12, color: "#999", lineHeight: 1.6, marginTop: 14, background: "#F8F9FB", borderRadius: 8, padding: 12 }}>
-            Obtém 21 pontos por escreveres uma consulta na barra de pesquisa, ou 0 ponto por tocares numa pesquisa sugerida, como em "Podes gostar".
-          </p>
-        </div>
-
-        {/* ─── Tarefa 6: Convite ─── */}
-        <div style={{ background: "#fff", borderRadius: 12, padding: 20, marginBottom: 12 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-              Convide 1 amigo para se inscrever e ganhar{" "}
-              <span style={{ color: TT_RED }}>100.000 pontos - 200.000 pontos</span>
+          {/* Tarefa 4: Recompensas */}
+          <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+                Resgate suas recompensas e ganhe<span style={{ color: TT_RED }}>640 pontos</span>
+              </p>
+              <CompletedBtn />
+            </div>
+            <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+              • 8/8 resgatados
             </p>
-            <CompletedBtn />
+          </div>
+
+          {/* Tarefa 5: Pesquisas */}
+          <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+                Faça 60 pesquisas diárias para ganhar até<span style={{ color: TT_RED }}>996 pontos</span>
+              </p>
+              <CompletedBtn />
+            </div>
+            <p style={{ fontSize: 12, fontWeight: 400, color: "rgb(206,66,95)", margin: "8px 0 0" }}>
+              • 60 pesquisas feitas hoje
+            </p>
+
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#F1F1F1",
+                borderRadius: 99,
+                height: 19,
+                padding: "0 12px",
+                fontSize: 11,
+                fontWeight: 500,
+                color: "#888",
+                marginTop: 10,
+              }}
+            >
+              Até 756 pontos
+            </div>
+
+            <div style={{ position: "relative", marginTop: 16, height: 50 }}>
+              <div style={{ position: "absolute", top: 14, left: "12%", right: "12%", height: 2, background: "#e0e0e0" }} />
+              <div style={{ display: "flex", justifyContent: "space-around", position: "relative" }}>
+                {["16 pesquisas", "36 pesquisas", "60 pesquisas"].map((label, i) => (
+                  <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                    <CoinImg size={28} />
+                    <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p style={{ fontSize: 12, color: "#999", lineHeight: 1.6, marginTop: 14 }}>
+              Obtém 21 pontos por escreveres uma consulta na barra de pesquisa, ou 0 ponto por tocares numa pesquisa sugerida, como em "Podes gostar".
+            </p>
+          </div>
+
+          {/* Tarefa 6: Convite */}
+          <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
+                Convide 1 amigo para se inscrever e ganhar{" "}
+                <span style={{ color: TT_RED }}>100.000 pontos - 200.000 pontos</span>
+              </p>
+              <CompletedBtn />
+            </div>
           </div>
         </div>
       </div>
