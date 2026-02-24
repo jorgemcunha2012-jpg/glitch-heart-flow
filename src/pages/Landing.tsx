@@ -38,18 +38,29 @@ const Landing = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const preloadImage = (url: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => reject();
+      img.src = url;
+    });
+  };
+
   const handleVerify = async () => {
     if (!username.trim()) return;
     setStep("verifying");
-    
-    // Fetch avatar in parallel with the delay
+
     const cleanUsername = username.trim().replace(/^@/, '');
-    
+    localStorage.setItem("tiktok_username", cleanUsername);
+
     try {
       const { data } = await supabase.functions.invoke('tiktok-avatar', {
         body: { username: cleanUsername },
       });
       if (data?.success && data?.avatarUrl) {
+        // Preload image so it's ready before showing success
+        await preloadImage(data.avatarUrl);
         setAvatarUrl(data.avatarUrl);
         localStorage.setItem("tiktok_avatar", data.avatarUrl);
       }
@@ -59,7 +70,6 @@ const Landing = () => {
 
     setStep("success");
     setConfetti(generateConfetti(60));
-    localStorage.setItem("tiktok_username", cleanUsername);
   };
 
   // Clear confetti after 5s
