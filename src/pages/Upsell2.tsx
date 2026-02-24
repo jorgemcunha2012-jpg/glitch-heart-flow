@@ -337,7 +337,7 @@ const Upsell2 = () => {
 
               {/* Benefits */}
               <div style={{ display: "flex", flexDirection: "column", gap: 10, margin: "16px 0 20px" }}>
-                {["Liberação imediata do saque", "Proteção garantida pelo BC", "Reembolso automático"].map((text, i) => (
+                {["Liberação imediata do saque", "Reembolso automático"].map((text, i) => (
                   <div key={text} style={{
                     ...fadeUp(0.35 + i * 0.05),
                     display: "flex", alignItems: "center", gap: 10,
