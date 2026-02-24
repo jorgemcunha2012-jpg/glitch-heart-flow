@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Check } from "lucide-react";
 import calendarCoinsImg from "@/assets/calendar-coins.png";
-import pixLogoFull from "@/assets/pix-logo-full.png";
+import pixLogoFull from "@/assets/pix-badge.png";
 import coinIcon from "@/assets/coin-p-icon.png";
 import goldenBallImg from "@/assets/golden-ball.png";
 
