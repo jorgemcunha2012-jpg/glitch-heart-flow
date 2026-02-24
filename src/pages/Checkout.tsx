@@ -145,7 +145,6 @@ const Checkout = () => {
           </div>
           <div className="flex flex-col items-center">
             <img src={receitaLogo} alt="Receita Federal" className="h-10 w-10 object-contain" />
-            <span className="text-[10px] font-bold text-gray-500 mt-1">Receita Federal</span>
           </div>
         </div>
 
