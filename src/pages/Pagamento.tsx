@@ -49,13 +49,16 @@ const Pagamento = () => {
         </div>
 
         {/* Info banner */}
-        <div className="rounded-xl bg-secondary p-4 text-center">
+        <div className="rounded-xl bg-black p-4 text-center">
           <p className="text-sm font-semibold text-white">
-            Confirmação instantânea • PIX cai em até 2 minutos
+            Confirmação instantânea
           </p>
-          <div className="flex items-center justify-center gap-1 mt-1">
-            <CheckCircle2 className="h-3 w-3 text-white/80" />
-            <p className="text-xs text-white/80">Transação Segura</p>
+          <p className="text-sm font-semibold text-white">
+            PIX cai em até 2 minutos
+          </p>
+          <div className="flex items-center justify-center gap-1 mt-2">
+            <CheckCircle2 className="h-3 w-3 text-[#69C9D0]" />
+            <p className="text-xs text-[#69C9D0]">Transação Segura</p>
           </div>
         </div>
 
