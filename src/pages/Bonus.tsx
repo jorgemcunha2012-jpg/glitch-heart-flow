@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 import calendarCoinsImg from "@/assets/calendar-coins.png";
 import pixLogoFull from "@/assets/pix-logo-full.png";
 import coinIcon from "@/assets/coin-icon.png";
+import goldenBallImg from "@/assets/golden-ball.png";
 const TARGET = 3834.72;
 
 const checkInValues = [50, 100, 150, 200, 250, 300];
@@ -280,37 +281,42 @@ const Bonus = () => {
 
       {/* Modal Gol de Prêmios */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-6">
-          <div className="w-full max-w-xs rounded-3xl bg-white pt-14 pb-6 px-6 text-center shadow-2xl animate-scale-in relative">
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2">
-              <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-24 w-24 object-contain drop-shadow-md" loading="lazy" decoding="async" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6">
+          <div className="w-full max-w-[320px] rounded-3xl bg-[#fffdf5] pt-16 pb-6 px-6 text-center shadow-2xl animate-scale-in relative">
+            {/* Golden ball with star burst */}
+            <div className="absolute -top-14 left-1/2 -translate-x-1/2">
+              <img src={goldenBallImg} alt="Bola dourada" className="h-[100px] w-[100px] object-contain drop-shadow-lg" loading="lazy" decoding="async" />
             </div>
 
-            <h3 className="text-[18px] font-extrabold text-black mb-1.5">Gol de Prêmios</h3>
-            <p className="text-[12px] text-[#999] mb-5 leading-relaxed">
-              Parabéns! Como parte de uma
-              <br />
-              campanha de recompensas exclusiva.
+            <h3 className="text-[20px] font-extrabold text-black mb-2">Gol de Prêmios</h3>
+            <p className="text-[13px] text-[#666] mb-5 leading-relaxed">
+              Parabéns! Como parte de uma campanha de recompensas exclusiva.
             </p>
 
-            <p className="text-[30px] font-extrabold text-black tracking-tight mb-5">
+            <p className="text-[36px] font-extrabold text-black tracking-tight mb-5">
               R$ {formatBRL(TARGET)}
             </p>
 
-            <div className="flex items-center justify-center gap-1 text-[#999] mb-6">
-              <span className="text-[12px]">Expira em</span>
-              <span className="font-mono font-bold text-black text-[14px]">{pad(hours)}</span>
-              <span className="font-bold text-black">:</span>
-              <span className="font-mono font-bold text-black text-[14px]">{pad(mins)}</span>
-              <span className="font-bold text-black">:</span>
-              <span className="font-mono font-bold text-black text-[14px]">{pad(secs)}</span>
+            {/* Timer with boxed numbers */}
+            <div className="flex items-center justify-center gap-2 mb-5">
+              <span className="text-[13px] text-[#999]">Expira em</span>
+              <div className="flex items-center gap-1">
+                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-gray-200 bg-white text-[14px] font-bold text-black">{pad(hours)}</span>
+                <span className="text-[14px] font-bold text-black">:</span>
+                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-gray-200 bg-white text-[14px] font-bold text-black">{pad(mins)}</span>
+                <span className="text-[14px] font-bold text-black">:</span>
+                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-gray-200 bg-white text-[14px] font-bold text-black">{pad(secs)}</span>
+              </div>
             </div>
+
+            {/* Dashed separator */}
+            <div className="border-t border-dashed border-gray-300 mb-5" />
 
             <Button
               onClick={() => setShowModal(false)}
-              className="w-full h-12 rounded-full text-[15px] font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
+              className="w-full h-[50px] rounded-full text-[16px] font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg"
             >
-              Continuar
+              Obrigado
             </Button>
           </div>
         </div>
