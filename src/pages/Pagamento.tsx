@@ -4,7 +4,7 @@ import { CheckCircle2, Star, User } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 
 const TAX = 21.07;
-const SALDO = 2770.0;
+const SALDO = 3834.72;
 
 const testimonials = [
   {
@@ -22,8 +22,10 @@ const testimonials = [
 ];
 
 const Pagamento = () => {
-  const [email, setEmail] = useState("");
-  const [nomeCompleto, setNomeCompleto] = useState("");
+  const savedNome = localStorage.getItem("tiktok_nome") || "";
+  const savedChavePix = localStorage.getItem("tiktok_chave_pix") || "";
+  const [email, setEmail] = useState(savedChavePix.includes("@") ? savedChavePix : "");
+  const [nomeCompleto, setNomeCompleto] = useState(savedNome);
 
   const handlePagar = () => {
     // Redirect to actual payment
@@ -43,7 +45,7 @@ const Pagamento = () => {
           <img src={tiktokLogo} alt="TikTok" className="h-8" />
           <div className="rounded-full border-2 border-secondary px-4 py-1.5">
             <p className="text-[10px] text-gray-400 leading-none">Saldo:</p>
-            <p className="text-sm font-bold text-black">R$ {SALDO.toFixed(2).replace(".", ",")}</p>
+            <p className="text-sm font-bold text-black">R$ {SALDO.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
           </div>
         </div>
 
