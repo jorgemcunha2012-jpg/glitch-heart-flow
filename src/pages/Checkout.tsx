@@ -125,7 +125,7 @@ const Checkout = () => {
           onClick={handlePagar}
           className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
         >
-          Pagar taxa para Liberar Saque
+          Liberar Saque
         </Button>
 
         {/* Reembolso info */}
