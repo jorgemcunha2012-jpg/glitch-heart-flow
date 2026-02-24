@@ -264,7 +264,7 @@ const Bonus = () => {
               onClick={() => setShowModal(false)}
               className="w-full h-12 rounded-full text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
             >
-              Obrigado
+              Continuar
             </Button>
           </div>
         </div>
