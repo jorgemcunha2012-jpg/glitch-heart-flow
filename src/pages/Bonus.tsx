@@ -240,7 +240,7 @@ const Bonus = () => {
           <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20, paddingBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-                Vê anúncios direcionados diariamente para ganhares até{" "}
+                Vê anúncios direcionados diariamente para ganhares até<br />
                 <span style={{ color: TT_RED }}>2.730 pontos</span>
               </p>
               <CompletedBtn />
