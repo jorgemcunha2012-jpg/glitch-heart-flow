@@ -372,7 +372,7 @@ const Bonus = () => {
         >
           <div
             style={{
-              background: "linear-gradient(180deg, #fff8e1 0%, #fffdf5 35%, #FFFFFF 70%)",
+              background: "linear-gradient(180deg, #fff8e1 0%, #fffdf5 50%, #FFFFFF 85%)",
               borderRadius: 11,
               padding: "14px 16px 16px",
               width: "calc(100% - 100px)",
