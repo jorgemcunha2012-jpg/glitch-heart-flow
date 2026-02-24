@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, RefreshCw } from "lucide-react";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
+import { TARGET_BALANCE } from "@/lib/constants";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import bacenLogo from "@/assets/bacen-logo.png";
 import govbrLogo from "@/assets/govbr-logo.png";
 import receitaLogo from "@/assets/receita-federal-logo.png";
 
-const TARGET = 3834.72;
+const TARGET = TARGET_BALANCE;
 const TAX = 32.71;
 
 const Checkout = () => {
