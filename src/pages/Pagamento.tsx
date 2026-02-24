@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { CheckCircle2, Star, User, Loader2, Copy, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -32,6 +33,9 @@ const testimonials = [
 ];
 
 const Pagamento = () => {
+  useEffect(() => {
+    trackTikTokEvent({ event: "AddPaymentInfo", properties: { value: TAX, currency: "BRL" } });
+  }, []);
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,6 +74,7 @@ const Pagamento = () => {
           qr_code_base64: data.qr_code_base64,
           transaction_id: data.transaction_id,
         });
+        trackTikTokEvent({ event: "CompletePayment", properties: { value: TAX, currency: "BRL", transaction_id: data.transaction_id } });
       } else {
         throw new Error(data?.error || "Erro ao gerar pagamento");
       }
