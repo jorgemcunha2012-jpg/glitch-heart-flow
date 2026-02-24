@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Star, User } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import tiktokRound from "@/assets/tiktok-round.png";
 
 const TAX = 21.07;
 const SALDO = 2770.0;
@@ -61,8 +62,8 @@ const Pagamento = () => {
         {/* Product card */}
         <div className="rounded-2xl bg-white border border-gray-200 p-5">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-14 w-14 rounded-2xl bg-black flex items-center justify-center shrink-0">
-              <span className="text-2xl">♪</span>
+            <div className="h-14 w-14 rounded-2xl overflow-hidden shrink-0">
+              <img src={tiktokRound} alt="TikTok" className="h-full w-full object-cover" />
             </div>
             <div>
               <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
