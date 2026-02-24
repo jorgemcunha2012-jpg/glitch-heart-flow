@@ -70,7 +70,7 @@ const Pagamento = () => {
             </div>
             <div>
               <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
-              <p className="text-xs text-gray-400">Tiktok ltda</p>
+              
             </div>
           </div>
           
