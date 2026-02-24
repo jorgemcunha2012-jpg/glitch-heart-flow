@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import calendarCoinsImg from "@/assets/calendar-coins.png";
-import pixLogo from "@/assets/pix-logo-icon.png";
+import pixLogoFull from "@/assets/pix-logo-full.png";
 
 const TARGET = 3834.72;
 
@@ -76,7 +76,7 @@ const Bonus = () => {
               R$ {formatBRL(value)}
             </p>
             <div className="flex flex-col items-center gap-1.5">
-              <img src={pixLogo} alt="PIX" className="h-[18px] object-contain" loading="lazy" decoding="async" />
+              <img src={pixLogoFull} alt="PIX" className="h-[22px] object-contain" loading="lazy" decoding="async" />
               <Button
                 onClick={() => navigate("/pix")}
                 className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-7 h-[38px] text-[14px]"
