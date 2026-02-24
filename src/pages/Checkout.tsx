@@ -138,7 +138,6 @@ const Checkout = () => {
         <div className="flex items-center justify-center gap-8 py-4">
           <div className="flex flex-col items-center">
             <img src={bacenLogo} alt="BACEN" className="h-10 w-10 object-contain" />
-            <span className="text-[10px] font-bold text-gray-500 mt-1">BACEN</span>
           </div>
           <div className="flex flex-col items-center">
             <img src={govbrLogo} alt="gov.br" className="h-8 object-contain" />
