@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Coins, TrendingUp, Eye, Search, Gift, Star } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import trophyImg from "@/assets/trophy.png";
 
 const TARGET = 3834.72;
 
@@ -112,7 +113,7 @@ const Bonus = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <div className="text-4xl">🏆</div>
+                <img src={trophyImg} alt="Troféu" className="h-16 w-16 object-contain" />
                 <span className="text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">100%</span>
               </div>
             </div>
@@ -244,7 +245,7 @@ const Bonus = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-6">
           <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl animate-scale-in">
             <img src={tiktokLogo} alt="TikTok" className="h-5 mx-auto mb-4 opacity-60" />
-            <div className="text-4xl mb-3">🏆</div>
+            <img src={trophyImg} alt="Troféu" className="h-20 w-20 object-contain mx-auto mb-3" />
             <h3 className="text-xl font-bold text-black mb-1">Gol de Prêmios</h3>
             <p className="text-sm text-gray-400 mb-5">
               Campanha de recompensas exclusiva concluída!
