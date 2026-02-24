@@ -114,7 +114,7 @@ const Checkout = () => {
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-black">3</span>
               <div>
                 <p className="text-sm font-semibold text-black">Acessar saldo completo</p>
-                <p className="text-xs text-gray-400">R$ {TARGET.toFixed(2).replace(".", ",")} liberado para saque</p>
+                <p className="text-xs text-gray-400 underline">R$ {TARGET.toFixed(2).replace(".", ",")} liberado para saque</p>
               </div>
             </div>
           </div>
