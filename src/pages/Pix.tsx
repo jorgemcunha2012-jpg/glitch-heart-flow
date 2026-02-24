@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CreditCard, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import pixLogoIcon from "@/assets/pix-logo-icon.png";
 import { Progress } from "@/components/ui/progress";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 
@@ -121,8 +122,7 @@ const Pix = () => {
         <div className="rounded-2xl border border-gray-200 p-5">
           <h2 className="text-base font-bold text-black mb-2">Sacar dinheiro</h2>
           <div className="flex items-center gap-2 mb-4">
-            <CreditCard className="h-4 w-4 text-gray-400" />
-            <span className="text-xs text-gray-400">Transferência via /</span>
+            <img src={pixLogoIcon} alt="Pix" className="h-5 w-5" />
             <span className="text-xs font-bold text-teal-500">pix</span>
           </div>
 
