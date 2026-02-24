@@ -186,7 +186,7 @@ const Bonus = () => {
           <div style={{ borderTop: "1.5px dashed #ccc", paddingTop: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <p style={{ fontSize: 14, fontWeight: 500, color: "#000", margin: 0, lineHeight: 1.5 }}>
-                Entre por 14 dias para ganhar{" "}
+                Entre por 14 dias para ganhar<br />
                 <span style={{ color: TT_RED }}>8.414 pontos</span>
               </p>
               <CompletedBtn />
