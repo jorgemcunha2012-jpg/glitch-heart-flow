@@ -110,7 +110,7 @@ const Bonus = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center gap-1">
-                <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-16 w-16 object-contain" loading="lazy" decoding="async" />
+                <img src={calendarCoinsImg} alt="Calendário com moedas" className="h-20 w-20 object-contain" loading="lazy" decoding="async" />
                 <span className="text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">100%</span>
               </div>
             </div>
