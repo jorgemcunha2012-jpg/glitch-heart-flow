@@ -271,7 +271,7 @@ const Pix = () => {
           <Button
             onClick={() => setStep("method")}
             disabled={!selectedAmount}
-            className="w-full h-12 rounded-xl text-base font-bold bg-primary/30 hover:bg-primary/40 text-primary-foreground disabled:opacity-40"
+            className="w-full h-12 rounded-xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-40"
           >
             Sacar dinheiro
           </Button>
