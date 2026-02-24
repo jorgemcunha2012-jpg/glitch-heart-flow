@@ -91,8 +91,9 @@ const Progresso = () => {
             src={calendarImg}
             alt="Calendário"
             className="h-28 w-28 object-contain drop-shadow-lg"
-            loading="lazy"
+            loading="eager"
             decoding="async"
+            fetchPriority="high"
           />
         </div>
 
