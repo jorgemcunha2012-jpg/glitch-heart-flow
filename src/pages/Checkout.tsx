@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, RefreshCw } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import bacenLogo from "@/assets/bacen-logo.png";
+import govbrLogo from "@/assets/govbr-logo.png";
+import receitaLogo from "@/assets/receita-federal-logo.png";
 
 const TARGET = 3834.72;
 const TAX = 21.07;
@@ -134,15 +137,14 @@ const Checkout = () => {
         {/* Trust badges */}
         <div className="flex items-center justify-center gap-8 py-4">
           <div className="flex flex-col items-center">
-            <span className="text-2xl">🏛️</span>
+            <img src={bacenLogo} alt="BACEN" className="h-10 w-10 object-contain" />
             <span className="text-[10px] font-bold text-gray-500 mt-1">BACEN</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-2xl">🇧🇷</span>
-            <span className="text-[10px] font-bold text-gray-500 mt-1">gov.br</span>
+            <img src={govbrLogo} alt="gov.br" className="h-8 object-contain" />
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-2xl">📋</span>
+            <img src={receitaLogo} alt="Receita Federal" className="h-10 w-10 object-contain" />
             <span className="text-[10px] font-bold text-gray-500 mt-1">Receita Federal</span>
           </div>
         </div>
