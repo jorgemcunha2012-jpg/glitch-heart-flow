@@ -6,7 +6,10 @@ import calendarCoinsImg from "@/assets/calendar-coins.png";
 import pixLogoFull from "@/assets/pix-logo-full.png";
 import coinIcon from "@/assets/coin-icon.png";
 import goldenBallImg from "@/assets/golden-ball.png";
+
 const TARGET = 3834.72;
+const TT_RED = "#FE2C55";
+const TT_BLACK = "#161823";
 
 const checkInValues = [50, 100, 150, 200, 250, 300];
 
@@ -57,18 +60,18 @@ const Bonus = () => {
     <div className="flex min-h-screen flex-col bg-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
       {/* Header */}
       <div className="flex items-center justify-center px-5 py-3.5">
-        <h1 className="text-[17px] font-bold text-black tracking-tight">TikTok Bônus</h1>
+        <h1 className="text-[17px] font-bold tracking-tight" style={{ color: TT_BLACK }}>TikTok Bônus</h1>
       </div>
 
       <div className="flex-1 px-4 pb-8 pt-2">
         {/* Saldo Card */}
         <div className="rounded-2xl bg-[#f5f5f5] p-5 mb-4 animate-fade-in">
           <div className="flex items-center gap-1.5 mb-0.5">
-            <span className="text-[15px] text-gray-600 font-medium">Seu saldo</span>
+            <span className="text-[15px] font-medium" style={{ color: '#545454' }}>Seu saldo</span>
             <CoinImg size={20} />
           </div>
           <div className="flex items-end justify-between mt-1">
-            <p className="text-[32px] font-extrabold text-black leading-none tracking-tight">
+            <p className="text-[32px] font-extrabold leading-none tracking-tight" style={{ color: TT_BLACK }}>
               R$ {formatBRL(value)}
             </p>
             <div className="flex flex-col items-center gap-1.5">
@@ -85,11 +88,11 @@ const Bonus = () => {
 
         {/* Parabéns Banner */}
         <div className="rounded-2xl overflow-hidden relative mb-4 animate-fade-in" style={{ animationDelay: '80ms' }}>
-          <div className="absolute inset-0 bg-gradient-to-br from-pink-50/80 via-white to-pink-50/60" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#fff0f3] via-white to-[#fff5f7]" />
           <div className="relative px-5 py-6">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <h2 className="text-[22px] font-extrabold text-black leading-[1.2]">
+                <h2 className="text-[22px] font-extrabold leading-[1.2]" style={{ color: TT_BLACK }}>
                   Parabéns!
                   <br />
                   Você concluiu
@@ -113,25 +116,25 @@ const Bonus = () => {
 
         {/* ─── Check-in Section ─── */}
         <div className="px-1 animate-fade-in" style={{ animationDelay: '160ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
+          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
 
           <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold text-black leading-snug">
+            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
               Entre por 14 dias para ganhar
               <br />
-              <span className="text-[#EE1D52]">8.414 pontos</span>
+              <span style={{ color: TT_RED }}>8.414 pontos</span>
             </p>
-            <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
+            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
               Concluído
             </span>
           </div>
 
           <div className="flex items-center gap-1.5 mb-3">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#999]" />
-            <p className="text-[12px] text-[#EE1D52]">12 de nov - 25 de nov</p>
+            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
+            <p className="text-[12px]" style={{ color: TT_RED }}>12 de nov - 25 de nov</p>
           </div>
 
-          <div className="border-l-[2px] border-gray-200 pl-3 mb-5">
+          <div className="border-l-[2px] border-[#e8e8e8] pl-3 mb-5">
             <p className="text-[13px] text-[#999] italic">Você concluiu todos os dias de check-in.</p>
           </div>
 
@@ -140,8 +143,8 @@ const Bonus = () => {
               <div key={i} className="flex flex-col items-center" style={{ gap: '4px' }}>
                 <div className="relative">
                   <div
-                    className="rounded-full bg-pink-50 flex items-center justify-center"
-                    style={{ width: 48, height: 48, border: '2px solid #f5c2d0' }}
+                    className="rounded-full flex items-center justify-center"
+                    style={{ width: 48, height: 48, border: '2px solid #fcc', backgroundColor: '#fff5f7' }}
                   >
                     <CoinImg size={26} />
                   </div>
@@ -149,7 +152,7 @@ const Bonus = () => {
                     className="absolute flex items-center justify-center bg-white rounded-full"
                     style={{ top: -3, right: -3, width: 20, height: 20 }}
                   >
-                    <Check className="text-[#EE1D52]" size={14} strokeWidth={3} />
+                    <Check style={{ color: TT_RED }} size={14} strokeWidth={3} />
                   </div>
                 </div>
                 <span className="text-[11px] font-semibold text-[#c49a20]">{pts}</span>
@@ -161,39 +164,39 @@ const Bonus = () => {
 
         {/* ─── Anúncios ─── */}
         <div className="px-1 animate-fade-in" style={{ animationDelay: '240ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
+          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
           <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold text-black leading-snug">
+            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
               Vê anúncios direcionados diariamente
               <br />
-              para ganhares até<span className="text-[#EE1D52]"> 2.730 pontos</span>
+              para ganhares até<span style={{ color: TT_RED }}> 2.730 pontos</span>
             </p>
-            <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
+            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
               Concluído
             </span>
           </div>
           <div className="flex items-center gap-1.5 mb-6">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#999]" />
-            <p className="text-[12px] text-[#EE1D52]">30/30 anúncios assistidos</p>
+            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
+            <p className="text-[12px]" style={{ color: TT_RED }}>30/30 anúncios assistidos</p>
           </div>
         </div>
 
         {/* ─── Assistir vídeos ─── */}
         <div className="px-1 animate-fade-in" style={{ animationDelay: '320ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
+          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
           <div className="flex items-start justify-between mb-3">
-            <p className="text-[16px] font-bold text-black leading-snug">
-              Assistir vídeos<span className="text-[#EE1D52]"> 500 pontos</span>
+            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
+              Assistir vídeos<span style={{ color: TT_RED }}> 500 pontos</span>
             </p>
-            <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
+            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
               Concluído
             </span>
           </div>
-          <div className="inline-block rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-semibold text-black mb-5">
+          <div className="inline-block rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-semibold mb-5" style={{ color: TT_BLACK }}>
             Assista por 10 min
           </div>
           <div className="relative mb-6">
-            <div className="absolute top-[18px] left-[10%] right-[10%] h-[2px] bg-gray-300" />
+            <div className="absolute top-[18px] left-[10%] right-[10%] h-[2px] bg-[#e0e0e0]" />
             <div className="flex items-center justify-between relative">
               {["50 pontos", "100 pontos", "150 pontos", "225 pontos"].map((label, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5 z-10">
@@ -207,43 +210,43 @@ const Bonus = () => {
 
         {/* ─── Recompensas ─── */}
         <div className="px-1 animate-fade-in" style={{ animationDelay: '400ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
+          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
           <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold text-black leading-snug">
-              Resgate suas recompensas e ganhe<span className="text-[#EE1D52]">640 pontos</span>
+            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
+              Resgate suas recompensas e ganhe<span style={{ color: TT_RED }}>640 pontos</span>
             </p>
-            <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
+            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
               Concluído
             </span>
           </div>
           <div className="flex items-center gap-1.5 mb-6">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#999]" />
-            <p className="text-[12px] text-[#EE1D52]">8/8 resgatados</p>
+            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
+            <p className="text-[12px]" style={{ color: TT_RED }}>8/8 resgatados</p>
           </div>
         </div>
 
         {/* ─── Pesquisas diárias ─── */}
         <div className="px-1 animate-fade-in" style={{ animationDelay: '480ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
+          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
           <div className="flex items-start justify-between mb-1.5">
-            <p className="text-[16px] font-bold text-black leading-snug">
+            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
               Faça 60 pesquisas diárias para ganhar
               <br />
-              até<span className="text-[#EE1D52]"> 996 pontos</span>
+              até<span style={{ color: TT_RED }}> 996 pontos</span>
             </p>
-            <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
+            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
               Concluído
             </span>
           </div>
           <div className="flex items-center gap-1.5 mb-2">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#999]" />
-            <p className="text-[12px] text-[#EE1D52]">60 pesquisas feitas hoje</p>
+            <span className="h-[5px] w-[5px] rounded-full bg-[#aaa]" />
+            <p className="text-[12px]" style={{ color: TT_RED }}>60 pesquisas feitas hoje</p>
           </div>
-          <div className="inline-block rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-semibold text-black mb-5">
+          <div className="inline-block rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-semibold mb-5" style={{ color: TT_BLACK }}>
             Até 756 pontos
           </div>
           <div className="relative mb-3">
-            <div className="absolute top-[18px] left-[20%] right-[20%] h-[2px] bg-gray-300" />
+            <div className="absolute top-[18px] left-[20%] right-[20%] h-[2px] bg-[#ddd]" />
             <div className="flex items-center justify-around relative">
               {["36 pesquisas", "60 pesquisas"].map((label, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5 z-10">
@@ -262,13 +265,13 @@ const Bonus = () => {
 
         {/* ─── Convide amigos ─── */}
         <div className="px-1 animate-fade-in" style={{ animationDelay: '560ms' }}>
-          <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
+          <div className="border-t-[1.5px] border-dashed border-[#ddd] mb-5" />
           <div className="flex items-start justify-between mb-6">
-            <p className="text-[16px] font-bold text-black leading-snug">
+            <p className="text-[16px] font-bold leading-snug" style={{ color: TT_BLACK }}>
               Convide 1 amigo para se inscrever e ganhar{" "}
-              <span className="text-[#EE1D52]">100.000 pontos - 200.000 pontos</span>
+              <span style={{ color: TT_RED }}>100.000 pontos - 200.000 pontos</span>
             </p>
-            <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
+            <span className="rounded-full bg-[#f0f0f0] px-4 py-1.5 text-[13px] font-medium text-[#b0b0b0] shrink-0 ml-3">
               Concluído
             </span>
           </div>
@@ -279,34 +282,31 @@ const Bonus = () => {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6">
           <div className="w-full max-w-[320px] rounded-3xl bg-[#fffdf5] pt-16 pb-6 px-6 text-center shadow-2xl animate-scale-in relative">
-            {/* Golden ball with star burst */}
             <div className="absolute -top-14 left-1/2 -translate-x-1/2">
               <img src={goldenBallImg} alt="Bola dourada" className="h-[100px] w-[100px] object-contain drop-shadow-lg" loading="lazy" decoding="async" />
             </div>
 
-            <h3 className="text-[20px] font-extrabold text-black mb-2">Gol de Prêmios</h3>
+            <h3 className="text-[20px] font-extrabold mb-2" style={{ color: TT_BLACK }}>Gol de Prêmios</h3>
             <p className="text-[13px] text-[#666] mb-5 leading-relaxed">
               Parabéns! Como parte de uma campanha de recompensas exclusiva.
             </p>
 
-            <p className="text-[36px] font-extrabold text-black tracking-tight mb-5">
+            <p className="text-[36px] font-extrabold tracking-tight mb-5" style={{ color: TT_BLACK }}>
               R$ {formatBRL(TARGET)}
             </p>
 
-            {/* Timer with boxed numbers */}
             <div className="flex items-center justify-center gap-2 mb-5">
               <span className="text-[13px] text-[#999]">Expira em</span>
               <div className="flex items-center gap-1">
-                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-gray-200 bg-white text-[14px] font-bold text-black">{pad(hours)}</span>
-                <span className="text-[14px] font-bold text-black">:</span>
-                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-gray-200 bg-white text-[14px] font-bold text-black">{pad(mins)}</span>
-                <span className="text-[14px] font-bold text-black">:</span>
-                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-gray-200 bg-white text-[14px] font-bold text-black">{pad(secs)}</span>
+                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-[#e0e0e0] bg-white text-[14px] font-bold" style={{ color: TT_BLACK }}>{pad(hours)}</span>
+                <span className="text-[14px] font-bold" style={{ color: TT_BLACK }}>:</span>
+                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-[#e0e0e0] bg-white text-[14px] font-bold" style={{ color: TT_BLACK }}>{pad(mins)}</span>
+                <span className="text-[14px] font-bold" style={{ color: TT_BLACK }}>:</span>
+                <span className="inline-flex items-center justify-center w-[32px] h-[30px] rounded-md border border-[#e0e0e0] bg-white text-[14px] font-bold" style={{ color: TT_BLACK }}>{pad(secs)}</span>
               </div>
             </div>
 
-            {/* Dashed separator */}
-            <div className="border-t border-dashed border-gray-300 mb-5" />
+            <div className="border-t border-dashed border-[#ddd] mb-5" />
 
             <Button
               onClick={() => setShowModal(false)}
