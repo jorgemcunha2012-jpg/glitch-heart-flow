@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CheckCircle2, Gift } from "lucide-react";
+import { Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import calendarImg from "@/assets/calendar.png";
 
 const bimonths = ["1/2", "3/4", "5/6", "7/8", "9/10", "11/12"];
 
 const Progresso = () => {
   const [checkedCount, setCheckedCount] = useState(0);
   const [calendarVisible, setCalendarVisible] = useState(false);
-  const [calendarBounce, setCalendarBounce] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
   const navigate = useNavigate();
   const username = localStorage.getItem("tiktok_username") || "usuario";
@@ -17,14 +17,8 @@ const Progresso = () => {
   const initial = username[0]?.toUpperCase() || "?";
 
   useEffect(() => {
-    // Show calendar after a brief delay with bounce
-    const calTimer = setTimeout(() => {
-      setCalendarVisible(true);
-      // Trigger bounce animation
-      setTimeout(() => setCalendarBounce(true), 100);
-    }, 400);
+    const calTimer = setTimeout(() => setCalendarVisible(true), 400);
 
-    // Start checking after calendar appears
     const checkStart = setTimeout(() => {
       const interval = setInterval(() => {
         setCheckedCount((prev) => {
@@ -44,10 +38,9 @@ const Progresso = () => {
     };
   }, []);
 
-  // Grid: 3 columns, 2 rows
   const rows = [
-    bimonths.slice(0, 3), // 1/2, 3/4, 5/6
-    bimonths.slice(3, 6), // 7/8, 9/10, 11/12
+    bimonths.slice(0, 3),
+    bimonths.slice(3, 6),
   ];
 
   return (
@@ -86,57 +79,82 @@ const Progresso = () => {
           </p>
         </div>
 
-        {/* Calendar */}
+        {/* Calendar Image */}
         <div
-          className={`my-6 text-7xl transition-all duration-700 ${
-            calendarVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
-          } ${calendarBounce ? "animate-[calendar-bounce_0.8s_ease-out]" : ""}`}
+          className={`my-6 transition-all duration-700 ${
+            calendarVisible
+              ? "opacity-100 animate-[calendar-bounce_0.8s_ease-out]"
+              : "opacity-0 scale-50"
+          }`}
         >
-          📅
+          <img
+            src={calendarImg}
+            alt="Calendário"
+            className="h-28 w-28 object-contain drop-shadow-lg"
+          />
         </div>
 
-        {/* Bimonth progress grid - 3 cols x 2 rows */}
-        <div className="w-full flex flex-col items-center gap-4 mb-4">
+        {/* Bimonth progress grid */}
+        <div className="w-full flex flex-col items-center gap-3 mb-4">
           {rows.map((row, rowIdx) => (
-            <div key={rowIdx} className="flex items-center justify-center gap-0">
+            <div key={rowIdx} className="flex items-center justify-center">
               {row.map((label, colIdx) => {
                 const globalIdx = rowIdx * 3 + colIdx;
                 const checked = globalIdx < checkedCount;
                 const showLine = colIdx < row.length - 1;
                 return (
                   <div key={label} className="flex items-center">
-                    {/* Check item */}
+                    {/* Check pill */}
                     <div
-                      className={`flex items-center gap-1.5 transition-all duration-500 ${
-                        checked ? "opacity-100 scale-100" : "opacity-30 scale-90"
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 transition-all duration-500 ${
+                        checked
+                          ? "border-green-400 bg-green-50 shadow-[0_0_8px_rgba(34,197,94,0.25)]"
+                          : "border-gray-200 bg-gray-50"
                       }`}
                       style={{
-                        transitionDelay: checked ? `${globalIdx * 100}ms` : "0ms",
+                        transitionDelay: `${globalIdx * 100}ms`,
                       }}
                     >
-                      <CheckCircle2
-                        className={`h-5 w-5 shrink-0 transition-colors duration-300 ${
-                          checked ? "text-green-500" : "text-gray-300"
+                      {/* Custom check icon */}
+                      <div
+                        className={`h-5 w-5 rounded-full flex items-center justify-center transition-all duration-300 ${
+                          checked
+                            ? "bg-green-500 scale-100"
+                            : "bg-gray-300 scale-90"
                         }`}
-                      />
+                      >
+                        <svg
+                          className={`h-3 w-3 text-white transition-all duration-300 ${
+                            checked ? "opacity-100 scale-100" : "opacity-0 scale-50"
+                          }`}
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </div>
                       <span
-                        className={`text-sm font-semibold transition-colors duration-300 ${
-                          checked ? "text-green-600" : "text-gray-400"
+                        className={`text-sm font-bold transition-colors duration-300 ${
+                          checked ? "text-green-700" : "text-gray-400"
                         }`}
                       >
                         {label}
                       </span>
                     </div>
-                    {/* Connecting line */}
+                    {/* Connecting dash */}
                     {showLine && (
                       <div
-                        className={`w-8 h-[3px] mx-3 rounded-full transition-colors duration-500 ${
+                        className={`w-5 h-[3px] mx-1.5 rounded-full transition-all duration-500 ${
                           checked && globalIdx + 1 < checkedCount
                             ? "bg-green-400"
                             : "bg-gray-200"
                         }`}
                         style={{
-                          transitionDelay: checked ? `${globalIdx * 100 + 200}ms` : "0ms",
+                          transitionDelay: `${globalIdx * 100 + 200}ms`,
                         }}
                       />
                     )}
@@ -149,7 +167,7 @@ const Progresso = () => {
 
         {/* Status text */}
         <p
-          className={`text-xs text-green-500 font-medium mb-5 transition-opacity duration-500 ${
+          className={`text-xs text-green-500 font-semibold mb-5 transition-opacity duration-500 ${
             checkedCount >= bimonths.length ? "opacity-100" : "opacity-0"
           }`}
         >
