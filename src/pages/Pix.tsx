@@ -238,7 +238,7 @@ const Pix = () => {
             <CreditCard className="h-4 w-4 text-gray-400" />
             <span className="text-xs text-gray-400">Transferencia via /</span>
             <img src={pixLogoIcon} alt="Pix" className="h-4 w-4" loading="lazy" decoding="async" />
-            <span className="text-xs font-bold text-teal-500">pix</span>
+            <span className="text-xs font-bold text-teal-500 uppercase">pix</span>
           </div>
 
           <div className="grid grid-cols-3 gap-3 mb-3">
