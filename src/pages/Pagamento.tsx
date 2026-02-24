@@ -4,6 +4,7 @@ import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { CheckCircle2, Star, User, Loader2, Copy, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { TARGET_BALANCE } from "@/lib/constants";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokRound from "@/assets/tiktok-round.png";
 import pixLogo3 from "@/assets/pix-logo-icon-3.png";
@@ -12,7 +13,7 @@ import testimonialAna from "@/assets/testimonial-ana.png";
 import testimonialCarlos from "@/assets/testimonial-carlos.png";
 
 const TAX = 32.71;
-const SALDO = 3834.72;
+const SALDO = TARGET_BALANCE;
 
 const testimonials = [
   {
