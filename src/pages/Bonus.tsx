@@ -93,11 +93,12 @@ const Bonus = () => {
             background: "rgba(255,255,255,0.95)",
             borderRadius: 8,
             boxShadow: "rgba(0,0,0,0.03) 0px 1px 18.4px 0px",
-            height: 90,
-            padding: 20,
+            minHeight: 90,
+            padding: "15px 20px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            boxSizing: "border-box",
           }}
         >
           <div>
@@ -109,7 +110,7 @@ const Bonus = () => {
               R$ {formatBRL(value)}
             </p>
           </div>
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative", display: "inline-block" }}>
             <button
               onClick={() => navigate("/pix")}
               style={{
@@ -122,6 +123,7 @@ const Bonus = () => {
                 fontSize: 14,
                 fontWeight: 500,
                 cursor: "pointer",
+                position: "relative",
               }}
             >
               Sacar
@@ -131,10 +133,13 @@ const Bonus = () => {
               alt="PIX"
               style={{
                 position: "absolute",
-                top: -10,
-                right: -10,
-                height: 16,
+                top: -8,
+                right: -6,
+                height: 14,
                 objectFit: "contain",
+                background: "#fff",
+                borderRadius: 3,
+                padding: "1px 2px",
               }}
               loading="lazy"
               decoding="async"
@@ -263,13 +268,16 @@ const Bonus = () => {
           </div>
 
           {/* Progress bar */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "0 10px", marginTop: 16, height: 44 }}>
-            {["50 pontos", "100", "150", "225 pontos"].map((label, i) => (
-              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                <CoinImg size={28} />
-                <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
-              </div>
-            ))}
+          <div style={{ position: "relative", marginTop: 16, height: 44, padding: "0 10px" }}>
+            <div style={{ position: "absolute", top: 14, left: "10%", right: "10%", height: 2, background: "#e0e0e0" }} />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
+              {["50 pontos", "100", "150", "225 pontos"].map((label, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                  <CoinImg size={28} />
+                  <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -320,13 +328,16 @@ const Bonus = () => {
           </div>
 
           {/* Progress */}
-          <div style={{ display: "flex", justifyContent: "space-around", marginTop: 16 }}>
-            {["16 pesquisas", "36 pesquisas", "60 pesquisas"].map((label, i) => (
-              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-                <CoinImg size={28} />
-                <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
-              </div>
-            ))}
+          <div style={{ position: "relative", marginTop: 16 }}>
+            <div style={{ position: "absolute", top: 14, left: "15%", right: "15%", height: 2, background: "#e0e0e0" }} />
+            <div style={{ display: "flex", justifyContent: "space-around", position: "relative" }}>
+              {["16 pesquisas", "36 pesquisas", "60 pesquisas"].map((label, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+                  <CoinImg size={28} />
+                  <span style={{ fontSize: 10, color: "#888" }}>{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <p style={{ fontSize: 12, color: "#999", lineHeight: 1.6, marginTop: 14, background: "#F8F9FB", borderRadius: 8, padding: 12 }}>
