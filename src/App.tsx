@@ -13,6 +13,7 @@ import BackRedirect from "./pages/BackRedirect";
 import Upsell from "./pages/Upsell";
 import Upsell2 from "./pages/Upsell2";
 import Upsell3 from "./pages/Upsell3";
+import Upsell4 from "./pages/Upsell4";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/upsell" element={<Upsell />} />
           <Route path="/up2" element={<Upsell2 />} />
           <Route path="/up3" element={<Upsell3 />} />
+          <Route path="/up4" element={<Upsell4 />} />
           <Route path="/backredirect" element={<BackRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
