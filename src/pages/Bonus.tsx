@@ -146,7 +146,7 @@ const Bonus = () => {
                 borderRadius: 3,
                 padding: "1px 2px",
               }}
-              loading="lazy"
+              loading="eager"
               decoding="async"
             />
           </div>
@@ -180,7 +180,7 @@ const Bonus = () => {
             src={calendarCoinsImg}
             alt="Calendário com moedas"
             style={{ width: 84, height: 84, objectFit: "contain", marginRight: -6, flexShrink: 0 }}
-            loading="lazy"
+            loading="eager"
             decoding="async"
           />
         </div>
@@ -394,7 +394,7 @@ const Bonus = () => {
             }}
           >
             <div style={{ position: "absolute", top: -37, left: "50%", transform: "translateX(-50%)" }}>
-              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 102, height: 102, objectFit: "contain" }} loading="lazy" decoding="async" />
+              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 102, height: 102, objectFit: "contain" }} loading="eager" decoding="async" />
             </div>
 
             <h3 style={{ fontSize: 14, fontWeight: 700, color: "#000", margin: "0 0 5px" }}>Gol de Prêmios</h3>
