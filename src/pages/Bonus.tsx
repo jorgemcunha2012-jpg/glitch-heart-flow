@@ -166,8 +166,7 @@ const Bonus = () => {
             <p className="text-[16px] font-bold text-black leading-snug">
               Vê anúncios direcionados diariamente
               <br />
-              para ganhares até
-              <span className="text-[#EE1D52]">2.730 pontos</span>
+              para ganhares até<span className="text-[#EE1D52]"> 2.730 pontos</span>
             </p>
             <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
               Concluído
@@ -184,8 +183,7 @@ const Bonus = () => {
           <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
           <div className="flex items-start justify-between mb-3">
             <p className="text-[16px] font-bold text-black leading-snug">
-              Assistir vídeos
-              <span className="text-[#EE1D52]">500 pontos</span>
+              Assistir vídeos<span className="text-[#EE1D52]"> 500 pontos</span>
             </p>
             <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
               Concluído
@@ -195,7 +193,7 @@ const Bonus = () => {
             Assista por 10 min
           </div>
           <div className="relative mb-6">
-            <div className="absolute top-[18px] left-0 right-0 h-[2px] bg-gray-200" />
+            <div className="absolute top-[18px] left-[10%] right-[10%] h-[2px] bg-gray-300" />
             <div className="flex items-center justify-between relative">
               {["50 pontos", "100 pontos", "150 pontos", "225 pontos"].map((label, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5 z-10">
@@ -212,9 +210,7 @@ const Bonus = () => {
           <div className="border-t-[1.5px] border-dashed border-gray-300 mb-5" />
           <div className="flex items-start justify-between mb-1.5">
             <p className="text-[16px] font-bold text-black leading-snug">
-              Resgate suas recompensas e ganhe
-              <span className="text-[#EE1D52]">640
-              <br />pontos</span>
+              Resgate suas recompensas e ganhe<span className="text-[#EE1D52]">640 pontos</span>
             </p>
             <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
               Concluído
@@ -233,7 +229,7 @@ const Bonus = () => {
             <p className="text-[16px] font-bold text-black leading-snug">
               Faça 60 pesquisas diárias para ganhar
               <br />
-              até<span className="text-[#EE1D52]">996 pontos</span>
+              até<span className="text-[#EE1D52]"> 996 pontos</span>
             </p>
             <span className="rounded-full bg-[#ebebeb] px-4 py-1.5 text-[13px] font-medium text-[#aaa] shrink-0 ml-3">
               Concluído
