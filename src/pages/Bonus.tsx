@@ -91,9 +91,9 @@ const Bonus = () => {
         <div
           style={{
             background: "rgba(255,255,255,0.95)",
-            borderRadius: 8,
+            borderRadius: 9,
             boxShadow: "rgba(0,0,0,0.03) 0px 1px 18.4px 0px",
-            padding: "14px 16px",
+            padding: "15px 18px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -102,10 +102,10 @@ const Bonus = () => {
         >
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-              <span style={{ fontSize: 10, fontWeight: 500, color: "#000" }}>Seu saldo</span>
-              <CoinImg size={14} />
+              <span style={{ fontSize: 11, fontWeight: 500, color: "#000" }}>Seu saldo</span>
+              <CoinImg size={15} />
             </div>
-            <p style={{ fontSize: 14, fontWeight: 700, color: "#000000", margin: "3px 0 0" }}>
+            <p style={{ fontSize: 15, fontWeight: 700, color: "#000000", margin: "3px 0 0" }}>
               R$ {formatBRL(value)}
             </p>
           </div>
@@ -117,9 +117,9 @@ const Bonus = () => {
                 color: "#fff",
                 border: "none",
                 borderRadius: 99,
-                width: 77,
-                height: 24,
-                fontSize: 10,
+                width: 85,
+                height: 26,
+                fontSize: 11,
                 fontWeight: 600,
                 cursor: "pointer",
                 position: "relative",
@@ -134,7 +134,7 @@ const Bonus = () => {
                 position: "absolute",
                 top: -7,
                 right: -5,
-                height: 11,
+                height: 12,
                 objectFit: "contain",
                 background: "#fff",
                 borderRadius: 3,
