@@ -181,7 +181,7 @@ const Pagamento = () => {
         {/* Info banner */}
         <div className="rounded-xl bg-black px-4 py-3 text-center space-y-0.5">
           <p className="text-xs font-semibold text-white">Confirmação instantânea</p>
-          <p className="text-[11px] text-gray-400">Confirmação automática via PIX em instantes</p>
+          <p className="text-[11px] text-gray-400">Reembolso automático via PIX em instantes</p>
         </div>
 
         {/* Product card */}
