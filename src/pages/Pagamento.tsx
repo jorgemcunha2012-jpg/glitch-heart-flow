@@ -18,7 +18,7 @@ const SALDO = TARGET_BALANCE;
 const testimonials = [
   {
     name: "Matheus Henrique Santos",
-    text: '"rapazz e nao foi que esse ngc do gol de premios deu boa aqui tbm familia KKKKKK"',
+    text: '"rapazz e nao foi que esse ngc do bônuc deu boa aqui tbm familia KKKKKK"',
     avatar: testimonialMatheus,
   },
   {
