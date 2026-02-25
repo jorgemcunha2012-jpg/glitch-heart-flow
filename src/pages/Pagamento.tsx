@@ -28,7 +28,7 @@ const testimonials = [
   },
   {
     name: "Carlos Eduardo",
-    text: '"pensei que era golpe mas recebi em 2 minutinhos, top demais!!"',
+    text: '"pensei que era golpe mas recebi na hora, top demais!!"',
     avatar: testimonialCarlos,
   },
 ];
