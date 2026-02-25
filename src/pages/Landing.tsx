@@ -148,7 +148,7 @@ const Landing = () => {
       <div className="mt-8 flex flex-col items-center gap-3">
         <div className="flex w-full items-center gap-3">
           <div className="h-px flex-1 bg-gray-200" />
-          <span className="text-xs text-gray-400">TikTok One</span>
+          <span className="text-xs text-gray-400">TikTok Bônus</span>
           <div className="h-px flex-1 bg-gray-200" />
         </div>
         <p className="text-center text-xs text-gray-400 leading-relaxed">
