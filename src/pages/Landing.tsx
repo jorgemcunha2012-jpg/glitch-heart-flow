@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, X } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -36,6 +36,7 @@ const Landing = () => {
   const [step, setStep] = useState<"idle" | "verifying" | "success">("idle");
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const navigate = useNavigate();
 
   const preloadImage = (url: string): Promise<string> => {
@@ -151,9 +152,41 @@ const Landing = () => {
           <div className="h-px flex-1 bg-gray-200" />
         </div>
         <p className="text-center text-xs text-gray-400 leading-relaxed">
-          Ao continuar, você concorda com os Termos de Serviço e confirma que leu a Política de Privacidade.
+          Ao continuar, você concorda com os Termos de Serviço e confirma que leu a{" "}
+          <button onClick={() => setShowPrivacy(true)} className="underline text-gray-500 hover:text-gray-700">
+            Política de Privacidade
+          </button>.
         </p>
       </div>
+
+      {/* Privacy Policy Modal */}
+      {showPrivacy && (
+        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/40" onClick={() => setShowPrivacy(false)}>
+          <div
+            className="w-full max-w-lg bg-white rounded-t-2xl max-h-[85vh] flex flex-col animate-[slideUp_0.3s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+              <h2 className="text-base font-bold text-black">Política de Privacidade</h2>
+              <button onClick={() => setShowPrivacy(false)} className="p-1 rounded-full hover:bg-gray-100">
+                <X className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+            {/* Content */}
+            <div className="overflow-y-auto px-5 py-4 text-sm text-gray-600 leading-relaxed space-y-4">
+              <p><strong>1. Coleta de Dados</strong><br />Coletamos apenas as informações necessárias para verificar sua elegibilidade na plataforma, incluindo nome de usuário do TikTok e dados de navegação.</p>
+              <p><strong>2. Uso das Informações</strong><br />Suas informações são utilizadas exclusivamente para validar sua conta, processar pagamentos e fornecer os serviços contratados.</p>
+              <p><strong>3. Compartilhamento</strong><br />Não compartilhamos seus dados pessoais com terceiros, exceto quando necessário para processamento de pagamentos através de parceiros autorizados.</p>
+              <p><strong>4. Segurança</strong><br />Empregamos medidas de segurança técnicas e organizacionais para proteger suas informações contra acesso não autorizado, alteração ou destruição.</p>
+              <p><strong>5. Cookies</strong><br />Utilizamos cookies essenciais para o funcionamento da plataforma e cookies analíticos para melhorar sua experiência de uso.</p>
+              <p><strong>6. Seus Direitos</strong><br />Você tem direito a acessar, corrigir ou excluir seus dados pessoais a qualquer momento, conforme previsto na LGPD (Lei Geral de Proteção de Dados).</p>
+              <p><strong>7. Contato</strong><br />Para dúvidas sobre esta política, entre em contato através dos canais oficiais disponíveis na plataforma.</p>
+              <p className="text-xs text-gray-400">Última atualização: Fevereiro de 2026.</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Fullscreen Verificando */}
       {step === "verifying" && (
