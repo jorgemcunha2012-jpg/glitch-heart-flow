@@ -76,9 +76,9 @@ const Checkout = () => {
         <div className="rounded-2xl border border-gray-200 p-5">
           <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-4">Dados para reembolso</p>
           <div className="space-y-3">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-              <span className="text-sm text-gray-500">Nome</span>
-              <span className="text-sm font-semibold text-black">{nome}</span>
+            <div className="flex justify-between border-b border-gray-100 pb-3 gap-4">
+              <span className="text-sm text-gray-500 shrink-0">Nome</span>
+              <span className="text-sm font-semibold text-black text-right break-words min-w-0">{nome}</span>
             </div>
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <span className="text-sm text-gray-500">Data</span>
