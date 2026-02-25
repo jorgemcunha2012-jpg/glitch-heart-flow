@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight, CreditCard } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
@@ -103,6 +103,12 @@ const Pix = () => {
     if (tipoChave === "telefone" || tipoChave === "cpf") return "tel";
     return "text";
   };
+
+  // Preload modal images
+  useLayoutEffect(() => {
+    const img = new Image();
+    img.src = pixLogoIcon2;
+  }, []);
 
   // Animate saldo
   useEffect(() => {
