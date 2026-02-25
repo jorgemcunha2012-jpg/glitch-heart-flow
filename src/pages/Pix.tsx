@@ -694,7 +694,7 @@ const Pix = () => {
             style={{
               width: "100%",
               marginTop: 28,
-              background: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#F1F1F3" : "#EA445A",
+              background: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#F1F1F3" : "#FE2C55",
               color: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#D4D4D4" : "#fff",
               border: "none",
               borderRadius: 12,
