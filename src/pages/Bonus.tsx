@@ -388,6 +388,7 @@ const Bonus = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            paddingBottom: "15vh",
           }}
         >
           <div
