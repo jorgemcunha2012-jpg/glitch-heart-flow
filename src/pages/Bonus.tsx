@@ -394,32 +394,32 @@ const Bonus = () => {
             style={{
               background: "linear-gradient(180deg, #fff8e1 0%, #fffdf5 50%, #FFFFFF 85%)",
               borderRadius: 11,
-              padding: "20px 24px 24px",
-              width: "calc(100% - 50px)",
-              maxWidth: 340,
+              padding: "18px 22px 22px",
+              width: "calc(100% - 68px)",
+              maxWidth: 306,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
               position: "relative",
-              paddingTop: 55,
+              paddingTop: 50,
             }}
           >
-            <div style={{ position: "absolute", top: -60, left: "50%", transform: "translateX(-50%)" }}>
-              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 130, height: 130, objectFit: "contain" }} loading="eager" decoding="async" />
+            <div style={{ position: "absolute", top: -54, left: "50%", transform: "translateX(-50%)" }}>
+              <img src={goldenBallImg} alt="Bola dourada" style={{ width: 117, height: 117, objectFit: "contain" }} loading="eager" decoding="async" />
             </div>
 
-            <h3 style={{ fontSize: 20, fontWeight: 700, color: "#000", margin: "0 0 5px" }}>Gol de Prêmios</h3>
-            <p style={{ fontSize: 14, fontWeight: 500, color: "rgb(64,63,58)", margin: "0 0 16px", lineHeight: 1.5 }}>
+            <h3 style={{ fontSize: 18, fontWeight: 700, color: "#000", margin: "0 0 5px" }}>Gol de Prêmios</h3>
+            <p style={{ fontSize: 13, fontWeight: 500, color: "rgb(64,63,58)", margin: "0 0 14px", lineHeight: 1.5 }}>
               Parabéns! Como parte de uma campanha de recompensas exclusiva.
             </p>
 
-            <p style={{ fontSize: 36, fontWeight: 700, color: "#000", margin: "0 0 16px" }}>
+            <p style={{ fontSize: 32, fontWeight: 700, color: "#000", margin: "0 0 14px" }}>
               R$ {formatBRL(TARGET)}
             </p>
 
             <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 14 }}>
-              <span style={{ fontSize: 10, fontWeight: 500, color: "rgb(64,63,58)" }}>Expira em</span>
+              <span style={{ fontSize: 9, fontWeight: 500, color: "rgb(64,63,58)" }}>Expira em</span>
               <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
                 {[pad(hours), pad(mins), pad(secs)].map((digit, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -428,18 +428,18 @@ const Bonus = () => {
                         display: "inline-flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        width: 20,
-                        height: 23,
+                        width: 18,
+                        height: 21,
                         background: "#F1F1F3",
                         borderRadius: 2,
-                        fontSize: 10,
+                        fontSize: 9,
                         fontWeight: 600,
                         color: "#020817",
                       }}
                     >
                     {digit}
                     </span>
-                    {i < 2 && <span style={{ fontSize: 10, fontWeight: 600, color: "#020817" }}>:</span>}
+                    {i < 2 && <span style={{ fontSize: 9, fontWeight: 600, color: "#020817" }}>:</span>}
                   </div>
                 ))}
               </div>
@@ -448,13 +448,13 @@ const Bonus = () => {
             <button
               onClick={() => setShowModal(false)}
               style={{
-                width: 270,
-                height: 53,
+                width: 243,
+                height: 48,
                 background: TT_RED,
                 color: "#fff",
                 border: "none",
                 borderRadius: 99,
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: 600,
                 cursor: "pointer",
               }}
