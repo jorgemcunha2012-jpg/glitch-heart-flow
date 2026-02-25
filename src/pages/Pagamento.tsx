@@ -284,7 +284,7 @@ const Pagamento = () => {
         </div>
 
         <p className="text-xs text-gray-400 text-center leading-relaxed pt-4 pb-2">
-          Ao finalizar o pagamento você concorda com nossos termos de uso e privacidade.
+          Ao finalizar o pagamento você concorda com os termos de uso e privacidade do TikTok.
         </p>
       </div>
     </div>
