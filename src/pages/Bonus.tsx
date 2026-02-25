@@ -152,7 +152,7 @@ const Bonus = () => {
                 position: "absolute",
                 top: -7,
                 right: -5,
-                height: 17,
+                height: 26,
                 objectFit: "contain",
                 background: "#fff",
                 borderRadius: 3,
