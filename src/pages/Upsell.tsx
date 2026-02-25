@@ -46,7 +46,7 @@ const Upsell = () => {
   });
 
   return (
-    <div style={{ fontFamily: FONT, background: "#F5F5F5", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ fontFamily: FONT, background: "#F5F5F5", minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
       {/* Header */}
       <div style={{
         width: "100%", background: "#fff", padding: "14px 0",

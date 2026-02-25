@@ -58,6 +58,14 @@
     font-family: 'Montserrat', sans-serif;
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* App-like full viewport pages */
+  .min-h-screen {
+    min-height: 100dvh !important;
   }
 
   /* Prevent iOS auto-zoom on inputs */

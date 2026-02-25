@@ -98,7 +98,7 @@ const Bonus = () => {
     v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <div style={{ background: "#F5F5F5", minHeight: "100vh", fontFamily: FONT }}>
+    <div style={{ background: "#F5F5F5", minHeight: "100dvh", fontFamily: FONT }}>
       <div style={{ maxWidth: 450, margin: "0 auto", padding: "0 12px 110px" }}>
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "14px 0" }}>

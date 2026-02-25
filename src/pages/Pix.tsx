@@ -222,7 +222,7 @@ const Pix = () => {
       style={{
         fontFamily: FONT,
         background: "#F5F5F5",
-        minHeight: "100vh",
+        minHeight: "100dvh",
         display: "flex",
         flexDirection: "column",
       }}
