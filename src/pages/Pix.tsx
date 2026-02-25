@@ -434,7 +434,7 @@ const Pix = () => {
                 border: "1.5px solid #E2E8F0",
                 borderRadius: 6,
                 padding: "10px 12px",
-                fontSize: 13,
+                fontSize: 16,
                 color: "#999",
                 fontFamily: FONT,
               }}
@@ -448,7 +448,7 @@ const Pix = () => {
                 border: "1.5px solid #E2E8F0",
                 borderRadius: 6,
                 padding: "10px 12px",
-                fontSize: 13,
+                fontSize: 16,
                 color: "#999",
                 fontFamily: FONT,
               }}
@@ -568,7 +568,7 @@ const Pix = () => {
                     border: "none",
                     borderBottom: "1px solid #E2E8F0",
                     padding: "8px 0",
-                    fontSize: 14,
+                    fontSize: 16,
                     color: "#020817",
                     outline: "none",
                     fontFamily: FONT,
@@ -586,7 +586,7 @@ const Pix = () => {
                     onChange={(e) => { setTipoChave(e.target.value); setChavePix(""); setChaveError(""); }}
                     style={{
                       width: "100%",
-                      fontSize: 14,
+                      fontSize: 16,
                       color: "#020817",
                       outline: "none",
                       background: "transparent",
@@ -619,7 +619,7 @@ const Pix = () => {
                     border: "none",
                     borderBottom: "1px solid #E2E8F0",
                     padding: "8px 0",
-                    fontSize: 14,
+                    fontSize: 16,
                     color: "#020817",
                     outline: "none",
                     fontFamily: FONT,
