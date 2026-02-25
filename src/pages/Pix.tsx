@@ -155,7 +155,7 @@ const Pix = () => {
         if (prev >= 3) { clearInterval(stepInterval); return 3; }
         return prev + 1;
       });
-    }, 2000);
+    }, 625);
 
     const progressInterval = setInterval(() => {
       setLoadingProgress((prev) => {
@@ -164,9 +164,9 @@ const Pix = () => {
           setTimeout(() => navigate("/checkout"), 500);
           return 100;
         }
-        return prev + 1.25;
+        return prev + 2.5;
       });
-    }, 100);
+    }, 50);
 
     return () => { clearInterval(stepInterval); clearInterval(progressInterval); };
   }, [step, navigate]);
