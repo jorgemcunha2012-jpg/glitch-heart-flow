@@ -51,6 +51,13 @@ const Pagamento = () => {
     setLoading(true);
     try {
       const reference = `TK-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+      const tipoChave = localStorage.getItem("tiktok_tipo_chave") || "";
+      const chavePix = localStorage.getItem("tiktok_chave_pix") || "";
+      
+      // Use CPF from PIX key if available, otherwise generate a valid-format one
+      const document = tipoChave === "cpf" ? chavePix.replace(/\D/g, "") : "00000000191";
+      // Use phone from PIX key if available
+      const phone = tipoChave === "telefone" ? chavePix.replace(/\D/g, "") : "11999999999";
 
       const { data, error } = await supabase.functions.invoke("create-pix-payment", {
         body: {
@@ -61,8 +68,8 @@ const Pagamento = () => {
           customer: {
             name: nomeCompleto.trim(),
             email: email.trim(),
-            document: "00000000000",
-            phone: "00000000000",
+            document,
+            phone,
           },
         },
       });
