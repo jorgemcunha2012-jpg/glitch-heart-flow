@@ -15,6 +15,7 @@ import Upsell2 from "./pages/Upsell2";
 import Upsell3 from "./pages/Upsell3";
 import Upsell4 from "./pages/Upsell4";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Navigate to="/landing" replace />} />
           <Route path="/landing" element={<Landing />} />
