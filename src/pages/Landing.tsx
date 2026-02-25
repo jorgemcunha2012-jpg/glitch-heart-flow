@@ -121,7 +121,10 @@ const Landing = () => {
           <span className="mr-2 text-sm text-gray-400 font-medium">@</span>
           <input
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value;
+              setUsername(val.length > 0 ? val[0].toLowerCase() + val.slice(1) : val);
+            }}
             placeholder="seu_usuario"
             className="w-full bg-transparent text-black placeholder:text-gray-300 outline-none"
             style={{ fontSize: '16px' }}
