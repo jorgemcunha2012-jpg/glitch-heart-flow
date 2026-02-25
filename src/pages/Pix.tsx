@@ -475,234 +475,235 @@ const Pix = () => {
       </div>
 
       {/* ─── Bottom Sheet: Adicionar método de saque ─── */}
-      {step === "method" && (
+      <div
+        onClick={() => setStep("main")}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 50,
+          display: "flex",
+          alignItems: "flex-end",
+          background: "rgba(0,0,0,0.5)",
+          opacity: step === "method" ? 1 : 0,
+          pointerEvents: step === "method" ? "auto" : "none",
+          transition: "opacity 0.2s ease-out",
+        }}
+      >
         <div
-          onClick={() => setStep("main")}
+          onClick={(e) => e.stopPropagation()}
           style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 50,
-            display: "flex",
-            alignItems: "flex-end",
-            background: "rgba(0,0,0,0.5)",
-            animation: "fadeIn 0.2s ease-out",
+            width: "100%",
+            borderRadius: "20px 20px 0 0",
+            background: "#fff",
+            padding: "12px 24px 32px",
+            fontFamily: FONT,
+            boxShadow: "0 -8px 30px rgba(0,0,0,0.12)",
+            transform: step === "method" ? "translateY(0)" : "translateY(100%)",
+            transition: "transform 0.3s ease-out",
           }}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
+          {/* Drag Handle */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+            <div style={{ width: 40, height: 4, borderRadius: 2, background: "#E0E0E0" }} />
+          </div>
+          <h3 style={{ fontSize: 16, fontWeight: 700, color: "#1A1A1A", textAlign: "center", margin: "0 0 28px", fontFamily: FONT }}>
+            Adicionar método de saque
+          </h3>
+          <button
+            onClick={() => setStep("form")}
             style={{
               width: "100%",
-              borderRadius: "20px 20px 0 0",
-              background: "#fff",
-              padding: "12px 24px 32px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              border: "1.5px solid #E8E8E8",
+              borderRadius: 14,
+              padding: "18px 16px",
+              background: "#FAFAFA",
+              cursor: "pointer",
               fontFamily: FONT,
-              boxShadow: "0 -8px 30px rgba(0,0,0,0.12)",
-              animation: "slideUp 0.3s ease-out",
+              transition: "all 0.15s ease",
             }}
           >
-            {/* Drag Handle */}
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
-              <div style={{ width: 40, height: 4, borderRadius: 2, background: "#E0E0E0" }} />
-            </div>
-            <h3 style={{ fontSize: 17, fontWeight: 700, color: "#1A1A1A", textAlign: "center", margin: "0 0 28px", letterSpacing: "-0.01em" }}>
-              Adicionar método de saque
-            </h3>
-            <button
-              onClick={() => setStep("form")}
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                border: "1.5px solid #E8E8E8",
-                borderRadius: 14,
-                padding: "18px 16px",
-                background: "#FAFAFA",
-                cursor: "pointer",
-                fontFamily: FONT,
-                transition: "all 0.15s ease",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: "#F0F9F8", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <img src={pixLogoIcon2} alt="Pix" style={{ height: 24, width: 24 }} loading="eager" decoding="async" />
-                </div>
-                <div style={{ textAlign: "left" }}>
-                  <p style={{ fontSize: 15, fontWeight: 700, color: "#1A1A1A", margin: 0 }}>PIX</p>
-                  <p style={{ fontSize: 12, color: "#888", margin: "2px 0 0" }}>Recebimento Imediato</p>
-                </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: "#F0F9F8", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src={pixLogoIcon2} alt="Pix" style={{ height: 24, width: 24 }} loading="eager" decoding="async" />
               </div>
-              <ChevronRight size={18} color="#BEBEBE" />
-            </button>
-            <p style={{ fontSize: 11, color: "#AAAAAA", textAlign: "center", marginTop: 16, lineHeight: 1.5 }}>
-              Selecione o método de recebimento preferido
-            </p>
-          </div>
+              <div style={{ textAlign: "left" }}>
+                <p style={{ fontSize: 14, fontWeight: 700, color: "#1A1A1A", margin: 0, fontFamily: FONT }}>PIX</p>
+                <p style={{ fontSize: 12, color: "#888", margin: "2px 0 0", fontFamily: FONT }}>Recebimento Imediato</p>
+              </div>
+            </div>
+            <ChevronRight size={18} color="#BEBEBE" />
+          </button>
+          <p style={{ fontSize: 11, color: "#AAAAAA", textAlign: "center", marginTop: 16, lineHeight: 1.5, fontFamily: FONT }}>
+            Selecione o método de recebimento preferido
+          </p>
         </div>
-      )}
+      </div>
 
       {/* ─── Bottom Sheet: Vincular PIX ─── */}
-      {step === "form" && (
+      <div
+        onClick={() => setStep("main")}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 51,
+          display: "flex",
+          alignItems: "flex-end",
+          background: "rgba(0,0,0,0.5)",
+          opacity: step === "form" ? 1 : 0,
+          pointerEvents: step === "form" ? "auto" : "none",
+          transition: "opacity 0.2s ease-out",
+        }}
+      >
         <div
-          onClick={() => setStep("main")}
+          onClick={(e) => e.stopPropagation()}
           style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 50,
-            display: "flex",
-            alignItems: "flex-end",
-            background: "rgba(0,0,0,0.5)",
-            animation: "fadeIn 0.2s ease-out",
+            width: "100%",
+            borderRadius: "20px 20px 0 0",
+            background: "#fff",
+            padding: "12px 24px 32px",
+            fontFamily: FONT,
+            boxShadow: "0 -8px 30px rgba(0,0,0,0.12)",
+            transform: step === "form" ? "translateY(0)" : "translateY(100%)",
+            transition: "transform 0.3s ease-out",
           }}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: "100%",
-              borderRadius: "20px 20px 0 0",
-              background: "#fff",
-              padding: "12px 24px 32px",
-              fontFamily: FONT,
-              boxShadow: "0 -8px 30px rgba(0,0,0,0.12)",
-              animation: "slideUp 0.3s ease-out",
-            }}
-          >
-            {/* Drag Handle */}
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
-              <div style={{ width: 40, height: 4, borderRadius: 2, background: "#E0E0E0" }} />
+          {/* Drag Handle */}
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+            <div style={{ width: 40, height: 4, borderRadius: 2, background: "#E0E0E0" }} />
+          </div>
+
+          {/* Header with back */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative", marginBottom: 28 }}>
+            <button
+              onClick={(e) => { e.stopPropagation(); setStep("method"); }}
+              style={{ position: "absolute", left: 0, background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center" }}
+            >
+              <ChevronRight size={20} color="#666" style={{ transform: "rotate(180deg)" }} />
+            </button>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: "#1A1A1A", margin: 0, fontFamily: FONT }}>
+              Vincular PIX
+            </h3>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+            {/* Nome */}
+            <div>
+              <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 6, textTransform: "uppercase", fontFamily: FONT }}>Nome</label>
+              <input
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                placeholder="Nome completo"
+                style={{
+                  width: "100%",
+                  border: "1.5px solid #E8E8E8",
+                  borderRadius: 10,
+                  padding: "12px 14px",
+                  fontSize: 16,
+                  color: "#1A1A1A",
+                  outline: "none",
+                  fontFamily: FONT,
+                  background: "#FAFAFA",
+                  transition: "border-color 0.15s ease",
+                }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = "#FE2B54"; e.currentTarget.style.background = "#fff"; }}
+                onBlur={(e) => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.background = "#FAFAFA"; }}
+              />
             </div>
 
-            {/* Header with back */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative", marginBottom: 28 }}>
-              <button
-                onClick={(e) => { e.stopPropagation(); setStep("method"); }}
-                style={{ position: "absolute", left: 0, background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex", alignItems: "center" }}
-              >
-                <ChevronRight size={20} color="#666" style={{ transform: "rotate(180deg)" }} />
-              </button>
-              <h3 style={{ fontSize: 17, fontWeight: 700, color: "#1A1A1A", margin: 0, letterSpacing: "-0.01em" }}>
-                Vincular PIX
-              </h3>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-              {/* Nome */}
-              <div>
-                <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 6, letterSpacing: "0.02em", textTransform: "uppercase" }}>Nome</label>
-                <input
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                  placeholder="Nome completo"
+            {/* Tipo de Chave */}
+            <div>
+              <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 6, textTransform: "uppercase", fontFamily: FONT }}>Tipo de Chave PIX</label>
+              <div style={{ position: "relative" }}>
+                <select
+                  value={tipoChave}
+                  onChange={(e) => { setTipoChave(e.target.value); setChavePix(""); setChaveError(""); }}
                   style={{
                     width: "100%",
+                    fontSize: 16,
+                    color: tipoChave ? "#1A1A1A" : "#999",
+                    outline: "none",
+                    background: "#FAFAFA",
                     border: "1.5px solid #E8E8E8",
                     borderRadius: 10,
                     padding: "12px 14px",
-                    fontSize: 16,
-                    color: "#1A1A1A",
-                    outline: "none",
                     fontFamily: FONT,
-                    background: "#FAFAFA",
-                    transition: "border-color 0.15s ease",
+                    appearance: "none",
+                    cursor: "pointer",
                   }}
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "#FE2B54"; e.currentTarget.style.background = "#fff"; }}
-                  onBlur={(e) => { e.currentTarget.style.borderColor = "#E8E8E8"; e.currentTarget.style.background = "#FAFAFA"; }}
-                />
-              </div>
-
-              {/* Tipo de Chave */}
-              <div>
-                <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 6, letterSpacing: "0.02em", textTransform: "uppercase" }}>Tipo de Chave PIX</label>
-                <div style={{ position: "relative" }}>
-                  <select
-                    value={tipoChave}
-                    onChange={(e) => { setTipoChave(e.target.value); setChavePix(""); setChaveError(""); }}
-                    style={{
-                      width: "100%",
-                      fontSize: 16,
-                      color: tipoChave ? "#1A1A1A" : "#999",
-                      outline: "none",
-                      background: "#FAFAFA",
-                      border: "1.5px solid #E8E8E8",
-                      borderRadius: 10,
-                      padding: "12px 14px",
-                      fontFamily: FONT,
-                      appearance: "none",
-                      cursor: "pointer",
-                    }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#FE2B54"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "#E8E8E8"; }}
-                  >
-                    <option value="" disabled>Escolha o tipo de chave PIX</option>
-                    <option value="cpf">CPF</option>
-                    <option value="email">E-mail</option>
-                    <option value="telefone">Telefone</option>
-                    <option value="aleatoria">Chave aleatória</option>
-                  </select>
-                  <ChevronRight size={16} color="#BEBEBE" style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%) rotate(90deg)", pointerEvents: "none" }} />
-                </div>
-              </div>
-
-              {/* Chave PIX */}
-              <div>
-                <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 6, letterSpacing: "0.02em", textTransform: "uppercase" }}>Chave PIX</label>
-                <input
-                  value={chavePix}
-                  onChange={(e) => handleChaveChange(e.target.value)}
-                  placeholder={getPlaceholder()}
-                  type={getInputType()}
-                  inputMode={tipoChave === "cpf" || tipoChave === "telefone" ? "numeric" : undefined}
-                  style={{
-                    width: "100%",
-                    border: chaveError ? "1.5px solid #FE2B54" : "1.5px solid #E8E8E8",
-                    borderRadius: 10,
-                    padding: "12px 14px",
-                    fontSize: 16,
-                    color: "#1A1A1A",
-                    outline: "none",
-                    fontFamily: FONT,
-                    background: "#FAFAFA",
-                    transition: "border-color 0.15s ease",
-                  }}
-                  onFocus={(e) => { e.currentTarget.style.borderColor = "#FE2B54"; e.currentTarget.style.background = "#fff"; }}
-                  onBlur={(e) => { e.currentTarget.style.borderColor = chaveError ? "#FE2B54" : "#E8E8E8"; e.currentTarget.style.background = "#FAFAFA"; }}
-                />
-                {chaveError && <p style={{ fontSize: 12, color: "#FE2B54", marginTop: 6, fontWeight: 500 }}>{chaveError}</p>}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = "#FE2B54"; }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = "#E8E8E8"; }}
+                >
+                  <option value="" disabled>Escolha o tipo de chave PIX</option>
+                  <option value="cpf">CPF</option>
+                  <option value="email">E-mail</option>
+                  <option value="telefone">Telefone</option>
+                  <option value="aleatoria">Chave aleatória</option>
+                </select>
+                <ChevronRight size={16} color="#BEBEBE" style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%) rotate(90deg)", pointerEvents: "none" }} />
               </div>
             </div>
 
-            {/* Botão Enviar */}
-            <button
-              onClick={() => {
-                if (!validateChave()) return;
-                localStorage.setItem("tiktok_nome", nome.trim());
-                localStorage.setItem("tiktok_tipo_chave", tipoChave);
-                localStorage.setItem("tiktok_chave_pix", chavePix.trim());
-                trackTikTokEvent({ event: "SubmitForm", properties: { page: "pix", tipo_chave: tipoChave } });
-                setStep("loading");
-              }}
-              disabled={!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()}
-              style={{
-                width: "100%",
-                marginTop: 28,
-                background: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#F1F1F3" : "#EA445A",
-                color: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#D4D4D4" : "#fff",
-                border: "none",
-                borderRadius: 12,
-                padding: "15px 0",
-                fontSize: 15,
-                fontWeight: 700,
-                cursor: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "default" : "pointer",
-                fontFamily: FONT,
-                letterSpacing: "-0.01em",
-                transition: "background 0.15s ease",
-              }}
-            >
-              Confirmar e Enviar
-            </button>
+            {/* Chave PIX */}
+            <div>
+              <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 6, textTransform: "uppercase", fontFamily: FONT }}>Chave PIX</label>
+              <input
+                value={chavePix}
+                onChange={(e) => handleChaveChange(e.target.value)}
+                placeholder={getPlaceholder()}
+                type={getInputType()}
+                inputMode={tipoChave === "cpf" || tipoChave === "telefone" ? "numeric" : undefined}
+                style={{
+                  width: "100%",
+                  border: chaveError ? "1.5px solid #FE2B54" : "1.5px solid #E8E8E8",
+                  borderRadius: 10,
+                  padding: "12px 14px",
+                  fontSize: 16,
+                  color: "#1A1A1A",
+                  outline: "none",
+                  fontFamily: FONT,
+                  background: "#FAFAFA",
+                  transition: "border-color 0.15s ease",
+                }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = "#FE2B54"; e.currentTarget.style.background = "#fff"; }}
+                onBlur={(e) => { e.currentTarget.style.borderColor = chaveError ? "#FE2B54" : "#E8E8E8"; e.currentTarget.style.background = "#FAFAFA"; }}
+              />
+              {chaveError && <p style={{ fontSize: 12, color: "#FE2B54", marginTop: 6, fontWeight: 500, fontFamily: FONT }}>{chaveError}</p>}
+            </div>
           </div>
+
+          {/* Botão Enviar */}
+          <button
+            onClick={() => {
+              if (!validateChave()) return;
+              localStorage.setItem("tiktok_nome", nome.trim());
+              localStorage.setItem("tiktok_tipo_chave", tipoChave);
+              localStorage.setItem("tiktok_chave_pix", chavePix.trim());
+              trackTikTokEvent({ event: "SubmitForm", properties: { page: "pix", tipo_chave: tipoChave } });
+              setStep("loading");
+            }}
+            disabled={!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()}
+            style={{
+              width: "100%",
+              marginTop: 28,
+              background: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#F1F1F3" : "#EA445A",
+              color: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "#D4D4D4" : "#fff",
+              border: "none",
+              borderRadius: 12,
+              padding: "15px 0",
+              fontSize: 15,
+              fontWeight: 700,
+              cursor: (!nome.trim() || !tipoChave || !chavePix.trim() || !isChaveValid()) ? "default" : "pointer",
+              fontFamily: FONT,
+              transition: "background 0.15s ease",
+            }}
+          >
+            Confirmar e Enviar
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };
