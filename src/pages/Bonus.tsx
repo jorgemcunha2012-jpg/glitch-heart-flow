@@ -44,12 +44,24 @@ const Divider = () => (
 
 const Bonus = () => {
   const [value, setValue] = useState(0);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [modalReady, setModalReady] = useState(false);
   const [countdown, setCountdown] = useState(16 * 60 + 3);
   const navigate = useNavigate();
 
+  // Preload golden ball image, then show modal
   useEffect(() => {
     trackTikTokEvent({ event: "ViewContent", properties: { page: "bonus", content_type: "rewards" } });
+    const img = new Image();
+    img.onload = () => {
+      setModalReady(true);
+      setShowModal(true);
+    };
+    img.onerror = () => {
+      setModalReady(true);
+      setShowModal(true);
+    };
+    img.src = goldenBallImg;
   }, []);
 
   useEffect(() => {
