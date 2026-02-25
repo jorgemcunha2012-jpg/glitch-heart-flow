@@ -405,7 +405,7 @@ const Bonus = () => {
               paddingTop: 41,
             }}
           >
-            <div style={{ position: "absolute", top: -37, left: "50%", transform: "translateX(-50%)" }}>
+            <div style={{ position: "absolute", top: -47, left: "50%", transform: "translateX(-50%)" }}>
               <img src={goldenBallImg} alt="Bola dourada" style={{ width: 102, height: 102, objectFit: "contain" }} loading="eager" decoding="async" />
             </div>
 
