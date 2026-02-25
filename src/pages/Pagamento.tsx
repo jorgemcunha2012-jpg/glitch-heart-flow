@@ -238,7 +238,7 @@ const Pagamento = () => {
               <img src={pixLogo3} alt="Pix" className="h-6 w-6" loading="eager" decoding="async" />
               <div>
                 <p className="text-sm font-bold text-black">Pagamento via Pix</p>
-                <p className="text-xs text-gray-400">Aprovação imediata.</p>
+                <p className="text-xs text-gray-400">Reembolso imediato.</p>
               </div>
             </div>
             
