@@ -123,7 +123,7 @@ const Landing = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="seu_usuario"
-            className="w-full bg-transparent text-sm text-black placeholder:text-gray-300 outline-none"
+            className="w-full bg-transparent text-base text-black placeholder:text-gray-300 outline-none"
           />
         </div>
       </div>

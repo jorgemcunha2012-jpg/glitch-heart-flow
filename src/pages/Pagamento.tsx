@@ -214,7 +214,7 @@ const Pagamento = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-base text-black placeholder:text-gray-300 outline-none focus:border-primary"
               />
             </div>
             <div>
@@ -224,7 +224,7 @@ const Pagamento = () => {
                 value={nomeCompleto}
                 onChange={(e) => setNomeCompleto(e.target.value)}
                 placeholder="Nome e sobrenome"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-black placeholder:text-gray-300 outline-none focus:border-primary"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-base text-black placeholder:text-gray-300 outline-none focus:border-primary"
               />
             </div>
           </div>
