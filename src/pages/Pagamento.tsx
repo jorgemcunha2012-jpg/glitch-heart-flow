@@ -192,7 +192,7 @@ const Pagamento = () => {
             </div>
             <div>
               <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
-              <p className="text-xs text-green-500 font-medium">Reembolso instantâneo</p>
+              <p className="text-xs text-green-500 font-medium">Verificação de Identidade</p>
             </div>
           </div>
         </div>
