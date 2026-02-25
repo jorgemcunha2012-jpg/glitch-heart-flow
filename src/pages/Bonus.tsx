@@ -150,7 +150,7 @@ const Bonus = () => {
               alt="PIX"
               style={{
                 position: "absolute",
-                top: -7,
+                top: -15,
                 right: -5,
                 height: 26,
                 objectFit: "contain",
