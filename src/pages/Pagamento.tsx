@@ -232,7 +232,7 @@ const Pagamento = () => {
 
         {/* Método de pagamento */}
         <div className="rounded-2xl bg-white border border-gray-200 p-5">
-          <h3 className="text-xl font-bold text-black mb-4">Escolha um método de pagamento...</h3>
+          <h3 className="text-xl font-bold text-black mb-4">Escolha um método de pagamento</h3>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img src={pixLogo3} alt="Pix" className="h-6 w-6" loading="eager" decoding="async" />
