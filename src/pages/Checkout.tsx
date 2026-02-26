@@ -23,6 +23,7 @@ const Checkout = () => {
   const [countdown, setCountdown] = useState(15 * 60);
   const [showNotification, setShowNotification] = useState(false);
   const [dismissNotification, setDismissNotification] = useState(false);
+  const [exitingNotification, setExitingNotification] = useState(false);
 
   useEffect(() => {
     trackTikTokEvent({ event: "InitiateCheckout", properties: { value: TARGET, currency: "BRL" } });
@@ -35,11 +36,15 @@ const Checkout = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Show push notification immediately, dismiss after 2500ms
+  // Show push notification immediately, slide out after 5s
   useEffect(() => {
     setShowNotification(true);
-    const timer = setTimeout(() => setDismissNotification(true), 3500);
-    return () => clearTimeout(timer);
+    const exitTimer = setTimeout(() => setExitingNotification(true), 5000);
+    const removeTimer = setTimeout(() => setDismissNotification(true), 5400);
+    return () => {
+      clearTimeout(exitTimer);
+      clearTimeout(removeTimer);
+    };
   }, []);
 
   const mins = Math.floor(countdown / 60);
@@ -60,13 +65,18 @@ const Checkout = () => {
       {showNotification && !dismissNotification && (
         <div
           className="fixed z-[9999] cursor-pointer"
-          onClick={() => setDismissNotification(true)}
+          onClick={() => {
+            setExitingNotification(true);
+            setTimeout(() => setDismissNotification(true), 400);
+          }}
           style={{
-            animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            animation: exitingNotification
+              ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
+              : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
             top: isIOS ? "4px" : "12px",
             left: isIOS ? "8px" : "12px",
             right: isIOS ? "8px" : "12px",
-            ...(isIOS ? { transform: "scale(1.2)", transformOrigin: "top center" } : {}),
+            ...(isIOS ? { transform: exitingNotification ? undefined : "scale(1.2)", transformOrigin: "top center" } : {}),
           }}
         >
           {isIOS ? (
