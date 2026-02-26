@@ -65,25 +65,32 @@ const Checkout = () => {
       {/* Simulated Push Notification */}
       {showNotification && !dismissNotification && (
         <div
-          className="fixed top-3 left-3 right-3 z-[9999] animate-fade-in cursor-pointer"
+          className="fixed top-3 left-3 right-3 z-[9999] cursor-pointer"
           onClick={() => setDismissNotification(true)}
           style={{ animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
-          <div className="rounded-2xl bg-white/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-gray-100/50 p-3.5 mx-auto max-w-md">
+          <div
+            className="rounded-[20px] p-4 mx-auto max-w-md border border-white/30"
+            style={{
+              background: "linear-gradient(135deg, rgba(200,200,200,0.55) 0%, rgba(180,180,180,0.45) 100%)",
+              backdropFilter: "blur(40px)",
+              WebkitBackdropFilter: "blur(40px)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.3)",
+            }}
+          >
             <div className="flex items-start gap-3">
               <img
                 src={tiktokLogo}
                 alt="TikTok"
-                className="h-10 w-10 rounded-xl object-contain bg-black p-1.5 shrink-0"
+                className="h-11 w-11 rounded-[12px] object-contain bg-black p-1.5 shrink-0 shadow-sm"
               />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-xs font-semibold text-gray-900 uppercase tracking-wide">TikTok Bônus</span>
-                  <span className="text-[10px] text-gray-400">{notifTime}</span>
+                <div className="flex items-baseline justify-between gap-2 mb-0.5">
+                  <span className="text-[15px] font-bold text-gray-900 leading-tight">Transferência recebida</span>
+                  <span className="text-[12px] text-gray-500 shrink-0 font-medium">{notifTime}</span>
                 </div>
-                <p className="text-sm font-semibold text-gray-900 leading-tight">Saque pendente 💰</p>
-                <p className="text-xs text-gray-500 leading-snug mt-0.5">
-                  Seu saque de R$ {TARGET.toFixed(2).replace(".", ",")} está aguardando confirmação de identidade.
+                <p className="text-[13px] text-gray-800 leading-snug mt-0.5">
+                  Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de Super Pagamentos e Tecnologia LTDA.
                 </p>
               </div>
             </div>
