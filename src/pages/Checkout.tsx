@@ -73,6 +73,7 @@ const Checkout = () => {
             <div
               className="rounded-[22px] p-3.5 mx-auto max-w-md border border-white/20"
               style={{
+                fontFamily: "-apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif",
                 background: "linear-gradient(135deg, rgba(45,45,45,0.92) 0%, rgba(35,35,35,0.95) 100%)",
                 backdropFilter: "blur(50px)",
                 WebkitBackdropFilter: "blur(50px)",
@@ -94,6 +95,7 @@ const Checkout = () => {
             <div
               className="rounded-2xl p-4 mx-auto max-w-md"
               style={{
+                fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
                 background: "#2a2a2e",
                 boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
               }}
