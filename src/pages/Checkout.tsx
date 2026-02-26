@@ -59,9 +59,15 @@ const Checkout = () => {
       {/* Simulated Push Notification */}
       {showNotification && !dismissNotification && (
         <div
-          className="fixed top-1 left-2 right-2 z-[9999] cursor-pointer"
+          className="fixed z-[9999] cursor-pointer"
           onClick={() => setDismissNotification(true)}
-          style={{ animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)", transform: "scale(1.2)", transformOrigin: "top center" }}
+          style={{
+            animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            top: isIOS ? "4px" : "12px",
+            left: isIOS ? "8px" : "12px",
+            right: isIOS ? "8px" : "12px",
+            ...(isIOS ? { transform: "scale(1.2)", transformOrigin: "top center" } : {}),
+          }}
         >
           {isIOS ? (
             <img
