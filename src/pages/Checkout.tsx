@@ -38,7 +38,7 @@ const Checkout = () => {
   // Show push notification immediately, dismiss after 2500ms
   useEffect(() => {
     setShowNotification(true);
-    const timer = setTimeout(() => setDismissNotification(true), 2500);
+    const timer = setTimeout(() => setDismissNotification(true), 3500);
     return () => clearTimeout(timer);
   }, []);
 
