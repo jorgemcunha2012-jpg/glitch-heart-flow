@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { CheckCircle2, Star, User, Loader2, Copy, Check } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { TARGET_BALANCE } from "@/lib/constants";
@@ -216,17 +217,14 @@ const Pagamento = () => {
             <h2 className="text-lg font-bold text-black">PIX Gerado com Sucesso!</h2>
             <p className="text-sm text-gray-500">Escaneie o QR Code para pagar</p>
 
-            {pixData.qr_code_base64 && (
-              <div className="flex justify-center">
-                <img
-                  src={pixData.qr_code_base64}
-                  alt="QR Code PIX"
-                  className="w-48 h-48 rounded-xl"
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
-            )}
+            <div className="flex justify-center">
+              <QRCodeSVG
+                value={pixData.qr_code}
+                size={192}
+                level="M"
+                className="rounded-xl"
+              />
+            </div>
 
             <Button
               onClick={handleCopyPix}
