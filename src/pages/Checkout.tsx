@@ -86,7 +86,7 @@ const Checkout = () => {
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                  <span className="text-[15px] font-bold text-white leading-tight">Transferência recebida</span>
+                  <span className="text-[15px] font-bold text-white leading-tight">Pix Pendente - TikTok Bônus</span>
                   <span className="text-[12px] text-white/50 shrink-0 font-medium">agora</span>
                 </div>
                 <p className="text-[13px] text-white/80 leading-snug mt-0.5">
