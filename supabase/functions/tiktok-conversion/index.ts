@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 const TIKTOK_EVENTS_URL = "https://business-api.tiktok.com/open_api/v1.3/event/track/";
@@ -27,7 +27,7 @@ serve(async (req) => {
   }
 
   try {
-    const { event, event_id, properties } = await req.json();
+    const { event, event_id, properties, ttclid, page_url, page_referrer } = await req.json();
 
     if (!event) {
       return new Response(JSON.stringify({ error: 'Missing event name' }), {
@@ -35,15 +35,31 @@ serve(async (req) => {
       });
     }
 
+    // Build user object with all attribution signals
+    const user: Record<string, unknown> = {
+      ip: req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || '',
+      user_agent: req.headers.get('user-agent') || '',
+    };
+
+    // ttclid is critical for TikTok attribution
+    if (ttclid) {
+      user.ttclid = ttclid;
+    }
+
     const eventData: Record<string, unknown> = {
-      event: event,
+      event,
       event_id: event_id || crypto.randomUUID(),
       event_time: Math.floor(Date.now() / 1000),
-      user: {
-        ip: req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || '',
-        user_agent: req.headers.get('user-agent') || '',
-      },
+      user,
     };
+
+    // Add page context
+    if (page_url) {
+      eventData.page = {
+        url: page_url,
+        ...(page_referrer && { referrer: page_referrer }),
+      };
+    }
 
     if (properties) {
       eventData.properties = properties;
