@@ -73,9 +73,9 @@ const Checkout = () => {
             animation: exitingNotification
               ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
               : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-            top: isIOS ? "4px" : "12px",
-            left: isIOS ? "8px" : "12px",
-            right: isIOS ? "8px" : "12px",
+            top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
+            left: isIOS ? "6px" : "12px",
+            right: isIOS ? "6px" : "12px",
             ...(isIOS ? { transform: exitingNotification ? undefined : "scale(1.05)", transformOrigin: "top center" } : {}),
           }}
         >
