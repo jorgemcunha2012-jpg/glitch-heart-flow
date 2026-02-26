@@ -34,19 +34,12 @@ const Checkout = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Show push notification after 3 seconds
+  // Show push notification immediately, dismiss after 2500ms
   useEffect(() => {
-    const timer = setTimeout(() => setShowNotification(true), 3000);
+    setShowNotification(true);
+    const timer = setTimeout(() => setDismissNotification(true), 2500);
     return () => clearTimeout(timer);
   }, []);
-
-  // Auto-dismiss after 6 seconds
-  useEffect(() => {
-    if (showNotification) {
-      const timer = setTimeout(() => setDismissNotification(true), 6000);
-      return () => clearTimeout(timer);
-    }
-  }, [showNotification]);
 
   const mins = Math.floor(countdown / 60);
   const secs = countdown % 60;
