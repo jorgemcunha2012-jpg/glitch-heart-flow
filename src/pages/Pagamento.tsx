@@ -6,6 +6,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { TARGET_BALANCE } from "@/lib/constants";
+import { getUtms } from "@/lib/utm";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokRound from "@/assets/tiktok-round.png";
 import pixLogo3 from "@/assets/pix-logo-icon-3.png";
@@ -54,6 +55,7 @@ const Pagamento = () => {
       const reference = `TK-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
       const tipoChave = localStorage.getItem("tiktok_tipo_chave") || "";
       const chavePix = localStorage.getItem("tiktok_chave_pix") || "";
+      const utms = getUtms();
       
       // Use CPF from PIX key if available, otherwise generate a valid-format one
       const document = tipoChave === "cpf" ? chavePix.replace(/\D/g, "") : "00000000191";
@@ -72,6 +74,7 @@ const Pagamento = () => {
             document,
             phone,
           },
+          ...(Object.keys(utms).length > 0 && { metadata: utms }),
         },
       });
 

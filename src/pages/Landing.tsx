@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2, X } from "lucide-react";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import { supabase } from "@/integrations/supabase/client";
+import { captureUtms } from "@/lib/utm";
 
 // Confetti piece component
 const CONFETTI_COLORS = ["#EE1D52", "#69C9D0", "#FFD700", "#FF6B6B", "#4ECDC4", "#A78BFA", "#F97316"];
@@ -38,6 +39,11 @@ const Landing = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [showPrivacy, setShowPrivacy] = useState(false);
   const navigate = useNavigate();
+
+  // Capture UTM params on first load
+  useEffect(() => {
+    captureUtms();
+  }, []);
 
   const preloadImage = (url: string): Promise<string> => {
     return new Promise((resolve, reject) => {
