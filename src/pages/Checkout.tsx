@@ -76,7 +76,7 @@ const Checkout = () => {
             top: isIOS ? "4px" : "12px",
             left: isIOS ? "8px" : "12px",
             right: isIOS ? "8px" : "12px",
-            ...(isIOS ? { transform: exitingNotification ? undefined : "scale(1.2)", transformOrigin: "top center" } : {}),
+            ...(isIOS ? { transform: exitingNotification ? undefined : "scale(1.05)", transformOrigin: "top center" } : {}),
           }}
         >
           {isIOS ? (
