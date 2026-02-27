@@ -121,6 +121,17 @@ const Pagamento = () => {
 
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
 
+  const [timeLeft, setTimeLeft] = useState(5 * 60);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const timer = setInterval(() => setTimeLeft((t) => Math.max(0, t - 1)), 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+  const seconds = String(timeLeft % 60).padStart(2, "0");
+
   const handlePagar = async () => {
     setLoading(true);
     try {
@@ -223,9 +234,11 @@ const Pagamento = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-1 px-3 py-1.5 rounded-full" style={{ background: "#E8FAF0" }}>
-          <div className="h-1.5 w-1.5 rounded-full" style={{ background: "#00C853" }} />
-          <span className="text-[11px] font-semibold" style={{ color: "#00C853" }}>Disponível</span>
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style={{ background: timeLeft <= 60 ? "#FFF0F0" : "#FFF8E1" }}>
+          <div className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: timeLeft <= 60 ? "#FE2C55" : "#FF9800" }} />
+          <span className="text-[11px] font-bold tabular-nums" style={{ color: timeLeft <= 60 ? "#FE2C55" : "#FF9800" }}>
+            {minutes}:{seconds}
+          </span>
         </div>
       </div>
 
