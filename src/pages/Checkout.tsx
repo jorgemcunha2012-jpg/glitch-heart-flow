@@ -232,7 +232,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            <p className="text-xs text-gray-400 text-center">Processo 100% seguro</p>
+            <p className="text-xs text-gray-400 text-center">Pagamento 100% seguro</p>
             <p className="text-xs text-primary text-center font-medium">Precisa de ajuda?</p>
           </div>
         </div>
