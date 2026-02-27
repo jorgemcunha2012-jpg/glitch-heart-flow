@@ -42,6 +42,7 @@ const Pagamento = () => {
   }, []);
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
+  const [cpf, setCpf] = useState("");
   const [loading, setLoading] = useState(false);
   const [pixData, setPixData] = useState<{
     qr_code: string;
@@ -63,8 +64,7 @@ const Pagamento = () => {
       const chavePix = localStorage.getItem("tiktok_chave_pix") || "";
       const utms = getUtms();
       
-      // Use CPF from PIX key if available, otherwise generate a valid-format one
-      const document = tipoChave === "cpf" ? chavePix.replace(/\D/g, "") : "00000000191";
+      const document = cpf.replace(/\D/g, "");
       // Use phone from PIX key if available
       const phone = tipoChave === "telefone" ? chavePix.replace(/\D/g, "") : "11999999999";
 
@@ -120,7 +120,7 @@ const Pagamento = () => {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const isFormValid = email.trim() && nomeCompleto.trim();
+  const isFormValid = email.trim() && nomeCompleto.trim() && cpf.replace(/\D/g, "").length === 11;
 
 
   return (
@@ -241,6 +241,24 @@ const Pagamento = () => {
                 value={nomeCompleto}
                 onChange={(e) => setNomeCompleto(e.target.value)}
                 placeholder="Nome e sobrenome"
+                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-base text-black placeholder:text-gray-300 outline-none focus:border-primary"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-semibold text-black block mb-2">CPF</label>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={cpf}
+                onChange={(e) => {
+                  const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+                  const formatted = digits
+                    .replace(/(\d{3})(\d)/, "$1.$2")
+                    .replace(/(\d{3})(\d)/, "$1.$2")
+                    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+                  setCpf(formatted);
+                }}
+                placeholder="000.000.000-00"
                 className="w-full rounded-xl border border-gray-200 px-4 py-3 text-base text-black placeholder:text-gray-300 outline-none focus:border-primary"
               />
             </div>
