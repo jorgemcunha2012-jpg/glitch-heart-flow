@@ -12,13 +12,16 @@ const UTM_KEYS = [
 const STORAGE_KEY = "tiktok_utms";
 
 export function captureUtms(): void {
-  const params = new URLSearchParams(window.location.search);
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
   const utms: Record<string, string> = {};
 
   for (const key of UTM_KEYS) {
     const value = params.get(key);
     if (value) utms[key] = value;
   }
+
+  
 
   // Only overwrite if we have new UTMs (preserve existing on internal navigations)
   if (Object.keys(utms).length > 0) {

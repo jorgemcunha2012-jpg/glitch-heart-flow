@@ -1,6 +1,10 @@
 import { createRoot } from "react-dom/client";
+import { captureUtms } from "./lib/utm";
 import App from "./App.tsx";
 import "./index.css";
+
+// Capture UTMs immediately before anything else
+captureUtms();
 
 // Prevent iOS auto-zoom on input focus by ensuring viewport max-scale
 const viewportMeta = document.querySelector('meta[name="viewport"]');
