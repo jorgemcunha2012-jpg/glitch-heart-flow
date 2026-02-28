@@ -144,8 +144,8 @@ const Pagamento = () => {
         body: { transaction_id: pixData.transaction_id }
       });
       if (error) return;
-      const status = data?.status?.toLowerCase?.() || data?.transaction_status?.toLowerCase?.() || "";
-      if (status === "approved" || status === "paid" || status === "completed" || status === "success") {
+      const status = data?.status?.toLowerCase?.() || "";
+      if (status === "approved") {
         if (pollingRef.current) clearInterval(pollingRef.current);
         navigate("/up1");
       }

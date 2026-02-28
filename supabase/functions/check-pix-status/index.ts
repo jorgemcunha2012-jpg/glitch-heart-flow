@@ -6,7 +6,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const PARADISE_API_URL = "https://multi.paradisepags.com/api/v1/transaction.php";
+const PARADISE_QUERY_URL = "https://multi.paradisepags.com/api/v1/query.php";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -28,11 +28,11 @@ serve(async (req) => {
       );
     }
 
-    const response = await fetch(`${PARADISE_API_URL}?id=${transaction_id}`, {
+    const url = `${PARADISE_QUERY_URL}?action=get_transaction&id=${transaction_id}`;
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "X-API-Key": PARADISE_API_KEY,
-        "Content-Type": "application/json",
       },
     });
 
