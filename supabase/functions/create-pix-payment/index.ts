@@ -19,7 +19,7 @@ serve(async (req) => {
       throw new Error("PARADISE_API_KEY is not configured");
     }
 
-    const { amount, description, reference, customer, source, metadata } = await req.json();
+    const { amount, description, reference, customer, source, tracking } = await req.json();
 
     if (!amount || !description || !reference || !customer) {
       return new Response(
@@ -34,7 +34,7 @@ serve(async (req) => {
       reference,
       customer,
       source: source || "api_externa",
-      ...(metadata && { metadata }),
+      ...(tracking && { tracking }),
     };
 
     const response = await fetch(PARADISE_API_URL, {
