@@ -188,7 +188,7 @@ const Pagamento = () => {
             document,
             phone
           },
-          ...(Object.keys(utms).length > 0 && { metadata: utms })
+          ...(Object.keys(utms).length > 0 && { tracking: utms })
         }
       });
 
