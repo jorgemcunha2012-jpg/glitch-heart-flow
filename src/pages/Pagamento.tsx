@@ -382,9 +382,9 @@ const Pagamento = () => {
         {/* Testimonials */}
         <div className="pt-2">
           <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-3">O que estão dizendo</p>
-          <div className="space-y-3">
+          <div className="flex gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory" style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
             {testimonials.map((t) => (
-              <div key={t.name} className="rounded-2xl border border-gray-200 p-4">
+              <div key={t.name} className="min-w-[260px] max-w-[260px] rounded-2xl border border-gray-200 p-4 snap-start shrink-0">
                 <div className="flex items-center gap-2.5 mb-2">
                   <div className="h-8 w-8 rounded-full overflow-hidden shrink-0">
                     <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="eager" decoding="async" />
