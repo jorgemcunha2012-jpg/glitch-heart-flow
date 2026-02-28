@@ -3,8 +3,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import { captureUtms } from "@/lib/utm";
+
+// Capture UTMs immediately on script load (before any redirect)
+captureUtms();
 
 // Lazy load all pages for code splitting
 const Landing = lazy(() => import("./pages/Landing"));
@@ -22,6 +26,12 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
+/** Preserves query string when redirecting / → /landing */
+const RedirectWithParams = () => {
+  const location = useLocation();
+  return <Navigate to={`/landing${location.search}`} replace />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -31,7 +41,7 @@ const App = () => (
         <ScrollToTop />
         <Suspense fallback={null}>
           <Routes>
-            <Route path="/" element={<Navigate to="/landing" replace />} />
+            <Route path="/" element={<RedirectWithParams />} />
             <Route path="/landing" element={<Landing />} />
             <Route path="/progresso" element={<Progresso />} />
             <Route path="/bonus" element={<Bonus />} />
