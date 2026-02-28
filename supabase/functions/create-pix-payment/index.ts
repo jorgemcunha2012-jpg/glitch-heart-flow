@@ -37,6 +37,8 @@ serve(async (req) => {
       ...(tracking && { tracking }),
     };
 
+    console.log("Request body to Paradise:", JSON.stringify(body));
+
     const response = await fetch(PARADISE_API_URL, {
       method: "POST",
       headers: {
