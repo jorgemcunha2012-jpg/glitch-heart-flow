@@ -459,7 +459,8 @@ const Pagamento = () => {
         </div>
 
         <p className="text-[10px] text-center leading-relaxed pb-4" style={{ color: "#bbb" }}>
-          Ao finalizar o pagamento você concorda com os termos de uso e privacidade do TikTok.
+          Ao finalizar o pagamento você concorda com os termos de uso e privacidade do{" "}
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "#999" }}>TikTok</a>.
         </p>
       </div>
     </div>);
