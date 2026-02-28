@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { CheckCircle2, Star, Loader2, Copy, Check } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
@@ -100,6 +101,8 @@ const PushNotification = ({
 };
 
 const Pagamento = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     trackTikTokEvent({ event: "AddPaymentInfo", properties: { value: TAX, currency: "BRL" } });
   }, []);
@@ -130,6 +133,37 @@ const Pagamento = () => {
 
   const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
   const seconds = String(timeLeft % 60).padStart(2, "0");
+
+  // Poll payment status every 5s after PIX is generated
+  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const checkPaymentStatus = useCallback(async () => {
+    if (!pixData?.transaction_id) return;
+    try {
+      const { data, error } = await supabase.functions.invoke("check-pix-status", {
+        body: { transaction_id: pixData.transaction_id }
+      });
+      if (error) return;
+      const status = data?.status?.toLowerCase?.() || data?.transaction_status?.toLowerCase?.() || "";
+      if (status === "approved" || status === "paid" || status === "completed" || status === "success") {
+        if (pollingRef.current) clearInterval(pollingRef.current);
+        navigate("/up1");
+      }
+    } catch {
+      // silent retry
+    }
+  }, [pixData?.transaction_id, navigate]);
+
+  useEffect(() => {
+    if (!pixData?.transaction_id) return;
+    // Start polling
+    pollingRef.current = setInterval(checkPaymentStatus, 5000);
+    // Also check immediately
+    checkPaymentStatus();
+    return () => {
+      if (pollingRef.current) clearInterval(pollingRef.current);
+    };
+  }, [pixData?.transaction_id, checkPaymentStatus]);
 
   const handlePagar = async () => {
     setLoading(true);
