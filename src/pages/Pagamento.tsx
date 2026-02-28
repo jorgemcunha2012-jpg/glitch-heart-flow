@@ -354,9 +354,9 @@ const Pagamento = () => {
                 <p className="text-[10px]" style={{ color: "#999" }}>Aprovação instantânea</p>
               </div>
             </div>
-            <div className="h-5 w-5 rounded-full flex items-center justify-center" style={{ background: "#25F4EE" }}>
-              
-            </div>
+            
+
+
           </div>
         </div>
 
