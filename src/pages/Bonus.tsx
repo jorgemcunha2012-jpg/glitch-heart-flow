@@ -172,7 +172,8 @@ const Bonus = () => {
               <br />
               todas as tarefas
             </h2>
-            <p style={{ fontSize: 17, fontWeight: 700, color: TT_RED, margin: "6px 0 0" }}>
+            <p style={{ fontSize: 12, fontWeight: 500, color: "#888", margin: "6px 0 0" }}>Seu saldo:</p>
+            <p style={{ fontSize: 17, fontWeight: 700, color: TT_RED, margin: "2px 0 0" }}>
               R$ {formatBRL(TARGET)}
             </p>
           </div>
