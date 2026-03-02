@@ -65,7 +65,7 @@ const Upsell3 = () => {
 
   const handlePagar = () => {
     trackTikTokEvent({ event: "InitiateCheckout", properties: { page: "upsell3", value: UPSELL3_TAX } });
-    navigate("/pagamento");
+    navigate(`/pagamento?amount=${UPSELL3_TAX}&next=/up4&desc=${encodeURIComponent("Taxa de Cashback - TikTok Rewards")}`);
   };
 
   const fadeUp = (delay: number): React.CSSProperties => ({
