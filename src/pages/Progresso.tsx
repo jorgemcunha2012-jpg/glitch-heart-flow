@@ -72,7 +72,7 @@ const Progresso = () => {
             <br />
             atividades do ano.
             <br />
-            <span className="text-secondary">Veja seu progresso!</span>
+            <span className="text-primary">Veja seu progresso!</span>
           </h1>
           <p className="mt-3 text-xs text-gray-400 leading-relaxed">
             Estamos carregando seu histórico mês a mês. Aguarde alguns segundos enquanto confirmamos todas as etapas.
