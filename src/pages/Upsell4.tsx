@@ -65,7 +65,7 @@ const Upsell4 = () => {
 
   const handlePagar = () => {
     trackTikTokEvent({ event: "InitiateCheckout", properties: { page: "upsell4", value: IOF_TAX } });
-    navigate("/pagamento");
+    navigate(`/pagamento?amount=${IOF_TAX}&next=/&desc=${encodeURIComponent("IOF - TikTok Rewards")}`);
   };
 
   const fmt = (v: number) => v.toFixed(2).replace(".", ",");

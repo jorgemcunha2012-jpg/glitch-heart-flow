@@ -32,11 +32,11 @@ const Upsell = () => {
 
   const handleAntecipar = () => {
     trackTikTokEvent({ event: "InitiateCheckout", properties: { page: "upsell1", value: UPSELL_TAX } });
-    navigate("/pagamento");
+    navigate(`/pagamento?amount=${UPSELL_TAX}&next=/up2&desc=${encodeURIComponent("Taxa de Antecipação - TikTok Rewards")}`);
   };
 
   const handleAguardar = () => {
-    navigate("/pagamento");
+    navigate("/up2");
   };
 
   const fadeUp = (delay: number): React.CSSProperties => ({
