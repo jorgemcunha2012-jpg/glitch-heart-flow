@@ -15,7 +15,7 @@ import testimonialMatheus from "@/assets/testimonial-matheus.png";
 import testimonialAna from "@/assets/testimonial-ana.png";
 import testimonialCarlos from "@/assets/testimonial-carlos.png";
 
-const DEFAULT_TAX = 32.68;
+const DEFAULT_TAX = 32.64;
 const SALDO = TARGET_BALANCE;
 
 const testimonials = [
