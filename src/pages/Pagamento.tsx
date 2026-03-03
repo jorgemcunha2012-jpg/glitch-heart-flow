@@ -31,7 +31,7 @@ const testimonials = [
 },
 {
   name: "Carla Eduarda",
-  text: '"pensei que era golpe mas recebi na hora, top demais!!"',
+  text: '"no começo fiquei com pé atrás, mas caiu certinho na minha conta em menos de 5 min 🙏"',
   avatar: testimonialCarlos
 }];
 
