@@ -30,7 +30,7 @@ const testimonials = [
   avatar: testimonialAna
 },
 {
-  name: "Carla Eduarda",
+  name: "Eduarda Farias",
   text: '"no começo fiquei com pé atrás, mas caiu certinho na minha conta em menos de 5 min 🙏"',
   avatar: testimonialCarlos
 }];
